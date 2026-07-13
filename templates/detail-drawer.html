@@ -44,7 +44,7 @@
       font-family: var(--font-stack);
       font-size: 14px;
       color: var(--text-primary);
-      background: var(--page-bg);
+      background: #f5f7fa;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -53,7 +53,6 @@
     .page-container {
       padding: 20px;
       min-height: 100vh;
-      background: var(--page-bg);
     }
 
     /* ========== Filter Bar ========== */
@@ -180,7 +179,7 @@
     }
 
     .el-drawer__body {
-      padding: 20px;
+      padding: 16px 20px;
     }
 
     /* ========== Drawer Internal Layout ========== */
@@ -217,7 +216,7 @@
     }
 
     .drawer-body {
-      padding: 20px;
+      padding: 0;
       overflow-y: auto;
     }
 
@@ -260,6 +259,10 @@
       color: var(--text-primary);
     }
 
+    .drawer-body .el-descriptions__cell {
+      padding: 10px 16px;
+    }
+
     /* 只读表单覆盖 */
     .readonly-form .el-form-item {
       margin-bottom: 12px;
@@ -281,7 +284,7 @@
       line-height: 32px;
       font-size: 14px;
       color: var(--text-primary);
-      background: var(--page-bg);
+      background: #f5f7fa;
       border-radius: 4px;
       word-break: break-all;
     }

@@ -44,7 +44,7 @@
       font-family: var(--font-stack);
       font-size: 14px;
       color: var(--text-primary);
-      background: var(--page-bg);
+      background: #f5f7fa;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -53,7 +53,6 @@
     .page-container {
       padding: 20px;
       min-height: 100vh;
-      background: var(--page-bg);
     }
 
     /* ========== Stats Row ========== */
@@ -97,6 +96,7 @@
     }
 
     .tabs-card .el-tabs__header {
+      padding: 0 16px;
       margin-bottom: 0;
     }
 
@@ -106,6 +106,7 @@
     }
 
     .tabs-card .el-tabs__content {
+      padding: 16px;
       padding: 0;
     }
 
@@ -133,8 +134,16 @@
       width: 180px;
     }
 
+    .filter-bar .el-button { display: inline-flex; align-items: center; gap: 6px; }
+
     .filter-bar .el-date-editor--daterange {
       width: 260px;
+    }
+
+    .filter-bar .el-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* ========== Table ========== */
@@ -155,6 +164,12 @@
 
     .tabs-card .el-table .el-table__row td {
       height: 48px;
+    }
+
+    /* 数字列右对齐 */
+    .col-number {
+      font-variant-numeric: tabular-nums;
+      text-align: right;
     }
 
     /* ========== Action Buttons ========== */
@@ -306,7 +321,8 @@
           stripe
           style="width: 100%"
         >
-          <el-table-column prop="name" label="任务名称" min-width="200" show-overflow-tooltip />
+          <el-table-column prop="name" label="任务名称" min-width="180" show-overflow-tooltip />
+          <el-table-column prop="description" label="描述" min-width="260" show-overflow-tooltip />
           <el-table-column prop="status" label="状态" width="100" align="center">
             <template #default="{ row }">
               <el-tag
@@ -330,7 +346,12 @@
             </template>
           </el-table-column>
           <el-table-column prop="assignee" label="负责人" width="100" />
-          <el-table-column prop="createdAt" label="创建时间" width="180" />
+          <el-table-column prop="workHours" label="工时(h)" width="100" align="right">
+            <template #default="{ row }">
+              <span class="col-number">{{ row.workHours }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="createdAt" label="创建时间" width="160" />
           <el-table-column label="操作" width="150" fixed="right" align="center">
             <template #default="{ row }">
               <el-button
@@ -414,14 +435,14 @@
 
         /* ---- 示例数据 ---- */
         const allData = [
-          { id: 1,  name: '用户权限模块重构',       status: 'completed',  priority: 'high',   assignee: '张三', createdAt: '2026-07-10 09:30:00' },
-          { id: 2,  name: '订单导出功能优化',       status: 'pending',    priority: 'medium', assignee: '李四', createdAt: '2026-07-09 14:20:00' },
-          { id: 3,  name: '首页性能瓶颈排查',       status: 'inProgress', priority: 'high',   assignee: '王五', createdAt: '2026-07-08 11:05:00' },
-          { id: 4,  name: '消息中心推送对接',       status: 'pending',    priority: 'low',    assignee: '赵六', createdAt: '2026-07-07 16:45:00' },
-          { id: 5,  name: '数据看板图表组件升级',   status: 'completed',  priority: 'medium', assignee: '孙七', createdAt: '2026-07-06 08:10:00' },
-          { id: 6,  name: '国际化多语言适配',       status: 'inProgress', priority: 'medium', assignee: '张三', createdAt: '2026-07-05 10:20:00' },
-          { id: 7,  name: 'API 网关限流策略调整',   status: 'completed',  priority: 'high',   assignee: '李四', createdAt: '2026-07-04 15:30:00' },
-          { id: 8,  name: '文件上传组件重构',       status: 'pending',    priority: 'low',    assignee: '王五', createdAt: '2026-07-03 09:00:00' },
+          { id: 1,  name: '用户权限模块重构',             description: '重构RBAC权限模型，支持多租户数据隔离与动态菜单配置',                       status: 'completed',  priority: 'high',   assignee: '张三', workHours: 128, createdAt: '2026-07-10 09:30:00' },
+          { id: 2,  name: '订单导出功能优化',             description: '将全量导出改为流式导出，支持百万级订单数据异步生成Excel',                   status: 'pending',    priority: 'medium', assignee: '李四', workHours: 40,  createdAt: '2026-07-09 14:20:00' },
+          { id: 3,  name: '首页性能瓶颈排查',             description: '排查首屏加载耗时超过3s的根因，定位到第三方SDK阻塞渲染问题',               status: 'inProgress', priority: 'high',   assignee: '王五', workHours: 64,  createdAt: '2026-07-08 11:05:00' },
+          { id: 4,  name: '消息中心推送对接',             description: '对接极光推送与企业微信，实现站内信、APP推送、企微消息三通道触达',           status: 'pending',    priority: 'low',    assignee: '赵六', workHours: 24,  createdAt: '2026-07-07 16:45:00' },
+          { id: 5,  name: '数据看板图表组件升级',         description: '将ECharts从4.x升级至5.x，适配暗色主题并优化大数据量渲染性能',             status: 'completed',  priority: 'medium', assignee: '孙七', workHours: 56,  createdAt: '2026-07-06 08:10:00' },
+          { id: 6,  name: '国际化多语言适配',             description: '新增阿拉伯语RTL布局支持，调整日期、货币等本地化格式处理逻辑',              status: 'inProgress', priority: 'medium', assignee: '张三', workHours: 80,  createdAt: '2026-07-05 10:20:00' },
+          { id: 7,  name: 'API网关限流策略调整',          description: '基于业务峰值QPS数据，重新评估各接口限流阈值并优化令牌桶算法参数',           status: 'completed',  priority: 'high',   assignee: '李四', workHours: 32,  createdAt: '2026-07-04 15:30:00' },
+          { id: 8,  name: '文件上传组件重构',             description: '重构为分片上传架构，支持断点续传、并发上传及上传进度实时反馈',             status: 'pending',    priority: 'low',    assignee: '王五', workHours: 48,  createdAt: '2026-07-03 09:00:00' },
         ];
 
         const tableData = computed(() => {

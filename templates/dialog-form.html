@@ -43,7 +43,7 @@
       font-family: var(--font-stack);
       font-size: 14px;
       color: var(--text-primary);
-      background: var(--page-bg);
+      background: #f5f7fa;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -52,7 +52,6 @@
     .page-container {
       padding: 20px;
       min-height: 100vh;
-      background: var(--page-bg);
     }
 
     /* ========== Filter Bar ========== */
@@ -197,7 +196,7 @@
     }
 
     .el-dialog__body {
-      padding: 20px;
+      padding: 16px 20px;
     }
 
     .el-dialog__footer {
@@ -223,6 +222,14 @@
 
     .dialog-form .el-textarea__inner {
       min-height: 80px;
+    }
+
+    .dialog-form .el-form-item {
+      margin-bottom: 12px;
+    }
+
+    .el-dialog__footer .el-button + .el-button {
+      margin-left: 8px;
     }
   </style>
 </head>
@@ -296,13 +303,15 @@
           stripe
           style="width: 100%"
         >
-          <el-table-column prop="name" label="名称" min-width="200" show-overflow-tooltip />
-          <el-table-column prop="type" label="类型" width="120" align="center">
+          <el-table-column prop="code" label="编码" width="140" show-overflow-tooltip />
+          <el-table-column prop="name" label="名称" min-width="180" show-overflow-tooltip />
+          <el-table-column prop="type" label="类型" width="110" align="center">
             <template #default="{ row }">
               <el-tag size="small" effect="plain">{{ row.type }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="status" label="状态" width="100" align="center">
+          <el-table-column prop="version" label="版本" width="90" align="center" />
+          <el-table-column prop="status" label="状态" width="90" align="center">
             <template #default="{ row }">
               <el-tag
                 :type="statusTagType(row.status)"
@@ -313,8 +322,9 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="creator" label="创建人" width="120" />
-          <el-table-column prop="createdAt" label="创建时间" width="180" />
+          <el-table-column prop="owner" label="负责人" width="100" />
+          <el-table-column prop="description" label="描述" min-width="220" show-overflow-tooltip />
+          <el-table-column prop="updatedAt" label="更新时间" width="170" />
           <el-table-column label="操作" width="150" fixed="right" align="center">
             <template #default="{ row }">
               <el-button
@@ -374,7 +384,7 @@
           ref="formRef"
           :model="formData"
           :rules="formRules"
-          label-width="120px"
+          label-width="100px"
           class="dialog-form"
         >
           <el-form-item label="名称" prop="name">
@@ -454,11 +464,16 @@
 
         /* ---- 示例数据 ---- */
         const tableData = ref([
-          { id: 1, name: '供应链管理模块',   type: '基础模块', status: 'active',   creator: '张三', createdAt: '2026-07-10 09:30:00' },
-          { id: 2, name: '客户关系管理系统', type: '业务组件', status: 'active',   creator: '李四', createdAt: '2026-07-09 14:20:00' },
-          { id: 3, name: '财务报表引擎',     type: '数据引擎', status: 'disabled', creator: '王五', createdAt: '2026-07-08 11:05:00' },
-          { id: 4, name: '权限网关服务',     type: '工具服务', status: 'draft',    creator: '赵六', createdAt: '2026-07-07 16:45:00' },
-          { id: 5, name: '数据同步中间件',   type: '工具服务', status: 'active',   creator: '孙七', createdAt: '2026-07-06 08:10:00' },
+          { id: 1, code: 'MOD-2026-001', name: '供应链管理模块',     type: '基础模块', version: 'v2.3.1', status: 'active',   owner: '张伟',   description: '覆盖采购、仓储、物流全链路的供应链核心模块，支持多级供应商协同管理', updatedAt: '2026-07-10 09:30:00' },
+          { id: 2, code: 'CMP-2026-012', name: '客户关系管理系统',   type: '业务组件', version: 'v1.8.0', status: 'active',   owner: '李娜',   description: '集成客户画像、跟进记录、商机漏斗等功能的 CRM 组件', updatedAt: '2026-07-09 14:20:00' },
+          { id: 3, code: 'ENG-2026-005', name: '财务报表引擎',       type: '数据引擎', version: 'v3.1.2', status: 'disabled', owner: '王强',   description: '支持多维度财务数据聚合、自动出具三大报表及自定义报表模板', updatedAt: '2026-07-08 11:05:00' },
+          { id: 4, code: 'SRV-2026-008', name: '统一权限网关服务',   type: '工具服务', version: 'v1.2.0', status: 'draft',    owner: '赵敏',   description: '基于 RBAC 模型的统一鉴权网关，支持 OAuth2.0 与 SSO 单点登录', updatedAt: '2026-07-07 16:45:00' },
+          { id: 5, code: 'SRV-2026-011', name: '数据同步中间件',     type: '工具服务', version: 'v2.0.3', status: 'active',   owner: '孙鹏',   description: '支持 MySQL、PostgreSQL、MongoDB 等异构数据源的实时增量同步', updatedAt: '2026-07-06 08:10:00' },
+          { id: 6, code: 'CMP-2026-015', name: '审批流程引擎',       type: '业务组件', version: 'v1.5.4', status: 'active',   owner: '周洋',   description: '可视化流程编排引擎，支持串行、并行、条件分支及加签转签', updatedAt: '2026-07-05 17:20:00' },
+          { id: 7, code: 'MOD-2026-003', name: '人力资源管理平台',   type: '基础模块', version: 'v4.0.1', status: 'active',   owner: '吴芳',   description: '涵盖组织架构、考勤排假、薪酬核算、绩效考核等 HR 核心域', updatedAt: '2026-07-04 10:15:00' },
+          { id: 8, code: 'ENG-2026-009', name: '实时消息推送引擎',   type: '数据引擎', version: 'v1.1.0', status: 'draft',    owner: '郑涛',   description: '基于 WebSocket 的实时消息推送，支持按租户、角色、用户多维定向', updatedAt: '2026-07-03 13:40:00' },
+          { id: 9, code: 'SRV-2026-014', name: '文件存储服务',       type: '工具服务', version: 'v2.2.0', status: 'active',   owner: '陈琳',   description: '兼容 S3 协议的对象存储服务，支持分片上传、断点续传及 CDN 加速', updatedAt: '2026-07-02 09:55:00' },
+          { id: 10, code: 'CMP-2026-018', name: '数据可视化大屏组件', type: '业务组件', version: 'v1.0.2', status: 'disabled', owner: '黄磊',   description: '拖拽式大屏搭建组件，内置折线图、柱状图、地图等 20+ 图表类型', updatedAt: '2026-07-01 15:30:00' },
         ]);
 
         /* ---- 弹框状态 ---- */

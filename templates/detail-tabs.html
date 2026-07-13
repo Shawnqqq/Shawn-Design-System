@@ -43,7 +43,7 @@
       font-family: var(--font-stack);
       font-size: 14px;
       color: var(--text-primary);
-      background: var(--page-bg);
+      background: #f5f7fa;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -52,14 +52,13 @@
     .page-container {
       padding: 20px;
       min-height: 100vh;
-      background: var(--page-bg);
     }
 
     /* ========== Detail Banner ========== */
     .detail-banner {
       position: relative;
       background: var(--card-bg);
-      padding: 20px 24px;
+      padding: 20px 24px 16px;
       border-radius: var(--card-radius);
       margin-bottom: 16px;
       box-shadow: var(--shadow-sm);
@@ -142,7 +141,7 @@
 
     /* Tab content area */
     .content-card .el-tabs__content {
-      padding: 0;
+      padding: 16px 24px;
     }
 
     .tab-pane-body {
@@ -301,9 +300,39 @@
             <div class="tab-pane-body">
               <el-table :data="relatedData" border class="tab-table" style="width: 100%">
                 <el-table-column prop="courseName" label="课程名称" min-width="200" show-overflow-tooltip />
-                <el-table-column prop="trainer" label="培训讲师" width="120" />
-                <el-table-column prop="duration" label="课时" width="100" align="center" />
-                <el-table-column prop="participants" label="参训人数" width="100" align="center" />
+                <el-table-column prop="category" label="课程分类" width="110" align="center">
+                  <template #default="{ row }">
+                    <el-tag
+                      :type="categoryTagType(row.category)"
+                      size="small"
+                      effect="plain"
+                    >
+                      {{ row.category }}
+                    </el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="trainer" label="培训讲师" width="100" />
+                <el-table-column prop="trainerDept" label="讲师部门" width="120" />
+                <el-table-column prop="duration" label="课时" width="80" align="center" />
+                <el-table-column prop="participants" label="参训人数" width="90" align="center" />
+                <el-table-column prop="scheduledDate" label="计划日期" width="120" align="center" />
+                <el-table-column prop="completionRate" label="完成率" width="140" align="center">
+                  <template #default="{ row }">
+                    <el-progress
+                      :percentage="row.completionRate"
+                      :stroke-width="6"
+                      :color="row.completionRate >= 80 ? '#67C23A' : row.completionRate >= 50 ? '#E6A23C' : '#F56C6C'"
+                      style="width: 100px; display: inline-flex"
+                    />
+                  </template>
+                </el-table-column>
+                <el-table-column prop="avgScore" label="平均分" width="80" align="center">
+                  <template #default="{ row }">
+                    <span :style="{ color: row.avgScore >= 80 ? 'var(--color-success)' : row.avgScore >= 60 ? 'var(--color-warning)' : 'var(--color-danger)', fontWeight: 600 }">
+                      {{ row.avgScore }}
+                    </span>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="status" label="状态" width="100" align="center">
                   <template #default="{ row }">
                     <el-tag
@@ -315,10 +344,13 @@
                     </el-tag>
                   </template>
                 </el-table-column>
-                <el-table-column label="操作" width="100" fixed="right" align="center">
+                <el-table-column label="操作" width="140" fixed="right" align="center">
                   <template #default="{ row }">
                     <el-button class="action-btn action-btn--edit" type="primary" link @click="handleViewCourse(row)">
                       查看
+                    </el-button>
+                    <el-button class="action-btn action-btn--edit" type="primary" link @click="handleEditCourse(row)">
+                      编辑
                     </el-button>
                   </template>
                 </el-table-column>
@@ -378,11 +410,13 @@
 
         /* ---- 关联数据 ---- */
         const relatedData = ref([
-          { id: 1, courseName: '企业文化与价值观',       trainer: '李明',   duration: '4 课时',  participants: 32, status: '已完成' },
-          { id: 2, courseName: '岗位技能基础培训',       trainer: '王芳',   duration: '8 课时',  participants: 32, status: '进行中' },
-          { id: 3, courseName: '信息安全与合规意识',     trainer: '赵强',   duration: '2 课时',  participants: 32, status: '待开始' },
-          { id: 4, courseName: '办公系统操作实训',       trainer: '孙丽',   duration: '4 课时',  participants: 28, status: '待开始' },
-          { id: 5, courseName: '团队协作与沟通技巧',     trainer: '周伟',   duration: '3 课时',  participants: 30, status: '待开始' },
+          { id: 1, courseName: '企业文化与价值观',       category: '通识类', trainer: '李明',   trainerDept: '人力资源部', duration: '4 课时',  participants: 32, scheduledDate: '2026-08-02', completionRate: 100, avgScore: 92, status: '已完成' },
+          { id: 2, courseName: '岗位技能基础培训',       category: '技能类', trainer: '王芳',   trainerDept: '研发中心',   duration: '8 课时',  participants: 32, scheduledDate: '2026-08-05', completionRate: 68,  avgScore: 75, status: '进行中' },
+          { id: 3, courseName: '信息安全与合规意识',     category: '合规类', trainer: '赵强',   trainerDept: '信息安全部', duration: '2 课时',  participants: 32, scheduledDate: '2026-08-12', completionRate: 0,   avgScore: 0,  status: '待开始' },
+          { id: 4, courseName: 'ERP 系统操作实训',       category: '技能类', trainer: '孙丽',   trainerDept: '数字化中心', duration: '4 课时',  participants: 28, scheduledDate: '2026-08-15', completionRate: 0,   avgScore: 0,  status: '待开始' },
+          { id: 5, courseName: '跨部门协作与高效沟通',   category: '管理类', trainer: '周伟',   trainerDept: '组织发展部', duration: '3 课时',  participants: 30, scheduledDate: '2026-08-18', completionRate: 0,   avgScore: 0,  status: '待开始' },
+          { id: 6, courseName: '财务报销流程与制度解读', category: '通识类', trainer: '钱敏',   trainerDept: '财务部',     duration: '2 课时',  participants: 32, scheduledDate: '2026-08-20', completionRate: 12,  avgScore: 0,  status: '待开始' },
+          { id: 7, courseName: '安全生产与应急处置演练', category: '合规类', trainer: '郑伟',   trainerDept: '安全管理部', duration: '4 课时',  participants: 32, scheduledDate: '2026-08-22', completionRate: 0,   avgScore: 0,  status: '待开始' },
         ]);
 
         /* ---- 操作日志 ---- */
@@ -411,6 +445,11 @@
           return map[status] || 'info';
         }
 
+        function categoryTagType(category) {
+          const map = { '通识类': '', '技能类': 'success', '合规类': 'warning', '管理类': 'danger' };
+          return map[category] ?? 'info';
+        }
+
         /* ---- 事件处理 ---- */
         function handleEdit() {
           ElementPlus.ElMessage.info('进入编辑模式');
@@ -424,6 +463,10 @@
           ElementPlus.ElMessage.info('查看课程：' + row.courseName);
         }
 
+        function handleEditCourse(row) {
+          ElementPlus.ElMessage.info('编辑课程：' + row.courseName);
+        }
+
         return {
           activeTab,
           detail,
@@ -432,9 +475,11 @@
           statusTagType,
           statusLabel,
           courseStatusType,
+          categoryTagType,
           handleEdit,
           handleBack,
           handleViewCourse,
+          handleEditCourse,
         };
       },
     });

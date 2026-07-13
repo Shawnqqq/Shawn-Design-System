@@ -42,7 +42,7 @@
       font-family: var(--font-stack);
       font-size: 14px;
       color: var(--text-primary);
-      background: var(--page-bg);
+      background: #f5f7fa;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -51,7 +51,6 @@
     .page-container {
       padding: 20px;
       min-height: 100vh;
-      background: var(--page-bg);
     }
 
     /* ========== Page Header ========== */
@@ -86,17 +85,16 @@
       background: var(--card-bg);
       border-radius: var(--card-radius);
       padding: 24px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       box-shadow: var(--shadow-sm);
     }
 
     .section-title {
       font-size: 16px;
       font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding-left: 12px;
+      border-left: 3px solid #1764E8;
+      margin-bottom: 16px;
     }
 
     .form-card .el-form {
@@ -122,15 +120,26 @@
       width: 200px;
     }
 
-    /* ========== Form Actions Bar ========== */
+    .form-card .el-form-item {
+      margin-bottom: 12px;
+    }
+
+    .page-description {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* ========== Form Actions (inside last card) ========== */
     .form-actions {
-      background: var(--card-bg);
-      border-radius: var(--card-radius);
-      padding: 16px 24px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      box-shadow: var(--shadow-sm);
+      border-top: 1px solid rgba(0,0,0,0.06);
+      padding-top: 16px;
+      margin-top: 16px;
+      text-align: right;
+    }
+
+    .form-actions .el-button + .el-button {
+      margin-left: 8px;
     }
   </style>
 </head>
@@ -147,6 +156,7 @@
         </el-button>
         <span class="page-title">创建培训计划</span>
       </div>
+      <p class="page-description">填写以下信息创建一个新的培训计划，带 <span style="color: var(--color-danger);">*</span> 为必填项。</p>
 
       <!-- 第一分区：基础信息 -->
       <div class="form-card">
@@ -238,12 +248,12 @@
             />
           </el-form-item>
         </el-form>
-      </div>
 
-      <!-- 底部操作栏 -->
-      <div class="form-actions">
-        <el-button @click="handleCancel">取消</el-button>
-        <el-button type="primary" @click="handleSubmit">保存</el-button>
+        <!-- 底部操作栏 -->
+        <div class="form-actions">
+          <el-button @click="handleCancel">取消</el-button>
+          <el-button type="primary" @click="handleSubmit">保存</el-button>
+        </div>
       </div>
     </div>
   </div>

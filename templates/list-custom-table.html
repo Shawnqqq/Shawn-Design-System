@@ -52,7 +52,6 @@
     .page-container {
       padding: 20px;
       min-height: 100vh;
-      background: var(--page-bg);
     }
 
     /* ========== Filter Bar ========== */
@@ -82,8 +81,16 @@
       width: 180px;
     }
 
+    .filter-bar .el-button { display: inline-flex; align-items: center; gap: 6px; }
+
     .filter-bar .el-date-editor--daterange {
       width: 260px;
+    }
+
+    .filter-bar .el-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* ========== Table Card ========== */
@@ -111,6 +118,12 @@
 
     .table-card .el-table .el-table__row td {
       height: 48px;
+    }
+
+    /* 数字列右对齐 */
+    .col-number {
+      font-variant-numeric: tabular-nums;
+      text-align: right;
     }
 
     /* ========== Toolbar ========== */
@@ -507,7 +520,14 @@
             v-if="isColumnVisible('name')"
             prop="name"
             label="名称"
-            min-width="200"
+            min-width="180"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            v-if="isColumnVisible('description')"
+            prop="description"
+            label="描述"
+            min-width="260"
             show-overflow-tooltip
           />
           <el-table-column
@@ -537,19 +557,30 @@
             v-if="isColumnVisible('creator')"
             prop="creator"
             label="创建人"
-            width="120"
+            width="100"
           />
+          <el-table-column
+            v-if="isColumnVisible('quantity')"
+            prop="quantity"
+            label="数量"
+            width="100"
+            align="right"
+          >
+            <template #default="{ row }">
+              <span class="col-number">{{ (row.quantity || 0).toLocaleString() }}</span>
+            </template>
+          </el-table-column>
           <el-table-column
             v-if="isColumnVisible('updatedAt')"
             prop="updatedAt"
             label="更新时间"
-            width="180"
+            width="160"
           />
           <el-table-column
             v-if="isColumnVisible('createdAt')"
             prop="createdAt"
             label="创建时间"
-            width="180"
+            width="160"
           />
           <el-table-column label="操作" width="150" fixed="right" align="center">
             <template #default="{ row }">
@@ -639,6 +670,17 @@
   <script>
     const { createApp, ref, reactive, computed } = Vue;
 
+    /* ---- 中文语言包 ---- */
+    const zhCn = {
+      name: 'zh-cn',
+      el: {
+        pagination: { goto: '前往', pagesize: '条/页', total: '共 {total} 条', pageClassifier: '页', page: '页', prev: '上一页', next: '下一页', currentPage: '第 {pager} 页' },
+        select: { loading: '加载中', noMatch: '无匹配数据', noData: '暂无数据', placeholder: '请选择' },
+        table: { emptyText: '暂无数据', confirmFilter: '确认', resetFilter: '重置', clearFilter: '全部', sumText: '合计' },
+        datepicker: { now: '此刻', today: '今天', cancel: '取消', clear: '清空', confirm: '确定', startDate: '开始日期', startTime: '开始时间', endDate: '结束日期', endTime: '结束时间', prevYear: '前一年', nextYear: '后一年', prevMonth: '上个月', nextMonth: '下个月', year: '年', month1: '1月', month2: '2月', month3: '3月', month4: '4月', month5: '5月', month6: '6月', month7: '7月', month8: '8月', month9: '9月', month10: '10月', month11: '11月', month12: '12月', weeks: { sun: '日', mon: '一', tue: '二', wed: '三', thu: '四', fri: '五', sat: '六' }, months: { jan: '一月', feb: '二月', mar: '三月', apr: '四月', may: '五月', jun: '六月', jul: '七月', aug: '八月', sep: '九月', oct: '十月', nov: '十一月', dec: '十二月' } },
+      },
+    };
+
     const app = createApp({
       setup() {
         const tableRef = ref(null);
@@ -659,12 +701,14 @@
 
         /* ---- 列定义 ---- */
         const allColumns = [
-          { prop: 'name',      label: '名称',     fixed: true },
-          { prop: 'status',    label: '状态',     fixed: false },
-          { prop: 'category',  label: '分类',     fixed: false },
-          { prop: 'creator',   label: '创建人',   fixed: false },
-          { prop: 'updatedAt', label: '更新时间', fixed: false },
-          { prop: 'createdAt', label: '创建时间', fixed: false },
+          { prop: 'name',        label: '名称',     fixed: true },
+          { prop: 'description', label: '描述',     fixed: false },
+          { prop: 'status',      label: '状态',     fixed: false },
+          { prop: 'category',    label: '分类',     fixed: false },
+          { prop: 'creator',     label: '创建人',   fixed: false },
+          { prop: 'quantity',    label: '数量',     fixed: false },
+          { prop: 'updatedAt',   label: '更新时间', fixed: false },
+          { prop: 'createdAt',   label: '创建时间', fixed: false },
         ];
 
         const visibleColumns = ref(
@@ -691,11 +735,26 @@
 
         /* ---- 示例数据 ---- */
         const tableData = ref([
-          { id: 1, name: '供应链管理模块',   status: 'active',   category: '业务系统', creator: '张三', updatedAt: '2026-07-12 10:30:00', createdAt: '2026-07-10 09:30:00' },
-          { id: 2, name: '客户关系管理系统', status: 'active',   category: '业务系统', creator: '李四', updatedAt: '2026-07-11 16:20:00', createdAt: '2026-07-09 14:20:00' },
-          { id: 3, name: '财务报表引擎',     status: 'disabled', category: '数据平台', creator: '王五', updatedAt: '2026-07-10 09:05:00', createdAt: '2026-07-08 11:05:00' },
-          { id: 4, name: '权限网关服务',     status: 'draft',    category: '基础设施', creator: '赵六', updatedAt: '2026-07-09 14:45:00', createdAt: '2026-07-07 16:45:00' },
-          { id: 5, name: '数据同步中间件',   status: 'active',   category: '基础设施', creator: '孙七', updatedAt: '2026-07-08 08:10:00', createdAt: '2026-07-06 08:10:00' },
+          { id: 1,  name: '供应链管理高级研修班',           description: '与知名商学院合作的供应链专题课程，面向中高层管理人员，为期12周系统化培训',         status: 'active',   category: '业务系统', creator: '张三', quantity: 128,  updatedAt: '2026-07-12 10:30:00', createdAt: '2026-07-10 09:30:00' },
+          { id: 2,  name: '2026年新员工入职培训计划',       description: '面向Q3季度新入职员工的标准化培训方案，涵盖企业文化、制度规范、岗位技能三大模块',   status: 'active',   category: '业务系统', creator: '李四', quantity: 86,   updatedAt: '2026-07-11 16:20:00', createdAt: '2026-07-09 14:20:00' },
+          { id: 3,  name: '客户关系管理系统升级项目',       description: 'CRM平台从v2.x迁移至v3.x，涉及数据清洗、接口重构、权限体系重建等核心工作',         status: 'disabled', category: '数据平台', creator: '王五', quantity: 320,  updatedAt: '2026-07-10 09:05:00', createdAt: '2026-07-08 11:05:00' },
+          { id: 4,  name: '企业内训师认证与激励方案',       description: '建立内部讲师选拔、培训、认证及课酬激励的完整体系，预计首批认证30名内训师',         status: 'draft',    category: '基础设施', creator: '赵六', quantity: 30,   updatedAt: '2026-07-09 14:45:00', createdAt: '2026-07-07 16:45:00' },
+          { id: 5,  name: '数据同步中间件性能优化',         description: '基于CDC的实时数据同步服务在高并发场景下存在延迟，需优化消费端批量写入策略',         status: 'active',   category: '基础设施', creator: '孙七', quantity: 45,   updatedAt: '2026-07-08 08:10:00', createdAt: '2026-07-06 08:10:00' },
+          { id: 6,  name: '销售团队季度冲刺培训',           description: '针对华东区销售团队的季度业绩冲刺专项培训，包含话术演练、客户画像分析等实战内容',   status: 'active',   category: '业务系统', creator: '周八', quantity: 64,   updatedAt: '2026-07-07 11:20:00', createdAt: '2026-07-05 10:30:00' },
+          { id: 7,  name: '权限网关服务安全审计',           description: '对统一认证中心进行年度安全审计，覆盖OAuth2.0流程、Token管理、SSO会话等关键环节',   status: 'active',   category: '基础设施', creator: '吴九', quantity: 200,  updatedAt: '2026-07-06 15:40:00', createdAt: '2026-07-04 15:00:00' },
+          { id: 8,  name: '财务报表引擎自动化测试建设',     description: '为资产负债表、利润表、现金流量表等核心报表搭建自动化回归测试框架与用例集',         status: 'draft',    category: '数据平台', creator: '郑十', quantity: 156,  updatedAt: '2026-07-05 09:20:00', createdAt: '2026-07-03 09:15:00' },
+          { id: 9,  name: '消息队列插件安全加固',           description: '对RabbitMQ消息队列插件进行安全加固，增加消息加密、消费确认重试及死信队列处理',       status: 'active',   category: '基础设施', creator: '张三', quantity: 38,   updatedAt: '2026-07-04 14:10:00', createdAt: '2026-07-02 13:30:00' },
+          { id: 10, name: '日志采集服务监控告警体系',       description: '为分布式日志采集平台搭建实时监控告警体系，覆盖采集延迟、存储容量等核心指标',       status: 'active',   category: '数据平台', creator: '李四', quantity: 92,   updatedAt: '2026-07-03 16:50:00', createdAt: '2026-07-01 10:00:00' },
+          { id: 11, name: '产品经理能力模型与晋升通道设计', description: '梳理P1-P7产品经理能力模型，配套设计晋升评审标准、述职模板及培养路径',               status: 'draft',    category: '业务系统', creator: '王五', quantity: 45,   updatedAt: '2026-07-02 11:30:00', createdAt: '2026-06-30 09:45:00' },
+          { id: 12, name: '移动端性能监控SDK集成',          description: '集成APM SDK到iOS/Android客户端，实现页面加载、接口耗时、内存占用等性能指标采集',   status: 'active',   category: '基础设施', creator: '赵六', quantity: 3,    updatedAt: '2026-07-01 15:20:00', createdAt: '2026-06-29 14:00:00' },
+          { id: 13, name: '国际化多语言适配二期',           description: '在一期基础上新增阿拉伯语、泰语等RTL语言支持，调整布局镜像及字体回退策略',         status: 'active',   category: '业务系统', creator: '孙七', quantity: 12,   updatedAt: '2026-06-30 10:15:00', createdAt: '2026-06-28 11:20:00' },
+          { id: 14, name: 'API网关限流策略调整',            description: '基于业务峰值数据重新评估各接口限流阈值，优化令牌桶算法参数及降级策略',             status: 'disabled', category: '基础设施', creator: '周八', quantity: 28,   updatedAt: '2026-06-29 09:30:00', createdAt: '2026-06-27 16:00:00' },
+          { id: 15, name: '文件上传组件重构',               description: '将传统文件上传组件重构为分片上传架构，支持断点续传、并发上传及进度实时反馈',         status: 'active',   category: '基础设施', creator: '吴九', quantity: 8,    updatedAt: '2026-06-28 14:40:00', createdAt: '2026-06-26 09:00:00' },
+          { id: 16, name: '2026年度技术大会筹备方案',       description: '策划年度技术分享大会，包含议题征集、嘉宾邀请、场地预订、直播平台对接等全流程',       status: 'draft',    category: '业务系统', creator: '郑十', quantity: 500,  updatedAt: '2026-06-27 16:20:00', createdAt: '2026-06-25 10:30:00' },
+          { id: 17, name: '数据库慢查询治理专项',           description: '针对MySQL主库Top50慢查询进行索引优化、SQL重写及读写分离策略调整',                 status: 'active',   category: '数据平台', creator: '张三', quantity: 50,   updatedAt: '2026-06-26 11:00:00', createdAt: '2026-06-24 15:45:00' },
+          { id: 18, name: '前端微服务架构迁移',             description: '将单体前端应用拆分为基于qiankun的微服务架构，实现独立开发、部署和技术栈隔离',       status: 'active',   category: '基础设施', creator: '李四', quantity: 6,    updatedAt: '2026-06-25 09:50:00', createdAt: '2026-06-23 13:10:00' },
+          { id: 19, name: '客户成功经理培训营',             description: '为期8周的客户成功经理专项培训，涵盖客户健康度评估、续费策略、流失预警等核心能力',     status: 'disabled', category: '业务系统', creator: '王五', quantity: 36,   updatedAt: '2026-06-24 14:30:00', createdAt: '2026-06-22 10:00:00' },
+          { id: 20, name: '灰度发布平台建设',               description: '搭建统一灰度发布平台，支持按用户比例、地域、设备等多维度进行流量分配与回滚',         status: 'active',   category: '基础设施', creator: '赵六', quantity: 15,   updatedAt: '2026-06-23 16:10:00', createdAt: '2026-06-21 09:30:00' },
         ]);
 
         /* ---- 状态映射 ---- */
@@ -782,7 +841,7 @@
       },
     });
 
-    app.use(ElementPlus);
+    app.use(ElementPlus, { locale: zhCn });
     app.mount('#app');
   </script>
 </body>
