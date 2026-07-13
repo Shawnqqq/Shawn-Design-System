@@ -1,0 +1,520 @@
+<!--
+  Shawn Design System — 列表页（统计 + Tabs）
+  变体：顶部统计卡片 + 标签页切换 + 筛选 + 表格 + 分页
+  使用方法：复制此文件，替换文字和数据内容。
+  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>统计 + Tabs 列表页</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <style>
+    /* ========== Design Tokens ========== */
+    :root {
+      --color-primary: #1764E8;
+      --color-success: #67C23A;
+      --color-warning: #E6A23C;
+      --color-danger:  #F56C6C;
+      --text-primary:   rgba(0,0,0,0.85);
+      --text-secondary: rgba(0,0,0,0.65);
+      --text-muted:     rgba(0,0,0,0.45);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --page-bg: #f5f7fa;
+      --card-bg: #fff;
+      --card-radius: 8px;
+      --table-header-bg: #fafafa;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-stack);
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== Page Container ========== */
+    .page-container {
+      padding: 20px;
+      min-height: 100vh;
+      background: var(--page-bg);
+    }
+
+    /* ========== Stats Row ========== */
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: var(--card-bg);
+      padding: 16px 20px;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .stat-value--primary {
+      color: var(--color-primary);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ========== Tabs Card ========== */
+    .tabs-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .tabs-card .el-tabs__header {
+      margin-bottom: 0;
+    }
+
+    .tabs-card .el-tabs__nav-wrap::after {
+      height: 1px;
+      background: rgba(0,0,0,0.06);
+    }
+
+    .tabs-card .el-tabs__content {
+      padding: 0;
+    }
+
+    /* ========== Filter Bar (inside tabs-card) ========== */
+    .filter-bar {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .filter-bar .el-form--inline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-bar .el-form-item {
+      margin-bottom: 0;
+      margin-right: 0;
+    }
+
+    .filter-bar .el-input,
+    .filter-bar .el-select,
+    .filter-bar .el-date-editor {
+      width: 180px;
+    }
+
+    .filter-bar .el-date-editor--daterange {
+      width: 260px;
+    }
+
+    /* ========== Table ========== */
+    .tabs-card .el-table {
+      --el-table-border-color: rgba(0,0,0,0.06);
+      --el-table-header-bg-color: var(--table-header-bg);
+      --el-table-row-height: 48px;
+      --el-table-header-text-color: var(--text-primary);
+      --el-table-text-color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .tabs-card .el-table th.el-table__cell {
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--table-header-bg);
+    }
+
+    .tabs-card .el-table .el-table__row td {
+      height: 48px;
+    }
+
+    /* ========== Action Buttons ========== */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+      height: auto;
+      font-size: 13px;
+    }
+
+    .action-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .action-btn--edit {
+      color: var(--color-primary);
+    }
+
+    .action-btn--edit:hover {
+      color: #3d85f0;
+    }
+
+    .action-btn--delete {
+      color: var(--color-danger);
+    }
+
+    .action-btn--delete:hover {
+      color: #f78989;
+    }
+
+    /* ========== Pagination Bar ========== */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .pagination-total {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .pagination-bar .el-pagination {
+      --el-pagination-font-size: 13px;
+    }
+
+    .pagination-bar .el-pagination .el-input {
+      width: 80px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="page-container">
+      <!-- 统计卡片 -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value stat-value--primary">{{ stats.total.toLocaleString() }}</div>
+          <div class="stat-label">总任务</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.pending }}</div>
+          <div class="stat-label">待处理</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.inProgress }}</div>
+          <div class="stat-label">进行中</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.completed.toLocaleString() }}</div>
+          <div class="stat-label">已完成</div>
+        </div>
+      </div>
+
+      <!-- Tabs + 表格卡片 -->
+      <div class="tabs-card">
+        <el-tabs v-model="activeTab" @tab-change="handleTabChange">
+          <el-tab-pane label="全部" name="all" />
+          <el-tab-pane label="待处理" name="pending" />
+          <el-tab-pane label="已完成" name="completed" />
+        </el-tabs>
+
+        <!-- 筛选区 -->
+        <div class="filter-bar">
+          <el-form :inline="true" :model="filterForm" @submit.prevent="handleSearch">
+            <el-form-item>
+              <el-input
+                v-model="filterForm.keyword"
+                placeholder="搜索任务名称"
+                clearable
+                @keyup.enter="handleSearch"
+              >
+                <template #prefix>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="filterForm.priority" placeholder="优先级" clearable>
+                <el-option label="高" value="high" />
+                <el-option label="中" value="medium" />
+                <el-option label="低" value="low" />
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-date-picker
+                v-model="filterForm.dateRange"
+                type="daterange"
+                range-separator="-"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                value-format="YYYY-MM-DD"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="handleSearch">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                查询
+              </el-button>
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="handleReset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1 4 1 10 7 10"/>
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                </svg>
+                重置
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <!-- 表格 -->
+        <el-table
+          :data="tableData"
+          border
+          stripe
+          style="width: 100%"
+        >
+          <el-table-column prop="name" label="任务名称" min-width="200" show-overflow-tooltip />
+          <el-table-column prop="status" label="状态" width="100" align="center">
+            <template #default="{ row }">
+              <el-tag
+                :type="statusTagType(row.status)"
+                size="small"
+                effect="light"
+              >
+                {{ statusLabel(row.status) }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="priority" label="优先级" width="90" align="center">
+            <template #default="{ row }">
+              <el-tag
+                :type="priorityTagType(row.priority)"
+                size="small"
+                effect="plain"
+              >
+                {{ priorityLabel(row.priority) }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="assignee" label="负责人" width="100" />
+          <el-table-column prop="createdAt" label="创建时间" width="180" />
+          <el-table-column label="操作" width="150" fixed="right" align="center">
+            <template #default="{ row }">
+              <el-button
+                class="action-btn action-btn--edit"
+                type="primary"
+                link
+                @click="handleEdit(row)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                </svg>
+                编辑
+              </el-button>
+              <el-button
+                class="action-btn action-btn--delete"
+                type="danger"
+                link
+                @click="handleDelete(row)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <path d="M10 11v6"/>
+                  <path d="M14 11v6"/>
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                </svg>
+                删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <!-- 分页栏 -->
+        <div class="pagination-bar">
+          <span class="pagination-total">共 {{ total }} 条</span>
+          <el-pagination
+            v-model:current-page="pagination.page"
+            v-model:page-size="pagination.pageSize"
+            :page-sizes="[20, 50, 100, 200, 500]"
+            :total="total"
+            layout="sizes, prev, pager, next, jumper"
+            @size-change="handlePageChange"
+            @current-change="handlePageChange"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script>
+    const { createApp, ref, reactive, computed } = Vue;
+
+    const app = createApp({
+      setup() {
+        /* ---- 统计数据 ---- */
+        const stats = reactive({
+          total: 1286,
+          pending: 48,
+          inProgress: 126,
+          completed: 1112,
+        });
+
+        /* ---- Tabs ---- */
+        const activeTab = ref('all');
+
+        /* ---- 筛选表单 ---- */
+        const filterForm = reactive({
+          keyword: '',
+          priority: '',
+          dateRange: null,
+        });
+
+        /* ---- 分页 ---- */
+        const pagination = reactive({
+          page: 1,
+          pageSize: 50,
+        });
+        const total = ref(1286);
+
+        /* ---- 示例数据 ---- */
+        const allData = [
+          { id: 1,  name: '用户权限模块重构',       status: 'completed',  priority: 'high',   assignee: '张三', createdAt: '2026-07-10 09:30:00' },
+          { id: 2,  name: '订单导出功能优化',       status: 'pending',    priority: 'medium', assignee: '李四', createdAt: '2026-07-09 14:20:00' },
+          { id: 3,  name: '首页性能瓶颈排查',       status: 'inProgress', priority: 'high',   assignee: '王五', createdAt: '2026-07-08 11:05:00' },
+          { id: 4,  name: '消息中心推送对接',       status: 'pending',    priority: 'low',    assignee: '赵六', createdAt: '2026-07-07 16:45:00' },
+          { id: 5,  name: '数据看板图表组件升级',   status: 'completed',  priority: 'medium', assignee: '孙七', createdAt: '2026-07-06 08:10:00' },
+          { id: 6,  name: '国际化多语言适配',       status: 'inProgress', priority: 'medium', assignee: '张三', createdAt: '2026-07-05 10:20:00' },
+          { id: 7,  name: 'API 网关限流策略调整',   status: 'completed',  priority: 'high',   assignee: '李四', createdAt: '2026-07-04 15:30:00' },
+          { id: 8,  name: '文件上传组件重构',       status: 'pending',    priority: 'low',    assignee: '王五', createdAt: '2026-07-03 09:00:00' },
+        ];
+
+        const tableData = computed(() => {
+          let data = allData;
+          if (activeTab.value === 'pending') {
+            data = data.filter(r => r.status === 'pending');
+          } else if (activeTab.value === 'completed') {
+            data = data.filter(r => r.status === 'completed');
+          }
+          return data;
+        });
+
+        /* ---- 状态映射 ---- */
+        function statusTagType(status) {
+          const map = { completed: 'success', pending: 'warning', inProgress: '' };
+          return map[status] || 'info';
+        }
+
+        function statusLabel(status) {
+          const map = { completed: '已完成', pending: '待处理', inProgress: '进行中' };
+          return map[status] || status;
+        }
+
+        /* ---- 优先级映射 ---- */
+        function priorityTagType(priority) {
+          const map = { high: 'danger', medium: 'warning', low: 'info' };
+          return map[priority] || 'info';
+        }
+
+        function priorityLabel(priority) {
+          const map = { high: '高', medium: '中', low: '低' };
+          return map[priority] || priority;
+        }
+
+        /* ---- 事件处理 ---- */
+        function handleTabChange(tab) {
+          pagination.page = 1;
+          // 替换为实际接口调用，按 tab 筛选
+        }
+
+        function handleSearch() {
+          ElementPlus.ElMessage.success('查询条件：' + JSON.stringify({ keyword: filterForm.keyword, priority: filterForm.priority, dateRange: filterForm.dateRange }));
+        }
+
+        function handleReset() {
+          filterForm.keyword = '';
+          filterForm.priority = '';
+          filterForm.dateRange = null;
+          pagination.page = 1;
+          ElementPlus.ElMessage.info('已重置筛选条件');
+        }
+
+        function handleEdit(row) {
+          ElementPlus.ElMessage.info('编辑：' + row.name);
+        }
+
+        function handleDelete(row) {
+          ElementPlus.ElMessageBox.confirm(
+            '确定删除「' + row.name + '」？删除后无法恢复。',
+            '确认删除',
+            { confirmButtonText: '删除', cancelButtonText: '取消', type: 'warning' }
+          ).then(() => {
+            ElementPlus.ElMessage.success('已删除：' + row.name);
+          }).catch(() => {});
+        }
+
+        function handlePageChange() {
+          // 替换为实际接口调用
+        }
+
+        return {
+          stats,
+          activeTab,
+          filterForm,
+          pagination,
+          total,
+          tableData,
+          statusTagType,
+          statusLabel,
+          priorityTagType,
+          priorityLabel,
+          handleTabChange,
+          handleSearch,
+          handleReset,
+          handleEdit,
+          handleDelete,
+          handlePageChange,
+        };
+      },
+    });
+
+    app.use(ElementPlus);
+    app.mount('#app');
+  </script>
+</body>
+</html>

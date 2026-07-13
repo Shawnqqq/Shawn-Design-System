@@ -1,0 +1,434 @@
+<!--
+  Shawn Design System — 数据仪表盘
+  使用方法：复制此文件，替换文字、数据和图表配置。
+  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数据仪表盘</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <style>
+    /* ========== Design Tokens ========== */
+    :root {
+      --color-primary: #1764E8;
+      --color-primary-bg: rgba(23,100,232,0.1);
+      --color-success: #67C23A;
+      --color-success-bg: rgba(103,194,58,0.1);
+      --color-warning: #E6A23C;
+      --color-warning-bg: rgba(230,162,60,0.1);
+      --color-danger:  #F56C6C;
+      --color-danger-bg: rgba(245,108,108,0.1);
+      --text-primary:   rgba(0,0,0,0.85);
+      --text-secondary: rgba(0,0,0,0.65);
+      --text-muted:     rgba(0,0,0,0.45);
+      --text-placeholder: rgba(0,0,0,0.25);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --page-bg: #f5f7fa;
+      --card-bg: #fff;
+      --card-radius: 8px;
+      --table-header-bg: #fafafa;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-stack);
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== Page Container ========== */
+    .page-container {
+      padding: 20px;
+      min-height: 100vh;
+      background: var(--page-bg);
+    }
+
+    /* ========== Stats Row ========== */
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-card .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-card .icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .stat-card .icon--primary {
+      background: var(--color-primary-bg);
+      color: var(--color-primary);
+    }
+
+    .stat-card .icon--success {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .stat-card .icon--warning {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    .stat-card .icon--danger {
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
+    }
+
+    .stat-card .stat-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .stat-card .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .stat-card .stat-trend {
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .stat-trend--up {
+      color: var(--color-success);
+    }
+
+    .stat-trend--down {
+      color: var(--color-danger);
+    }
+
+    /* ========== Chart Row ========== */
+    .chart-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .chart-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .chart-card-main {
+      flex: 2;
+      min-height: 320px;
+    }
+
+    .chart-card-side {
+      flex: 1;
+      min-height: 320px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-header .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .card-header .card-extra {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header .card-link {
+      font-size: 13px;
+      color: var(--color-primary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .card-header .card-link:hover {
+      color: #3d85f0;
+    }
+
+    .chart-placeholder {
+      background: var(--page-bg);
+      border-radius: 4px;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-placeholder);
+      font-size: 14px;
+    }
+
+    /* ========== Table Card ========== */
+    .table-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .table-card .card-header {
+      padding: 16px 20px;
+      margin-bottom: 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .table-card .el-table {
+      --el-table-border-color: rgba(0,0,0,0.06);
+      --el-table-header-bg-color: var(--table-header-bg);
+      --el-table-row-height: 48px;
+      --el-table-header-text-color: var(--text-primary);
+      --el-table-text-color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .table-card .el-table th.el-table__cell {
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--table-header-bg);
+    }
+
+    .table-card .el-table .el-table__row td {
+      height: 48px;
+    }
+
+    /* ========== Trend Tag ========== */
+    .trend-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .trend-tag--up {
+      color: var(--color-success);
+      background: var(--color-success-bg);
+    }
+
+    .trend-tag--down {
+      color: var(--color-danger);
+      background: var(--color-danger-bg);
+    }
+
+    .trend-tag svg {
+      width: 12px;
+      height: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="page-container">
+      <!-- 统计卡片行 -->
+      <div class="stats-row">
+        <div class="stat-card" v-for="item in statsCards" :key="item.key">
+          <div class="icon" :class="'icon--' + item.color">
+            <!-- 总课程 -->
+            <svg v-if="item.key === 'courses'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+            <!-- 总学员 -->
+            <svg v-else-if="item.key === 'students'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <!-- 完成率 -->
+            <svg v-else-if="item.key === 'rate'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 11 12 14 22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+            <!-- 本月活跃 -->
+            <svg v-else-if="item.key === 'active'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="stat-content">
+            <div class="stat-label">{{ item.label }}</div>
+            <div class="stat-value">{{ item.value }}</div>
+            <div class="stat-trend" :class="item.trendUp ? 'stat-trend--up' : 'stat-trend--down'">
+              {{ item.trendUp ? '↑' : '↓' }}{{ item.trend }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 图表行 -->
+      <div class="chart-row">
+        <!-- 趋势图 -->
+        <div class="chart-card chart-card-main">
+          <div class="card-header">
+            <span class="card-title">趋势图</span>
+            <div class="card-extra">
+              <el-radio-group v-model="trendRange" size="small">
+                <el-radio-button label="week">近7天</el-radio-button>
+                <el-radio-button label="month">近30天</el-radio-button>
+                <el-radio-button label="quarter">近90天</el-radio-button>
+              </el-radio-group>
+            </div>
+          </div>
+          <div class="chart-placeholder">ECharts 图表区域</div>
+        </div>
+
+        <!-- 分布图 -->
+        <div class="chart-card chart-card-side">
+          <div class="card-header">
+            <span class="card-title">分布</span>
+          </div>
+          <div class="chart-placeholder">ECharts 图表区域</div>
+        </div>
+      </div>
+
+      <!-- 最近数据表格 -->
+      <div class="table-card">
+        <div class="card-header">
+          <span class="card-title">最近数据</span>
+          <a class="card-link" @click.prevent="handleViewMore">查看更多</a>
+        </div>
+        <el-table :data="tableData" border stripe style="width: 100%">
+          <el-table-column prop="course" label="课程名称" min-width="200" show-overflow-tooltip />
+          <el-table-column prop="category" label="分类" width="120" />
+          <el-table-column prop="enrolled" label="报名人数" width="110" align="center" />
+          <el-table-column prop="completionRate" label="完成率" width="110" align="center">
+            <template #default="{ row }">
+              <span :style="{ color: row.completionRate >= 80 ? 'var(--color-success)' : row.completionRate >= 60 ? 'var(--color-warning)' : 'var(--color-danger)' }">
+                {{ row.completionRate }}%
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="updatedAt" label="更新时间" width="180" />
+        </el-table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script>
+    const { createApp, ref, reactive } = Vue;
+
+    const app = createApp({
+      setup() {
+        /* ---- 统计卡片数据 ---- */
+        const statsCards = ref([
+          {
+            key: 'courses',
+            label: '总课程',
+            value: '1,286',
+            trend: '12%',
+            trendUp: true,
+            color: 'primary',
+          },
+          {
+            key: 'students',
+            label: '总学员',
+            value: '8,432',
+            trend: '8%',
+            trendUp: true,
+            color: 'success',
+          },
+          {
+            key: 'rate',
+            label: '完成率',
+            value: '76.8%',
+            trend: '3%',
+            trendUp: true,
+            color: 'warning',
+          },
+          {
+            key: 'active',
+            label: '本月活跃',
+            value: '2,156',
+            trend: '5%',
+            trendUp: false,
+            color: 'danger',
+          },
+        ]);
+
+        /* ---- 趋势图时间范围 ---- */
+        const trendRange = ref('week');
+
+        /* ---- 表格数据 ---- */
+        const tableData = ref([
+          { id: 1, course: '新员工入职培训',       category: '必修', enrolled: 326, completionRate: 92.3, updatedAt: '2026-07-13 10:20:00' },
+          { id: 2, course: '供应链管理高级课程',   category: '选修', enrolled: 158, completionRate: 78.5, updatedAt: '2026-07-12 16:45:00' },
+          { id: 3, course: 'Python 数据分析实战',   category: '技术', enrolled: 243, completionRate: 65.1, updatedAt: '2026-07-12 09:10:00' },
+          { id: 4, course: '项目管理 PMP 认证辅导', category: '认证', enrolled: 89,  completionRate: 88.7, updatedAt: '2026-07-11 14:30:00' },
+          { id: 5, course: '领导力与团队管理',     category: '管理', enrolled: 201, completionRate: 71.4, updatedAt: '2026-07-11 08:55:00' },
+        ]);
+
+        /* ---- 事件处理 ---- */
+        function handleViewMore() {
+          ElementPlus.ElMessage.info('跳转到完整数据列表');
+        }
+
+        return {
+          statsCards,
+          trendRange,
+          tableData,
+          handleViewMore,
+        };
+      },
+    });
+
+    app.use(ElementPlus);
+    app.mount('#app');
+  </script>
+</body>
+</html>

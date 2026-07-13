@@ -1,0 +1,329 @@
+<!--
+  Shawn Design System — 表单页（标准）
+  使用方法：复制此文件，替换文字、表单项和数据内容。
+  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>创建培训计划</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <style>
+    /* ========== Design Tokens ========== */
+    :root {
+      --color-primary: #1764E8;
+      --color-success: #67C23A;
+      --color-warning: #E6A23C;
+      --color-danger:  #F56C6C;
+      --text-primary:   rgba(0,0,0,0.85);
+      --text-secondary: rgba(0,0,0,0.65);
+      --text-muted:     rgba(0,0,0,0.45);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --page-bg: #f5f7fa;
+      --card-bg: #fff;
+      --card-radius: 8px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-stack);
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== Page Container ========== */
+    .page-container {
+      padding: 20px;
+      min-height: 100vh;
+      background: var(--page-bg);
+    }
+
+    /* ========== Page Header ========== */
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .page-header .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .page-header .back-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .page-header .page-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    /* ========== Form Card ========== */
+    .form-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .form-card .el-form {
+      max-width: 720px;
+    }
+
+    .form-card .el-form-item__label {
+      color: var(--text-secondary);
+    }
+
+    .form-card .el-input,
+    .form-card .el-select,
+    .form-card .el-date-editor {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .form-card .el-textarea {
+      max-width: 480px;
+    }
+
+    .form-card .el-input-number {
+      width: 200px;
+    }
+
+    /* ========== Form Actions Bar ========== */
+    .form-actions {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="page-container">
+      <!-- 页头：返回 + 标题 -->
+      <div class="page-header">
+        <el-button class="back-btn" @click="handleBack">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          返回
+        </el-button>
+        <span class="page-title">创建培训计划</span>
+      </div>
+
+      <!-- 第一分区：基础信息 -->
+      <div class="form-card">
+        <div class="section-title">基础信息</div>
+        <el-form
+          ref="formRef"
+          :model="formData"
+          :rules="formRules"
+          label-width="120px"
+          label-position="right"
+        >
+          <el-form-item label="计划名称" prop="name">
+            <el-input
+              v-model="formData.name"
+              placeholder="请输入培训计划名称"
+              clearable
+            />
+          </el-form-item>
+
+          <el-form-item label="培训类型" prop="type">
+            <el-select
+              v-model="formData.type"
+              placeholder="请选择培训类型"
+              clearable
+            >
+              <el-option label="新员工入职培训" value="onboarding" />
+              <el-option label="技能培训" value="skill" />
+              <el-option label="管理能力培训" value="management" />
+              <el-option label="合规培训" value="compliance" />
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="计划描述" prop="description">
+            <el-input
+              v-model="formData.description"
+              type="textarea"
+              :rows="3"
+              placeholder="请输入培训计划的简要描述"
+            />
+          </el-form-item>
+
+          <el-form-item label="开始日期" prop="startDate">
+            <el-date-picker
+              v-model="formData.startDate"
+              type="date"
+              placeholder="请选择开始日期"
+              value-format="YYYY-MM-DD"
+            />
+          </el-form-item>
+
+          <el-form-item label="是否启用" prop="enabled">
+            <el-switch v-model="formData.enabled" />
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <!-- 第二分区：高级设置 -->
+      <div class="form-card">
+        <div class="section-title">高级设置</div>
+        <el-form
+          ref="advancedFormRef"
+          :model="formData"
+          label-width="120px"
+          label-position="right"
+        >
+          <el-form-item label="最大人数" prop="maxCount">
+            <el-input-number
+              v-model="formData.maxCount"
+              :min="1"
+              :max="9999"
+              placeholder="请输入"
+            />
+          </el-form-item>
+
+          <el-form-item label="优先级" prop="priority">
+            <el-radio-group v-model="formData.priority">
+              <el-radio value="high">高</el-radio>
+              <el-radio value="medium">中</el-radio>
+              <el-radio value="low">低</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="备注" prop="remark">
+            <el-input
+              v-model="formData.remark"
+              type="textarea"
+              :rows="3"
+              placeholder="其他补充说明"
+            />
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <!-- 底部操作栏 -->
+      <div class="form-actions">
+        <el-button @click="handleCancel">取消</el-button>
+        <el-button type="primary" @click="handleSubmit">保存</el-button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script>
+    const { createApp, ref, reactive } = Vue;
+
+    const app = createApp({
+      setup() {
+        const formRef = ref(null);
+
+        /* ---- 表单数据 ---- */
+        const formData = reactive({
+          name: '',
+          type: '',
+          description: '',
+          startDate: '',
+          enabled: true,
+          maxCount: 50,
+          priority: 'medium',
+          remark: '',
+        });
+
+        /* ---- 校验规则 ---- */
+        const formRules = {
+          name: [
+            { required: true, message: '请输入培训计划名称', trigger: 'blur' },
+          ],
+          type: [
+            { required: true, message: '请选择培训类型', trigger: 'change' },
+          ],
+          startDate: [
+            { required: true, message: '请选择开始日期', trigger: 'change' },
+          ],
+        };
+
+        /* ---- 事件处理 ---- */
+        function handleBack() {
+          ElementPlus.ElMessage.info('返回上一页');
+        }
+
+        function handleCancel() {
+          ElementPlus.ElMessageBox.confirm(
+            '确定取消？未保存的内容将丢失。',
+            '提示',
+            { confirmButtonText: '确定', cancelButtonText: '继续编辑', type: 'warning' }
+          ).then(() => {
+            ElementPlus.ElMessage.info('已取消');
+          }).catch(() => {});
+        }
+
+        function handleSubmit() {
+          const formEl = formRef.value;
+          if (!formEl) return;
+
+          formEl.validate((valid) => {
+            if (valid) {
+              ElementPlus.ElMessage.success('保存成功');
+              console.log('提交数据：', JSON.parse(JSON.stringify(formData)));
+            } else {
+              ElementPlus.ElMessage.warning('请填写必填项');
+            }
+          });
+        }
+
+        return {
+          formRef,
+          formData,
+          formRules,
+          handleBack,
+          handleCancel,
+          handleSubmit,
+        };
+      },
+    });
+
+    app.use(ElementPlus);
+    app.mount('#app');
+  </script>
+</body>
+</html>

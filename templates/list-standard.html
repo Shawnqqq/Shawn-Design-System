@@ -1,0 +1,393 @@
+<!--
+  Shawn Design System — 列表页（标准）
+  使用方法：复制此文件，替换文字和数据内容。
+  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>标准列表页</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <style>
+    /* ========== Design Tokens ========== */
+    :root {
+      --color-primary: #1764E8;
+      --color-success: #67C23A;
+      --color-warning: #E6A23C;
+      --color-danger:  #F56C6C;
+      --text-primary:   rgba(0,0,0,0.85);
+      --text-secondary: rgba(0,0,0,0.65);
+      --text-muted:     rgba(0,0,0,0.45);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --page-bg: #f5f7fa;
+      --card-bg: #fff;
+      --card-radius: 8px;
+      --table-header-bg: #fafafa;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-stack);
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== Page Container ========== */
+    .page-container {
+      padding: 20px;
+      min-height: 100vh;
+      background: var(--page-bg);
+    }
+
+    /* ========== Filter Bar ========== */
+    .filter-bar {
+      background: var(--card-bg);
+      padding: 12px 16px;
+      border-radius: var(--card-radius);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-bar .el-form--inline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-bar .el-form-item {
+      margin-bottom: 0;
+      margin-right: 0;
+    }
+
+    .filter-bar .el-input,
+    .filter-bar .el-select,
+    .filter-bar .el-date-editor {
+      width: 180px;
+    }
+
+    .filter-bar .el-date-editor--daterange {
+      width: 260px;
+    }
+
+    /* ========== Table Card ========== */
+    .table-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .table-card .el-table {
+      --el-table-border-color: rgba(0,0,0,0.06);
+      --el-table-header-bg-color: var(--table-header-bg);
+      --el-table-row-height: 48px;
+      --el-table-header-text-color: var(--text-primary);
+      --el-table-text-color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .table-card .el-table th.el-table__cell {
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--table-header-bg);
+    }
+
+    .table-card .el-table .el-table__row td {
+      height: 48px;
+    }
+
+    /* ========== Action Buttons ========== */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+      height: auto;
+      font-size: 13px;
+    }
+
+    .action-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .action-btn--edit {
+      color: var(--color-primary);
+    }
+
+    .action-btn--edit:hover {
+      color: #3d85f0;
+    }
+
+    .action-btn--delete {
+      color: var(--color-danger);
+    }
+
+    .action-btn--delete:hover {
+      color: #f78989;
+    }
+
+    /* ========== Pagination Bar ========== */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .pagination-total {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .pagination-bar .el-pagination {
+      --el-pagination-font-size: 13px;
+    }
+
+    .pagination-bar .el-pagination .el-input {
+      width: 80px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="page-container">
+      <!-- 筛选区 -->
+      <div class="filter-bar">
+        <el-form :inline="true" :model="filterForm" @submit.prevent="handleSearch">
+          <el-form-item>
+            <el-input
+              v-model="filterForm.keyword"
+              placeholder="搜索名称"
+              clearable
+              @keyup.enter="handleSearch"
+            >
+              <template #prefix>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="filterForm.status" placeholder="状态" clearable>
+              <el-option label="启用" value="active" />
+              <el-option label="禁用" value="disabled" />
+              <el-option label="草稿" value="draft" />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-date-picker
+              v-model="filterForm.dateRange"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="YYYY-MM-DD"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleSearch">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              查询
+            </el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="handleReset">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"/>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+              </svg>
+              重置
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <!-- 表格区 -->
+      <div class="table-card">
+        <el-table
+          :data="tableData"
+          border
+          stripe
+          style="width: 100%"
+        >
+          <el-table-column prop="name" label="名称" min-width="200" show-overflow-tooltip />
+          <el-table-column prop="status" label="状态" width="100" align="center">
+            <template #default="{ row }">
+              <el-tag
+                :type="statusTagType(row.status)"
+                size="small"
+                effect="light"
+              >
+                {{ statusLabel(row.status) }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="creator" label="创建人" width="120" />
+          <el-table-column prop="createdAt" label="创建时间" width="180" />
+          <el-table-column label="操作" width="150" fixed="right" align="center">
+            <template #default="{ row }">
+              <el-button
+                class="action-btn action-btn--edit"
+                type="primary"
+                link
+                @click="handleEdit(row)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                </svg>
+                编辑
+              </el-button>
+              <el-button
+                class="action-btn action-btn--delete"
+                type="danger"
+                link
+                @click="handleDelete(row)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <path d="M10 11v6"/>
+                  <path d="M14 11v6"/>
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                </svg>
+                删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <!-- 分页栏 -->
+        <div class="pagination-bar">
+          <span class="pagination-total">共 {{ total }} 条</span>
+          <el-pagination
+            v-model:current-page="pagination.page"
+            v-model:page-size="pagination.pageSize"
+            :page-sizes="[20, 50, 100, 200, 500]"
+            :total="total"
+            layout="sizes, prev, pager, next, jumper"
+            @size-change="handlePageChange"
+            @current-change="handlePageChange"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script>
+    const { createApp, ref, reactive } = Vue;
+
+    const app = createApp({
+      setup() {
+        /* ---- 筛选表单 ---- */
+        const filterForm = reactive({
+          keyword: '',
+          status: '',
+          dateRange: null,
+        });
+
+        /* ---- 分页 ---- */
+        const pagination = reactive({
+          page: 1,
+          pageSize: 50,
+        });
+        const total = ref(128);
+
+        /* ---- 示例数据 ---- */
+        const tableData = ref([
+          { id: 1, name: '供应链管理模块',   status: 'active',   creator: '张三', createdAt: '2026-07-10 09:30:00' },
+          { id: 2, name: '客户关系管理系统', status: 'active',   creator: '李四', createdAt: '2026-07-09 14:20:00' },
+          { id: 3, name: '财务报表引擎',     status: 'disabled', creator: '王五', createdAt: '2026-07-08 11:05:00' },
+          { id: 4, name: '权限网关服务',     status: 'draft',    creator: '赵六', createdAt: '2026-07-07 16:45:00' },
+          { id: 5, name: '数据同步中间件',   status: 'active',   creator: '孙七', createdAt: '2026-07-06 08:10:00' },
+        ]);
+
+        /* ---- 状态映射 ---- */
+        function statusTagType(status) {
+          const map = { active: 'success', disabled: 'danger', draft: 'warning' };
+          return map[status] || 'info';
+        }
+
+        function statusLabel(status) {
+          const map = { active: '启用', disabled: '禁用', draft: '草稿' };
+          return map[status] || status;
+        }
+
+        /* ---- 事件处理 ---- */
+        function handleSearch() {
+          ElementPlus.ElMessage.success('查询条件：' + JSON.stringify({ keyword: filterForm.keyword, status: filterForm.status, dateRange: filterForm.dateRange }));
+        }
+
+        function handleReset() {
+          filterForm.keyword = '';
+          filterForm.status = '';
+          filterForm.dateRange = null;
+          pagination.page = 1;
+          ElementPlus.ElMessage.info('已重置筛选条件');
+        }
+
+        function handleEdit(row) {
+          ElementPlus.ElMessage.info('编辑：' + row.name);
+        }
+
+        function handleDelete(row) {
+          ElementPlus.ElMessageBox.confirm(
+            '确定删除「' + row.name + '」？删除后无法恢复。',
+            '确认删除',
+            { confirmButtonText: '删除', cancelButtonText: '取消', type: 'warning' }
+          ).then(() => {
+            ElementPlus.ElMessage.success('已删除：' + row.name);
+          }).catch(() => {});
+        }
+
+        function handlePageChange() {
+          // 替换为实际接口调用
+        }
+
+        return {
+          filterForm,
+          pagination,
+          total,
+          tableData,
+          statusTagType,
+          statusLabel,
+          handleSearch,
+          handleReset,
+          handleEdit,
+          handleDelete,
+          handlePageChange,
+        };
+      },
+    });
+
+    app.use(ElementPlus);
+    app.mount('#app');
+  </script>
+</body>
+</html>

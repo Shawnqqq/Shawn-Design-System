@@ -1,146 +1,154 @@
 ---
 name: "Shawn Design System"
-description: //
+description: "B2B 后台设计规范。使用 Element Plus 组件 + 统一视觉规范生成页面。"
 ---
-
-> ## 🚨 组件实现硬规则（最高优先级，不可覆盖）
->
-> ### 强制流程
->
-> 1. **匹配模板**：根据页面类型从 `ui_kits/` 选择最接近的模板：
->    | 页面需求 | 模板路径 |
->    |---------|---------|
->    | 列表页（带tab） | `ui_kits/list-page/index.html` |
->    | 列表页（不带tab） | `ui_kits/list-page-no-tabs/index.html` |
->    | 数据看板 | `ui_kits/data-dashboard/index.html` |
->    | 基础详情页（无tab） | `ui_kits/detail-basic-page/index.html` |
->    | 详情页（带tab） | `ui_kits/detail-tab-page/index.html` |
->    | 带右侧信息模块的详情页 | `ui_kits/detail-with-sidebar/index.html` |
->    | 配置页 | `ui_kits/config-page/index.html` |
->
->    **有匹配模板时**：Read 模板完整 HTML 作为骨架 → 保留 TopNav + Sidenav + 布局不动 → 只修改内容区
->
->    **无匹配模板时**：从任意模板中复制 TopNav + Sidenav + PageHeader 骨架 → 内容区从 `preview/component-{slug}.html` 自由组合组件
->
-> 2. **组件使用**：所有组件从 `preview/component-{slug}.html` **原样复制** HTML 插入（包括所有 class 名、内联 SVG、DOM 结构），仅改文字和数据
->
-> 3. **Dispatch 规则（面向调度层）**：生成任何页面时，dispatch 指令中**必须**写 `Read ui_kits/{type}/index.html`（或 `Read ui_kits/list-page/index.html` 取骨架），让 Sub-Agent 自行读取文件。**禁止**在 dispatch 文本中描述/转述模板结构代替文件读取——无论页面多复杂，Sub-Agent 都必须直接 Read 原始文件获取完整 HTML。
->
-> **判断标准**：生成代码中每个组件的 CSS class 名必须与 preview / UI Kit 中**完全一致**。写出了 preview 中不存在的 class 名 = 实现失败。
->
-> ### 禁止清单
->
-> | 禁止项 | 原因 |
-> |--------|------|
-> | Tailwind CSS（`class="text-sm px-4 bg-gray-100"` 等） | 与本库自定义 class 冲突 |
-> | Lucide / Heroicons / FontAwesome / 任何第三方图标库 | 本库有专属多色图标 |
-> | 自行编写简化 SVG 代替库中图标 | 库中 SVG 含 linearGradient/filter，手写无法还原 |
-> | 改变 preview 中的 class 命名或 DOM 层级 | 必须保持原始结构 |
-> | CDN 引入 Tailwind/Bootstrap/图标库 | 页面必须自包含 |
->
-> ### 图标规则
->
-> - **Sidenav 图标**：使用 IconPark 风格线性 SVG（24x24 viewBox, 2px stroke）。预置 5 种通用图标：dashboard、users、database、cloud-server、settings，从 `assets/icons/sidenav-icon/{name}.svg` 读取
-> - **Logo**：从 `snippets/nav-logo.html` 读取
-> - **通用 UI 图标**：简单内联 `<svg>` + `stroke="currentColor"`
-> - 绝不使用 `<i class="lucide-xxx">` 语法
->
-> ### 样式规则
->
-> ```html
-> <link rel="stylesheet" href="../../colors_and_type.css">
-> <link rel="stylesheet" href="../../components.css">
-> ```
-> - 页面布局样式写在 `<style>` 中，用 `var(--token-name)` 引用 Token
-> - 颜色用 `var(--color-primary)` 等语义变量，不硬编码 hex（SVG fill/stroke 除外）
-> - 禁止引入任何第三方 CSS 框架
 
 # Shawn Design System
 
-企业级 B2B 管理后台设计规范，服务于企业级产品线。主色 `#1764E8`（Shawn Blue），4px 栅格基准，32px 操作高度，48px 导航高度。
+> B2B 管理后台设计规范。紧凑、务实、信息密集型风格。
+> 使用 Element Plus v2.8.5 组件，页面模板自带完整样式。
 
----
+## 硬规则
 
-## Token 系统
+1. **禁止** Tailwind CSS、Lucide/Heroicons 图标、CDN 引入任何 CSS 框架
+2. **使用** Element Plus 组件（el-table、el-form、el-dialog 等）
+3. **模板自带样式** — 复制模板后只需注入少量变量（见下方 Token 速查）
+4. **字体栈**: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif
+5. **主色**: #1764E8 | **成功**: #67C23A | **警告**: #E6A23C | **危险**: #F56C6C
 
-所有 Token 定义在 `colors_and_type.css`（CSS 变量）和 `css.json`（JSON 映射）中。生成页面时直接引用变量，无需记忆具体值。
+## Token 速查
 
-| 类别 | 命名规则 | 示例 |
-|------|---------|------|
-| 颜色-语义 | `--color-{role}` | `--color-primary`, `--color-text-1`, `--color-border` |
-| 颜色-色阶 | `--{palette}-{level}` | `--primary-6`, `--danger-5`, `--grey-4` |
-| 间距 | `--space-{n}` (4px × n) | `--space-1`(4px) ~ `--space-16`(64px) |
-| 圆角 | `--radius-{size}` | `--radius-sm`(4px), `--radius-md`(8px), `--radius-lg`(12px) |
-| 阴影 | `--shadow-{1-5}` | `--shadow-1`(微浮) ~ `--shadow-5`(最大浮起) |
-| 字号 | `--font-size-{level}` | `--font-size-h1`(20px) ~ `--font-size-caption`(10px) |
+AI 生成页面时，在 `<style>` 顶部写入用到的变量（按需，不必全部写入）：
 
-Dark Mode：在 `<html>` 加 `.dark` 类即可切换，`colors_and_type.css` 中已定义全部深色映射。
-
----
-
-## 组件
-
-共 32 个组件，完整注册表见 `components/index.json`。每个组件在 `preview/component-{slug}.html` 有可直接复制的代码模板。
-
----
-
-## 页面骨架
-
-```
-+------------------------------------------------------------------+
-|                      TopNav (48px)                                |
-+------------------------------------------------------------------+
-|            |                                                      |
-|  Sidebar   |               Content                               |
-|  (200px)   |             (flex: 1)                               |
-|            |                                                      |
-+------------+-----------------------------------------------------+
+```css
+:root {
+  --primary: #1764E8;
+  --primary-light: rgba(23, 100, 232, 0.08);
+  --success: #67C23A;
+  --warning: #E6A23C;
+  --danger: #F56C6C;
+  --text-primary: rgba(0, 0, 0, 0.85);
+  --text-secondary: rgba(0, 0, 0, 0.65);
+  --text-tertiary: rgba(0, 0, 0, 0.45);
+  --text-disabled: rgba(0, 0, 0, 0.25);
+  --bg-page: #f5f7fa;
+  --bg-card: #ffffff;
+  --bg-hover: rgba(0, 0, 0, 0.04);
+  --bg-header: #fafafa;
+  --divider: rgba(0, 0, 0, 0.08);
+}
 ```
 
-| 区域 | 尺寸 | 背景色 | 说明 |
-|------|------|--------|------|
-| TopNav | 高 48px，宽 100% | `#FFFFFF` | 底阴影，左 Logo + 汉堡，右搜索 + 链接 + 图标 + 头像 |
-| Sidebar | 宽 200px | `#F6F8FA` | 业务标题区 + 分组菜单 + 底部折叠按钮 |
-| Content | `flex: 1` | `#FFFFFF` | 内边距 32px，模块间距 40px |
+完整 Token 参考见 `tokens.css`。
 
----
+## 页面模板（10 种）
 
-## 页面类型
+根据用户需求选择匹配的模板，复制 HTML 后替换内容。模板文件在 `templates/` 目录下。
 
-| 类型 | 核心构成 |
-|------|---------|
-| 列表页（带tab） | PageHeader(含Tab) + FilterBar + DataTable + Pagination |
-| 列表页（不带tab） | PageHeader(无Tab，底部border分隔) + FilterBar + DataTable + Pagination |
-| 详情页 | Breadcrumb + PageHeader + Tabs + DetailsDisplay |
-| 图表页 | 时间筛选条 + 3列图表卡片网格 |
+| # | 模板 | 文件 | 适用场景 |
+|---|------|------|---------|
+| 1 | 列表页（标准） | `templates/list-standard.html` | 筛选+表格+分页，最常见的列表页 |
+| 2 | 列表页（多筛选多按钮） | `templates/list-multi-filter.html` | 多行筛选+多操作按钮+表格 |
+| 3 | 列表页（含自定义表格） | `templates/list-custom-table.html` | 可勾选列+批量操作+表格 |
+| 4 | 列表页（统计+tabs） | `templates/list-stats-tabs.html` | 顶部统计卡+tabs切换+表格 |
+| 5 | 详情页（tabs） | `templates/detail-tabs.html` | banner+多标签页+详情内容 |
+| 6 | 详情页（信息展示） | `templates/detail-info.html` | banner+描述列表+分区信息 |
+| 7 | 详情页（抽屉） | `templates/detail-drawer.html` | 抽屉内表单或详情展示 |
+| 8 | 数据仪表盘 | `templates/dashboard.html` | 统计卡片+图表占位+数据表格 |
+| 9 | 独立表单页 | `templates/form-page.html` | 返回按钮+分区表单+提交按钮 |
+| 10 | 弹框（el-dialog） | `templates/dialog-form.html` | 弹框内嵌表单 |
 
----
+## Element Plus 使用规范
 
-## 🔍 质量验证（页面生成后执行）
+### 列表页结构
 
-### 检查 1：框架组件来源
-- TopNav 使用 `.top-nav` + 子 class，结构来自 `preview/component-topnav.html`
-- Sidenav 使用 `.sidenav` + `.menu-item` + `.menu-icon`，图标为完整多色内联 SVG
-- PageHeader 使用 `.page-header-comp` + 子 class
+```html
+<div class="page-container">
+  <div class="filter-container">
+    <el-form :inline="true">
+      <el-form-item label="名称"><el-input placeholder="请输入" /></el-form-item>
+      <el-form-item label="状态"><el-select placeholder="请选择" /></el-form-item>
+      <el-form-item>
+        <el-button type="primary">查询</el-button>
+        <el-button>重置</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+  <div class="table-container">
+    <el-table :data="list" border stripe>
+      <el-table-column prop="name" label="名称" />
+      <el-table-column prop="status" label="状态" />
+      <el-table-column label="操作" fixed="right" width="180">
+        <template #default>
+          <el-button link type="primary">编辑</el-button>
+          <el-button link type="danger">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination layout="total, sizes, prev, pager, next" :total="100" />
+  </div>
+</div>
+```
 
-### 检查 2：内容组件来源
-页面中每个 UI 区块必须使用对应 `preview/component-{slug}.html` 中的结构和 class 名。若出现 Tailwind 工具类（`text-sm`、`px-4`）或 Lucide class（`lucide-*`），即为不通过。
+### 详情页结构
 
-### 检查 3：Token 规范
-- 颜色用 `var(--color-*)` / `var(--primary-*)` 等变量，不硬编码 hex
-- 间距为 4px 倍数，圆角用 `var(--radius-*)`
-- 字体用 `var(--font-size-*)` 或工具类 `.type-h1` ~ `.type-caption`
+```html
+<div class="page-container">
+  <div class="detail-banner">
+    <div class="banner-title">标题</div>
+    <div class="banner-meta"><el-tag>状态</el-tag> 创建时间：2024-01-01</div>
+  </div>
+  <el-tabs>
+    <el-tab-pane label="基础信息">
+      <el-descriptions :column="2" border>
+        <el-descriptions-item label="名称">值</el-descriptions-item>
+      </el-descriptions>
+    </el-tab-pane>
+  </el-tabs>
+</div>
+```
 
-### 检查 4：完整性
-- `<head>` 引入 `colors_and_type.css` + `components.css`
-- 无 Tailwind/Lucide/Bootstrap CDN 引用
-- SVG 图标完整（含 `<defs>`、`<linearGradient>`）
+### 弹框/抽屉
 
-| 结果 | 条件 |
-|------|------|
-| ✅ 通过 | 4 项全部满足 |
-| ❌ 不通过 | 使用了 Tailwind/Lucide 替代组件，需重新生成 |
+- **el-dialog** 宽度: 720px（表单）或 980px（复杂内容），圆角 8px
+- **el-drawer** 宽度: 480px（表单）或 640px（详情）
+- 弹框/抽屉头部加底部分割线，body 内边距 20px
 
----
+### 表格规范
 
-> **流程总结**：读 preview 取组件 HTML → 原样复制粘贴 → 只改文字数据 → 引入 Token CSS → 验证通过后交付。
+- 行高 48px
+- 表头背景 #fafafa
+- 使用 border 和 stripe 属性
+- 操作列 fixed="right"
+- 分页居右，显示 total
+
+### 表单规范
+
+- label-width: 120px
+- 表单项间距 16px
+- 按钮区放在表单底部，padding-top: 16px，加顶部分割线
+- 主按钮用 type="primary"，取消按钮用默认样式
+
+## 间距规范
+
+- 页面容器 padding: 20px
+- 筛选区与表格区间距: 16px
+- 弹框/抽屉内边距: 20px
+- 卡片间距: 16px
+- 按钮间距: 8px
+
+## 字号规范
+
+- 12px: 辅助文字、表格单元格
+- 14px: 正文默认、表单标签
+- 16px: 小标题、卡片标题
+- 20px: 标题
+- 24px: 大标题
+- 32px: 页面标题
+
+## 字重规范
+
+- 400 (Regular): 正文
+- 500 (Medium): 强调文字、表单标签
+- 600 (Semibold): 标题
+- 700 (Bold): 页面标题、重点突出

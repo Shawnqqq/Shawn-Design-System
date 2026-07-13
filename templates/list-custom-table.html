@@ -1,0 +1,789 @@
+<!--
+  Shawn Design System — 列表页（自定义表格）
+  使用方法：复制此文件，替换文字和数据内容。
+  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>自定义表格列表页</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <style>
+    /* ========== Design Tokens ========== */
+    :root {
+      --color-primary: #1764E8;
+      --color-success: #67C23A;
+      --color-warning: #E6A23C;
+      --color-danger:  #F56C6C;
+      --text-primary:   rgba(0,0,0,0.85);
+      --text-secondary: rgba(0,0,0,0.65);
+      --text-muted:     rgba(0,0,0,0.45);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --page-bg: #f5f7fa;
+      --card-bg: #fff;
+      --card-radius: 8px;
+      --table-header-bg: #fafafa;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-stack);
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== Page Container ========== */
+    .page-container {
+      padding: 20px;
+      min-height: 100vh;
+      background: var(--page-bg);
+    }
+
+    /* ========== Filter Bar ========== */
+    .filter-bar {
+      background: var(--card-bg);
+      padding: 12px 16px;
+      border-radius: var(--card-radius);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-bar .el-form--inline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-bar .el-form-item {
+      margin-bottom: 0;
+      margin-right: 0;
+    }
+
+    .filter-bar .el-input,
+    .filter-bar .el-select,
+    .filter-bar .el-date-editor {
+      width: 180px;
+    }
+
+    .filter-bar .el-date-editor--daterange {
+      width: 260px;
+    }
+
+    /* ========== Table Card ========== */
+    .table-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .table-card .el-table {
+      --el-table-border-color: rgba(0,0,0,0.06);
+      --el-table-header-bg-color: var(--table-header-bg);
+      --el-table-row-height: 48px;
+      --el-table-header-text-color: var(--text-primary);
+      --el-table-text-color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .table-card .el-table th.el-table__cell {
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--table-header-bg);
+    }
+
+    .table-card .el-table .el-table__row td {
+      height: 48px;
+    }
+
+    /* ========== Toolbar ========== */
+    .table-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .selection-count {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+
+    .selection-count strong {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 16px;
+      background: rgba(0,0,0,0.1);
+    }
+
+    .toolbar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 30px;
+      padding: 0 12px;
+      font-size: 13px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid #dcdfe6;
+      background: #fff;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .toolbar-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .toolbar-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .toolbar-btn--danger:hover {
+      border-color: var(--color-danger);
+      color: var(--color-danger);
+    }
+
+    .toolbar-btn--primary {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .toolbar-btn--primary:hover {
+      background: rgba(23,100,232,0.06);
+    }
+
+    .toolbar-btn--icon {
+      width: 30px;
+      padding: 0;
+      justify-content: center;
+    }
+
+    /* ========== Column Settings Popover ========== */
+    .column-settings-popover {
+      padding: 0;
+    }
+
+    .column-settings-popover .el-popover__title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .column-settings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .column-settings-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+    }
+
+    .column-settings-item .el-checkbox {
+      margin-right: 0;
+    }
+
+    /* ========== Batch Action Bar ========== */
+    .batch-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: #ecf5ff;
+      border-top: 1px solid rgba(23,100,232,0.15);
+      animation: slideUp 0.2s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .batch-action-bar .batch-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--color-primary);
+      font-weight: 500;
+    }
+
+    .batch-action-bar .batch-info svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .batch-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .batch-action-bar .batch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 30px;
+      padding: 0 14px;
+      font-size: 13px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid #dcdfe6;
+      background: #fff;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .batch-action-bar .batch-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .batch-action-bar .batch-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .batch-action-bar .batch-btn--danger {
+      color: var(--color-danger);
+      border-color: #fbc4c4;
+    }
+
+    .batch-action-bar .batch-btn--danger:hover {
+      background: #fef0f0;
+      border-color: var(--color-danger);
+    }
+
+    .batch-action-bar .batch-btn--primary {
+      color: #fff;
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+
+    .batch-action-bar .batch-btn--primary:hover {
+      background: #3d85f0;
+      border-color: #3d85f0;
+    }
+
+    .batch-btn--cancel {
+      color: var(--text-muted);
+      background: transparent;
+      border-color: transparent;
+    }
+
+    .batch-btn--cancel:hover {
+      color: var(--text-secondary);
+      background: rgba(0,0,0,0.03);
+    }
+
+    /* ========== Action Buttons ========== */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+      height: auto;
+      font-size: 13px;
+    }
+
+    .action-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .action-btn--edit {
+      color: var(--color-primary);
+    }
+
+    .action-btn--edit:hover {
+      color: #3d85f0;
+    }
+
+    .action-btn--delete {
+      color: var(--color-danger);
+    }
+
+    .action-btn--delete:hover {
+      color: #f78989;
+    }
+
+    /* ========== Pagination Bar ========== */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .pagination-total {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .pagination-bar .el-pagination {
+      --el-pagination-font-size: 13px;
+    }
+
+    .pagination-bar .el-pagination .el-input {
+      width: 80px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="page-container">
+      <!-- 筛选区 -->
+      <div class="filter-bar">
+        <el-form :inline="true" :model="filterForm" @submit.prevent="handleSearch">
+          <el-form-item>
+            <el-input
+              v-model="filterForm.keyword"
+              placeholder="搜索名称"
+              clearable
+              @keyup.enter="handleSearch"
+            >
+              <template #prefix>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="filterForm.status" placeholder="状态" clearable>
+              <el-option label="启用" value="active" />
+              <el-option label="禁用" value="disabled" />
+              <el-option label="草稿" value="draft" />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-date-picker
+              v-model="filterForm.dateRange"
+              type="daterange"
+              range-separator="-"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="YYYY-MM-DD"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleSearch">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              查询
+            </el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="handleReset">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"/>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+              </svg>
+              重置
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <!-- 表格区 -->
+      <div class="table-card">
+        <!-- 工具栏 -->
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <span class="selection-count">
+              已选择 <strong>{{ selectedRows.length }}</strong> 项
+            </span>
+            <template v-if="selectedRows.length > 0">
+              <span class="toolbar-divider"></span>
+              <button class="toolbar-btn toolbar-btn--danger" @click="handleBatchDelete">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <path d="M10 11v6"/>
+                  <path d="M14 11v6"/>
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                </svg>
+                批量删除
+              </button>
+              <button class="toolbar-btn toolbar-btn--primary" @click="handleBatchExport">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                批量导出
+              </button>
+            </template>
+          </div>
+          <div class="toolbar-right">
+            <el-popover
+              placement="bottom-end"
+              :width="220"
+              trigger="click"
+              popper-class="column-settings-popover"
+            >
+              <template #reference>
+                <button class="toolbar-btn toolbar-btn--icon" title="列设置">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                  </svg>
+                </button>
+              </template>
+              <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:10px;">列设置</div>
+              <el-checkbox-group v-model="visibleColumns" class="column-settings-list">
+                <div v-for="col in allColumns" :key="col.prop" class="column-settings-item">
+                  <el-checkbox :label="col.prop" :disabled="col.fixed">
+                    {{ col.label }}
+                  </el-checkbox>
+                </div>
+              </el-checkbox-group>
+            </el-popover>
+          </div>
+        </div>
+
+        <el-table
+          ref="tableRef"
+          :data="tableData"
+          border
+          stripe
+          style="width: 100%"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="46" fixed="left" align="center" />
+          <el-table-column
+            v-if="isColumnVisible('name')"
+            prop="name"
+            label="名称"
+            min-width="200"
+            show-overflow-tooltip
+          />
+          <el-table-column
+            v-if="isColumnVisible('status')"
+            prop="status"
+            label="状态"
+            width="100"
+            align="center"
+          >
+            <template #default="{ row }">
+              <el-tag
+                :type="statusTagType(row.status)"
+                size="small"
+                effect="light"
+              >
+                {{ statusLabel(row.status) }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="isColumnVisible('category')"
+            prop="category"
+            label="分类"
+            width="120"
+          />
+          <el-table-column
+            v-if="isColumnVisible('creator')"
+            prop="creator"
+            label="创建人"
+            width="120"
+          />
+          <el-table-column
+            v-if="isColumnVisible('updatedAt')"
+            prop="updatedAt"
+            label="更新时间"
+            width="180"
+          />
+          <el-table-column
+            v-if="isColumnVisible('createdAt')"
+            prop="createdAt"
+            label="创建时间"
+            width="180"
+          />
+          <el-table-column label="操作" width="150" fixed="right" align="center">
+            <template #default="{ row }">
+              <el-button
+                class="action-btn action-btn--edit"
+                type="primary"
+                link
+                @click="handleEdit(row)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                </svg>
+                编辑
+              </el-button>
+              <el-button
+                class="action-btn action-btn--delete"
+                type="danger"
+                link
+                @click="handleDelete(row)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <path d="M10 11v6"/>
+                  <path d="M14 11v6"/>
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                </svg>
+                删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <!-- 选中行时底部批量操作栏 -->
+        <div v-if="selectedRows.length > 0" class="batch-action-bar">
+          <div class="batch-info">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 11 12 14 22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+            已选中 {{ selectedRows.length }} 项
+          </div>
+          <div class="batch-actions">
+            <button class="batch-btn batch-btn--danger" @click="handleBatchDelete">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                <path d="M10 11v6"/>
+                <path d="M14 11v6"/>
+                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+              </svg>
+              批量删除
+            </button>
+            <button class="batch-btn batch-btn--primary" @click="handleBatchExport">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              批量导出
+            </button>
+            <button class="batch-btn batch-btn--cancel" @click="clearSelection">
+              取消选择
+            </button>
+          </div>
+        </div>
+
+        <!-- 分页栏 -->
+        <div class="pagination-bar">
+          <span class="pagination-total">共 {{ total }} 条</span>
+          <el-pagination
+            v-model:current-page="pagination.page"
+            v-model:page-size="pagination.pageSize"
+            :page-sizes="[20, 50, 100, 200, 500]"
+            :total="total"
+            layout="sizes, prev, pager, next, jumper"
+            @size-change="handlePageChange"
+            @current-change="handlePageChange"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script>
+    const { createApp, ref, reactive, computed } = Vue;
+
+    const app = createApp({
+      setup() {
+        const tableRef = ref(null);
+
+        /* ---- 筛选表单 ---- */
+        const filterForm = reactive({
+          keyword: '',
+          status: '',
+          dateRange: null,
+        });
+
+        /* ---- 分页 ---- */
+        const pagination = reactive({
+          page: 1,
+          pageSize: 50,
+        });
+        const total = ref(128);
+
+        /* ---- 列定义 ---- */
+        const allColumns = [
+          { prop: 'name',      label: '名称',     fixed: true },
+          { prop: 'status',    label: '状态',     fixed: false },
+          { prop: 'category',  label: '分类',     fixed: false },
+          { prop: 'creator',   label: '创建人',   fixed: false },
+          { prop: 'updatedAt', label: '更新时间', fixed: false },
+          { prop: 'createdAt', label: '创建时间', fixed: false },
+        ];
+
+        const visibleColumns = ref(
+          allColumns.filter(c => !c.fixed || c.fixed).map(c => c.prop)
+        );
+
+        function isColumnVisible(prop) {
+          return visibleColumns.value.includes(prop);
+        }
+
+        /* ---- 多选 ---- */
+        const selectedRows = ref([]);
+
+        function handleSelectionChange(rows) {
+          selectedRows.value = rows;
+        }
+
+        function clearSelection() {
+          if (tableRef.value) {
+            tableRef.value.clearSelection();
+          }
+          selectedRows.value = [];
+        }
+
+        /* ---- 示例数据 ---- */
+        const tableData = ref([
+          { id: 1, name: '供应链管理模块',   status: 'active',   category: '业务系统', creator: '张三', updatedAt: '2026-07-12 10:30:00', createdAt: '2026-07-10 09:30:00' },
+          { id: 2, name: '客户关系管理系统', status: 'active',   category: '业务系统', creator: '李四', updatedAt: '2026-07-11 16:20:00', createdAt: '2026-07-09 14:20:00' },
+          { id: 3, name: '财务报表引擎',     status: 'disabled', category: '数据平台', creator: '王五', updatedAt: '2026-07-10 09:05:00', createdAt: '2026-07-08 11:05:00' },
+          { id: 4, name: '权限网关服务',     status: 'draft',    category: '基础设施', creator: '赵六', updatedAt: '2026-07-09 14:45:00', createdAt: '2026-07-07 16:45:00' },
+          { id: 5, name: '数据同步中间件',   status: 'active',   category: '基础设施', creator: '孙七', updatedAt: '2026-07-08 08:10:00', createdAt: '2026-07-06 08:10:00' },
+        ]);
+
+        /* ---- 状态映射 ---- */
+        function statusTagType(status) {
+          const map = { active: 'success', disabled: 'danger', draft: 'warning' };
+          return map[status] || 'info';
+        }
+
+        function statusLabel(status) {
+          const map = { active: '启用', disabled: '禁用', draft: '草稿' };
+          return map[status] || status;
+        }
+
+        /* ---- 事件处理 ---- */
+        function handleSearch() {
+          ElementPlus.ElMessage.success('查询条件：' + JSON.stringify({ keyword: filterForm.keyword, status: filterForm.status, dateRange: filterForm.dateRange }));
+        }
+
+        function handleReset() {
+          filterForm.keyword = '';
+          filterForm.status = '';
+          filterForm.dateRange = null;
+          pagination.page = 1;
+          ElementPlus.ElMessage.info('已重置筛选条件');
+        }
+
+        function handleEdit(row) {
+          ElementPlus.ElMessage.info('编辑：' + row.name);
+        }
+
+        function handleDelete(row) {
+          ElementPlus.ElMessageBox.confirm(
+            '确定删除「' + row.name + '」？删除后无法恢复。',
+            '确认删除',
+            { confirmButtonText: '删除', cancelButtonText: '取消', type: 'warning' }
+          ).then(() => {
+            ElementPlus.ElMessage.success('已删除：' + row.name);
+          }).catch(() => {});
+        }
+
+        function handleBatchDelete() {
+          const names = selectedRows.value.map(r => r.name).join('、');
+          ElementPlus.ElMessageBox.confirm(
+            '确定删除所选 ' + selectedRows.value.length + ' 项？删除后无法恢复。',
+            '批量删除',
+            { confirmButtonText: '删除', cancelButtonText: '取消', type: 'warning' }
+          ).then(() => {
+            ElementPlus.ElMessage.success('已批量删除 ' + selectedRows.value.length + ' 项');
+            clearSelection();
+          }).catch(() => {});
+        }
+
+        function handleBatchExport() {
+          const count = selectedRows.value.length;
+          ElementPlus.ElMessage.success('正在导出 ' + count + ' 条数据...');
+        }
+
+        function handlePageChange() {
+          // 替换为实际接口调用
+        }
+
+        return {
+          tableRef,
+          filterForm,
+          pagination,
+          total,
+          tableData,
+          allColumns,
+          visibleColumns,
+          isColumnVisible,
+          selectedRows,
+          handleSelectionChange,
+          clearSelection,
+          statusTagType,
+          statusLabel,
+          handleSearch,
+          handleReset,
+          handleEdit,
+          handleDelete,
+          handleBatchDelete,
+          handleBatchExport,
+          handlePageChange,
+        };
+      },
+    });
+
+    app.use(ElementPlus);
+    app.mount('#app');
+  </script>
+</body>
+</html>

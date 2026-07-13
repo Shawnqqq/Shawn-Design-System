@@ -1,0 +1,446 @@
+<!--
+  Shawn Design System — 详情页（Tabs）
+  使用方法：复制此文件，替换文字和数据内容。
+  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>详情页 - Tabs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <style>
+    /* ========== Design Tokens ========== */
+    :root {
+      --color-primary: #1764E8;
+      --color-success: #67C23A;
+      --color-warning: #E6A23C;
+      --color-danger:  #F56C6C;
+      --text-primary:   rgba(0,0,0,0.85);
+      --text-secondary: rgba(0,0,0,0.65);
+      --text-muted:     rgba(0,0,0,0.45);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --page-bg: #f5f7fa;
+      --card-bg: #fff;
+      --card-radius: 8px;
+      --table-header-bg: #fafafa;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-stack);
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--page-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== Page Container ========== */
+    .page-container {
+      padding: 20px;
+      min-height: 100vh;
+      background: var(--page-bg);
+    }
+
+    /* ========== Detail Banner ========== */
+    .detail-banner {
+      position: relative;
+      background: var(--card-bg);
+      padding: 20px 24px;
+      border-radius: var(--card-radius);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .banner-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .banner-header .page-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    .banner-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .banner-meta .meta-separator {
+      margin: 0 8px;
+      color: rgba(0,0,0,0.15);
+    }
+
+    .banner-actions {
+      position: absolute;
+      right: 24px;
+      top: 20px;
+      display: flex;
+      gap: 8px;
+    }
+
+    /* ========== Content Card ========== */
+    .content-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    /* Tabs header */
+    .content-card .el-tabs {
+      --el-tabs-header-height: 48px;
+    }
+
+    .content-card .el-tabs__header {
+      margin: 0;
+      padding: 0 24px;
+      background: var(--card-bg);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .content-card .el-tabs__nav-wrap::after {
+      display: none;
+    }
+
+    .content-card .el-tabs__item {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 0 16px;
+      height: 48px;
+      line-height: 48px;
+    }
+
+    .content-card .el-tabs__item.is-active {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .content-card .el-tabs__active-bar {
+      background-color: var(--color-primary);
+    }
+
+    /* Tab content area */
+    .content-card .el-tabs__content {
+      padding: 0;
+    }
+
+    .tab-pane-body {
+      padding: 16px 24px 24px;
+    }
+
+    /* ========== Descriptions Overrides ========== */
+    .detail-descriptions {
+      margin: 0;
+    }
+
+    .detail-descriptions .el-descriptions__label {
+      font-weight: 500;
+      color: var(--text-secondary);
+      width: 120px;
+      background: var(--table-header-bg);
+    }
+
+    .detail-descriptions .el-descriptions__content {
+      color: var(--text-primary);
+    }
+
+    /* ========== Table in Tab ========== */
+    .tab-table {
+      --el-table-border-color: rgba(0,0,0,0.06);
+      --el-table-header-bg-color: var(--table-header-bg);
+      --el-table-row-height: 48px;
+      --el-table-header-text-color: var(--text-primary);
+      --el-table-text-color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .tab-table th.el-table__cell {
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--table-header-bg);
+    }
+
+    .tab-table .el-table__row td {
+      height: 48px;
+    }
+
+    /* ========== Timeline in Tab ========== */
+    .log-timeline {
+      padding: 8px 0;
+    }
+
+    .log-timeline .el-timeline-item__timestamp {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .log-item-body {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .log-item-user {
+      font-size: 13px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .log-item-action {
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+
+    /* ========== Action Buttons (shared with list) ========== */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+      height: auto;
+      font-size: 13px;
+    }
+
+    .action-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .action-btn--edit {
+      color: var(--color-primary);
+    }
+
+    .action-btn--edit:hover {
+      color: #3d85f0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="page-container">
+      <!-- Banner 区 -->
+      <div class="detail-banner">
+        <div class="banner-header">
+          <span class="page-title">{{ detail.name }}</span>
+          <el-tag :type="statusTagType(detail.status)" size="small" effect="light">
+            {{ statusLabel(detail.status) }}
+          </el-tag>
+        </div>
+        <div class="banner-meta">
+          创建人：{{ detail.creator }}
+          <span class="meta-separator">|</span>
+          创建时间：{{ detail.createdAt }}
+          <span class="meta-separator">|</span>
+          更新时间：{{ detail.updatedAt }}
+        </div>
+        <div class="banner-actions">
+          <el-button type="primary" @click="handleEdit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+            </svg>
+            编辑
+          </el-button>
+          <el-button @click="handleBack">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            返回
+          </el-button>
+        </div>
+      </div>
+
+      <!-- 内容区 -->
+      <div class="content-card">
+        <el-tabs v-model="activeTab">
+
+          <!-- Tab 1: 基础信息 -->
+          <el-tab-pane label="基础信息" name="basic">
+            <div class="tab-pane-body">
+              <el-descriptions class="detail-descriptions" border :column="2">
+                <el-descriptions-item label="计划名称">{{ detail.name }}</el-descriptions-item>
+                <el-descriptions-item label="计划类型">{{ detail.type }}</el-descriptions-item>
+                <el-descriptions-item label="状态">
+                  <el-tag :type="statusTagType(detail.status)" size="small" effect="light">
+                    {{ statusLabel(detail.status) }}
+                  </el-tag>
+                </el-descriptions-item>
+                <el-descriptions-item label="负责人">{{ detail.creator }}</el-descriptions-item>
+                <el-descriptions-item label="开始日期">{{ detail.startDate }}</el-descriptions-item>
+                <el-descriptions-item label="结束日期">{{ detail.endDate }}</el-descriptions-item>
+                <el-descriptions-item label="培训对象">{{ detail.target }}</el-descriptions-item>
+                <el-descriptions-item label="预算（元）">{{ detail.budget }}</el-descriptions-item>
+                <el-descriptions-item label="描述" :span="2">{{ detail.description }}</el-descriptions-item>
+              </el-descriptions>
+            </div>
+          </el-tab-pane>
+
+          <!-- Tab 2: 关联数据 -->
+          <el-tab-pane label="关联数据" name="related">
+            <div class="tab-pane-body">
+              <el-table :data="relatedData" border class="tab-table" style="width: 100%">
+                <el-table-column prop="courseName" label="课程名称" min-width="200" show-overflow-tooltip />
+                <el-table-column prop="trainer" label="培训讲师" width="120" />
+                <el-table-column prop="duration" label="课时" width="100" align="center" />
+                <el-table-column prop="participants" label="参训人数" width="100" align="center" />
+                <el-table-column prop="status" label="状态" width="100" align="center">
+                  <template #default="{ row }">
+                    <el-tag
+                      :type="courseStatusType(row.status)"
+                      size="small"
+                      effect="light"
+                    >
+                      {{ row.status }}
+                    </el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="操作" width="100" fixed="right" align="center">
+                  <template #default="{ row }">
+                    <el-button class="action-btn action-btn--edit" type="primary" link @click="handleViewCourse(row)">
+                      查看
+                    </el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+          </el-tab-pane>
+
+          <!-- Tab 3: 操作日志 -->
+          <el-tab-pane label="操作日志" name="logs">
+            <div class="tab-pane-body">
+              <el-timeline class="log-timeline">
+                <el-timeline-item
+                  v-for="log in operationLogs"
+                  :key="log.id"
+                  :timestamp="log.time"
+                  :type="log.type"
+                  placement="top"
+                >
+                  <div class="log-item-body">
+                    <span class="log-item-user">{{ log.user }}</span>
+                    <span class="log-item-action">{{ log.action }}</span>
+                  </div>
+                </el-timeline-item>
+              </el-timeline>
+            </div>
+          </el-tab-pane>
+
+        </el-tabs>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script>
+    const { createApp, ref, reactive } = Vue;
+
+    const app = createApp({
+      setup() {
+        /* ---- 当前 Tab ---- */
+        const activeTab = ref('basic');
+
+        /* ---- 详情数据（示例：培训计划管理） ---- */
+        const detail = reactive({
+          name: '2026年度新员工入职培训计划',
+          status: 'active',
+          type: '入职培训',
+          creator: '张三',
+          createdAt: '2026-06-15 09:30:00',
+          updatedAt: '2026-07-12 16:20:00',
+          startDate: '2026-08-01',
+          endDate: '2026-08-31',
+          target: '2026年第三季度新入职员工',
+          budget: '50,000',
+          description: '面向第三季度新入职员工的系统性培训，涵盖企业文化、岗位技能、安全合规三大模块。培训结束后统一考核，考核结果纳入试用期评估。',
+        });
+
+        /* ---- 关联数据 ---- */
+        const relatedData = ref([
+          { id: 1, courseName: '企业文化与价值观',       trainer: '李明',   duration: '4 课时',  participants: 32, status: '已完成' },
+          { id: 2, courseName: '岗位技能基础培训',       trainer: '王芳',   duration: '8 课时',  participants: 32, status: '进行中' },
+          { id: 3, courseName: '信息安全与合规意识',     trainer: '赵强',   duration: '2 课时',  participants: 32, status: '待开始' },
+          { id: 4, courseName: '办公系统操作实训',       trainer: '孙丽',   duration: '4 课时',  participants: 28, status: '待开始' },
+          { id: 5, courseName: '团队协作与沟通技巧',     trainer: '周伟',   duration: '3 课时',  participants: 30, status: '待开始' },
+        ]);
+
+        /* ---- 操作日志 ---- */
+        const operationLogs = ref([
+          { id: 1, user: '张三', action: '创建了培训计划「2026年度新员工入职培训计划」',       time: '2026-06-15 09:30:00', type: 'primary' },
+          { id: 2, user: '张三', action: '关联课程「企业文化与价值观」',                     time: '2026-06-16 10:15:00', type: '' },
+          { id: 3, user: '李四', action: '审核通过，状态变更为「启用」',                     time: '2026-06-18 14:00:00', type: 'success' },
+          { id: 4, user: '张三', action: '关联课程「岗位技能基础培训」「信息安全与合规意识」', time: '2026-06-20 09:45:00', type: '' },
+          { id: 5, user: '王芳', action: '更新参训人员名单，新增 4 人',                      time: '2026-07-10 11:20:00', type: '' },
+          { id: 6, user: '张三', action: '修改培训结束日期为 2026-08-31',                    time: '2026-07-12 16:20:00', type: 'warning' },
+        ]);
+
+        /* ---- 状态映射 ---- */
+        function statusTagType(status) {
+          const map = { active: 'success', disabled: 'danger', draft: 'warning' };
+          return map[status] || 'info';
+        }
+
+        function statusLabel(status) {
+          const map = { active: '启用', disabled: '禁用', draft: '草稿' };
+          return map[status] || status;
+        }
+
+        function courseStatusType(status) {
+          const map = { '已完成': 'success', '进行中': 'primary', '待开始': 'info' };
+          return map[status] || 'info';
+        }
+
+        /* ---- 事件处理 ---- */
+        function handleEdit() {
+          ElementPlus.ElMessage.info('进入编辑模式');
+        }
+
+        function handleBack() {
+          ElementPlus.ElMessage.info('返回列表页');
+        }
+
+        function handleViewCourse(row) {
+          ElementPlus.ElMessage.info('查看课程：' + row.courseName);
+        }
+
+        return {
+          activeTab,
+          detail,
+          relatedData,
+          operationLogs,
+          statusTagType,
+          statusLabel,
+          courseStatusType,
+          handleEdit,
+          handleBack,
+          handleViewCourse,
+        };
+      },
+    });
+
+    app.use(ElementPlus);
+    app.mount('#app');
+  </script>
+</body>
+</html>

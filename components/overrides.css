@@ -1,0 +1,59 @@
+/* Shawn Design System — Element Plus 组件样式覆盖
+ * 在项目中引入此文件可统一弹框/抽屉样式。
+ * 其他组件样式已在各模板中内联定义。
+ */
+
+/* ── el-dialog 覆盖 ── */
+.el-dialog {
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.el-dialog__header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  margin-right: 0;
+}
+
+.el-dialog__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.el-dialog__body {
+  padding: 20px;
+}
+
+.el-dialog__footer {
+  padding: 12px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ── el-drawer 覆盖 ── */
+.el-drawer__header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 0;
+}
+
+.el-drawer__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.el-drawer__body {
+  padding: 20px;
+}
+
+/* ── el-table 全局微调 ── */
+.el-table {
+  --el-table-header-bg-color: #fafafa;
+  --el-table-row-hover-bg-color: rgba(0, 0, 0, 0.02);
+}
+
+/* ── el-pagination 居右 ── */
+.el-pagination {
+  justify-content: flex-end;
+}
