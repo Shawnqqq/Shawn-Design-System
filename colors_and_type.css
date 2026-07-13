@@ -1,30 +1,30 @@
 :root {
   /* === Colors === */
-  --primary-yuanliBlue-1: #f3f7ff;
-  --primary-yuanliBlue-2: #ebf1ff;
-  --primary-yuanliBlue-3: #a0c0ff;
-  --primary-yuanliBlue-4: #ccddff;
-  --primary-yuanliBlue-5: #387bff;
-  --primary-yuanliBlue-6: #1664ff;
-  --primary-yuanliBlue-7: #0055ff;
+  --primary-shawnPrimary-1: #f3f6fe;
+  --primary-shawnPrimary-2: #e6edfc;
+  --primary-shawnPrimary-3: #a5bff2;
+  --primary-shawnPrimary-4: #7da4ec;
+  --primary-shawnPrimary-5: #3678e2;
+  --primary-shawnPrimary-6: #1764e8;
+  --primary-shawnPrimary-7: #1250ba;
   --primary-foreground: #ffffff;
   --primary-accent-foreground: #ffffff;
-  --primary: #1664ff;
-  --primary-accent: #1664ff;
-  --primary-accent-hover: #0055ff;
-  --primary-link: #1664ff;
-  --primary-ring: #1664ff;
-  --text-yuanliNeutral-1: #ffffff;
-  --text-yuanliNeutral-2: #fcfdfe;
-  --text-yuanliNeutral-3: #eceded;
-  --text-yuanliNeutral-4: #dde2e9;
-  --text-yuanliNeutral-5: #c9cdd4;
-  --text-yuanliNeutral-6: #86909c;
-  --text-yuanliNeutral-7: #4e5969;
-  --text-yuanliNeutral-8: #333333;
-  --text-yuanliNeutral-9: #1d2129;
-  --text-yuanliNeutral-10: #0c0d0e;
-  --text-yuanliNeutral-11: #000b1a;
+  --primary: #1764e8;
+  --primary-accent: #1764e8;
+  --primary-accent-hover: #1250ba;
+  --primary-link: #1764e8;
+  --primary-ring: #1764e8;
+  --text-shawnNeutral-1: #ffffff;
+  --text-shawnNeutral-2: #fcfdfe;
+  --text-shawnNeutral-3: #eceded;
+  --text-shawnNeutral-4: #dde2e9;
+  --text-shawnNeutral-5: #c9cdd4;
+  --text-shawnNeutral-6: #86909c;
+  --text-shawnNeutral-7: #4e5969;
+  --text-shawnNeutral-8: #333333;
+  --text-shawnNeutral-9: #1d2129;
+  --text-shawnNeutral-10: #0c0d0e;
+  --text-shawnNeutral-11: #000b1a;
   --text-fg: #0c0d0e;
   --text-foreground: #0c0d0e;
   --text-secondary: #eceded;
@@ -54,35 +54,35 @@
   --foundation-rule: #dde2e9;
   --foundation-border: #dde2e9;
   --foundation-input: #eceded;
-  --border-yuanliBorder-1: #eaedf1;
-  --border-yuanliBorder-2: #e1e4e8;
-  --border-yuanliBorder-3: #d1d5da;
-  --border-yuanliBorder-4: #959da5;
-  --status-yuanliDanger-2: #feeced;
-  --status-yuanliDanger-3: #fa9ea3;
-  --status-yuanliDanger-5: #f65159;
-  --status-yuanliDanger-6: #d7312a;
-  --status-yuanliDanger-7: #c43138;
-  --status-yuanliSuccess-2: #e2f5eb;
-  --status-yuanliSuccess-3: #8dd8b3;
-  --status-yuanliSuccess-5: #1ebf6f;
-  --status-yuanliSuccess-6: #2a814b;
-  --status-yuanliSuccess-7: #189959;
-  --status-yuanliWarning-2: #fdf3de;
-  --status-yuanliWarning-3: #f8d080;
-  --status-yuanliWarning-5: #f5b433;
-  --status-yuanliWarning-6: #bd7e00;
-  --status-yuanliWarning-7: #de9400;
+  --border-shawnBorder-1: #eaedf1;
+  --border-shawnBorder-2: #e1e4e8;
+  --border-shawnBorder-3: #d1d5da;
+  --border-shawnBorder-4: #959da5;
+  --status-shawnDanger-2: #feeced;
+  --status-shawnDanger-3: #fa9ea3;
+  --status-shawnDanger-5: #f65159;
+  --status-shawnDanger-6: #d7312a;
+  --status-shawnDanger-7: #c43138;
+  --status-shawnSuccess-2: #e2f5eb;
+  --status-shawnSuccess-3: #8dd8b3;
+  --status-shawnSuccess-5: #1ebf6f;
+  --status-shawnSuccess-6: #2a814b;
+  --status-shawnSuccess-7: #189959;
+  --status-shawnWarning-2: #fdf3de;
+  --status-shawnWarning-3: #f8d080;
+  --status-shawnWarning-5: #f5b433;
+  --status-shawnWarning-6: #bd7e00;
+  --status-shawnWarning-7: #de9400;
   --status-on-error: #ffffff;
   --status-error: #d7312a;
   --status-error-container: #feeced;
   --status-on-error-container: #c43138;
   --status-success: #2a814b;
   --status-warning: #bd7e00;
-  --state-hover: rgba(22, 100, 255, 0.08);
-  --state-focus: rgba(22, 100, 255, 0.12);
-  --state-press: rgba(22, 100, 255, 0.16);
-  --state-drag: rgba(22, 100, 255, 0.16);
+  --state-hover: rgba(23, 100, 232, 0.08);
+  --state-focus: rgba(23, 100, 232, 0.12);
+  --state-press: rgba(23, 100, 232, 0.16);
+  --state-drag: rgba(23, 100, 232, 0.16);
   --color-on-primary: #ffffff;
   --color-background: #ffffff;
   --color-foreground: #0c0d0e;
@@ -98,10 +98,10 @@
   --color-on-surface: #0c0d0e;
   --color-on-surface-variant: #86909c;
   --color-muted-foreground: #86909c;
-  --color-primary: #1664ff;
-  --color-primary-hover: #0055ff;
-  --color-primary-container: #f3f7ff;
-  --color-on-primary-container: #0055ff;
+  --color-primary: #1764e8;
+  --color-primary-hover: #1250ba;
+  --color-primary-container: #f3f6fe;
+  --color-on-primary-container: #1250ba;
   --color-secondary: #eceded;
   --color-secondary-container: #fcfdfe;
   --color-on-secondary-container: #333333;
@@ -115,7 +115,7 @@
   --color-success: #2a814b;
   --color-warning: #bd7e00;
   --color-danger: #d7312a;
-  --chart-1: #1664ff;
+  --chart-1: #1764e8;
   --chart-2: #2a814b;
   --chart-3: #bd7e00;
   --chart-4: #d7312a;
@@ -158,7 +158,7 @@
   --line-height-price: 28px;
 
   /* === Radius === */
-  --yuanlitest-radius-sm: 4px;
+  --shawntest-radius-sm: 4px;
   --radius-full: 9999px;
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -194,9 +194,9 @@
 }
 
 .dark {
-  --yuanliDanger-6: #ff706d;
-  --yuanliSuccess-6: #7ccd94;
-  --yuanliWarning-6: #f0a50f;
+  --shawnDanger-6: #ff706d;
+  --shawnSuccess-6: #7ccd94;
+  --shawnWarning-6: #f0a50f;
   --fg: #ffffff;
   --foreground: #ffffff;
   --secondary: #333333;
@@ -228,10 +228,10 @@
   --on-error-container: #ffd9d7;
   --success: #7ccd94;
   --warning: #f0a50f;
-  --state-hover: rgba(56, 123, 255, 0.16);
-  --state-focus: rgba(56, 123, 255, 0.24);
-  --state-press: rgba(56, 123, 255, 0.32);
-  --state-drag: rgba(56, 123, 255, 0.32);
+  --state-hover: rgba(54, 120, 226, 0.16);
+  --state-focus: rgba(54, 120, 226, 0.24);
+  --state-press: rgba(54, 120, 226, 0.32);
+  --state-drag: rgba(54, 120, 226, 0.32);
   --color-background: #0c0d0e;
   --color-foreground: #ffffff;
   --color-surface: #1d2129;
@@ -246,9 +246,9 @@
   --color-on-surface: #ffffff;
   --color-on-surface-variant: #86909c;
   --color-muted-foreground: #86909c;
-  --color-primary: #1664ff;
-  --color-primary-hover: #0055ff;
-  --color-primary-container: #0055ff;
+  --color-primary: #1764e8;
+  --color-primary-hover: #1250ba;
+  --color-primary-container: #1250ba;
   --color-on-primary-container: #ffffff;
   --color-secondary: #333333;
   --color-secondary-container: #1d2129;
@@ -263,7 +263,7 @@
   --color-success: #7ccd94;
   --color-warning: #f0a50f;
   --color-danger: #ff706d;
-  --chart-1: #387bff;
+  --chart-1: #3678e2;
   --chart-2: #7ccd94;
   --chart-3: #f0a50f;
   --chart-4: #ff706d;
@@ -369,14 +369,14 @@
    ═══════════════════════════════════════════════════════════════ */
 :root {
   /* ── Color Scales (1-8) ── */
-  --primary-1: #F3F7FF;
-  --primary-2: #EBF1FF;
-  --primary-3: #97BCFF;
-  --primary-4: #6E9FFF;
-  --primary-5: #387BFF;
-  --primary-6: #1664FF;
-  --primary-7: #1759DD;
-  --primary-8: #114AB9;
+  --primary-1: #F3F6FE;
+  --primary-2: #E6EDFC;
+  --primary-3: #A5BFF2;
+  --primary-4: #7DA4EC;
+  --primary-5: #3678E2;
+  --primary-6: #1764E8;
+  --primary-7: #1250BA;
+  --primary-8: #0E3F97;
 
   --success-1: #EEF9F1;
   --success-2: #E1F6E6;
@@ -407,12 +407,12 @@
 
   --link-1: #F3F7FF;
   --link-2: #EBF1FF;
-  --link-3: #97BCFF;
-  --link-4: #6E9FFF;
-  --link-5: #387BFF;
-  --link-6: #1664FF;
-  --link-7: #1759DD;
-  --link-8: #114AB9;
+  --link-3: #A5BFF2;
+  --link-4: #7DA4EC;
+  --link-5: #3678E2;
+  --link-6: #1764e8;
+  --link-7: #1250BA;
+  --link-8: #0E3F97;
 
   --grey-1: #F6F8FA;
   --grey-2: #F6F6F6;
@@ -569,7 +569,7 @@
   --color-table-row-hover: #F2F3F5;
   --color-table-row-stripe: #FAFBFC;
   --color-table-border: #EAEDF1;
-  --color-table-action-primary: #1664FF;
+  --color-table-action-primary: #1764e8;
   --color-table-action-danger: #D7312A;
 
   /* ── Preview Shorthand Aliases ── */
@@ -584,7 +584,7 @@
 
   /* ── Primary State (button) ── */
   --primary-hover: #4585FF;
-  --primary-active: #0055FF;
+  --primary-active: #1250ba;
   --primary-disabled-bg: #A2C1FF;
 
   /* ── Success State (button) ── */
@@ -598,8 +598,8 @@
   --warning-disabled-bg: #F0D078;
 
   /* ── Button Shadows ── */
-  --shadow-blue: 0px 0px 0px 1px #0055FF, 0px 2px 1px 0px rgba(0,0,0,0.15);
-  --shadow-blue-hover: 0px 0px 0px 1px #4585FF, 0px 2px 1px 0px rgba(0,0,0,0.15);
+  --shadow-blue: 0px 0px 0px 1px #1250ba, 0px 2px 1px 0px rgba(0,0,0,0.15);
+  --shadow-blue-hover: 0px 0px 0px 1px #3678e2, 0px 2px 1px 0px rgba(0,0,0,0.15);
   --shadow-gray: 0px 0px 0px 1px #DDE2E9, 0px 2px 1px 0px rgba(0,0,0,0.08);
   --shadow-gray-hover: 0px 0px 0px 1px #C9CDD4, 0px 2px 1px 0px rgba(0,0,0,0.08);
   --shadow-danger: 0px 0px 0px 1px #D93F3F, 0px 2px 1px 0px rgba(0,0,0,0.15);
@@ -612,9 +612,9 @@
   --dark-text-secondary: rgba(255,255,255,0.7);
 
   /* ── Steps Component ── */
-  --steps-primary: #1664ff;
-  --steps-primary-bg: #387bff;
-  --steps-primary-line: #97bcff;
+  --steps-primary: #1764e8;
+  --steps-primary-bg: #3678e2;
+  --steps-primary-line: #a5bff2;
   --steps-text: #0c0d0e;
   --steps-desc: #737a87;
   --steps-white: #ffffff;
@@ -626,233 +626,233 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Yuanli-Prefixed Aliases
+   Shawn-Prefixed Aliases
    solo-design 的 fill-html-head.mjs 在页面 body 中引用变量时
-   会自动添加 --yuanli- 前缀（如 var(--yuanli-color-sidebar)），
+   会自动添加 --shawn- 前缀（如 var(--shawn-color-sidebar)），
    但 theme-vars 中定义的变量名无此前缀（如 --color-sidebar）。
    以下别名确保两种引用方式都能正确解析。
    ═══════════════════════════════════════════════════════════════ */
 :root {
   /* ── Color Scales ── */
-  --yuanli-primary-1: var(--primary-1);
-  --yuanli-primary-2: var(--primary-2);
-  --yuanli-primary-3: var(--primary-3);
-  --yuanli-primary-4: var(--primary-4);
-  --yuanli-primary-5: var(--primary-5);
-  --yuanli-primary-6: var(--primary-6);
-  --yuanli-primary-7: var(--primary-7);
-  --yuanli-primary-8: var(--primary-8);
-  --yuanli-success-1: var(--success-1);
-  --yuanli-success-2: var(--success-2);
-  --yuanli-success-3: var(--success-3);
-  --yuanli-success-4: var(--success-4);
-  --yuanli-success-5: var(--success-5);
-  --yuanli-success-6: var(--success-6);
-  --yuanli-success-7: var(--success-7);
-  --yuanli-success-8: var(--success-8);
-  --yuanli-warning-1: var(--warning-1);
-  --yuanli-warning-2: var(--warning-2);
-  --yuanli-warning-3: var(--warning-3);
-  --yuanli-warning-4: var(--warning-4);
-  --yuanli-warning-5: var(--warning-5);
-  --yuanli-warning-6: var(--warning-6);
-  --yuanli-warning-7: var(--warning-7);
-  --yuanli-warning-8: var(--warning-8);
-  --yuanli-danger-1: var(--danger-1);
-  --yuanli-danger-2: var(--danger-2);
-  --yuanli-danger-3: var(--danger-3);
-  --yuanli-danger-4: var(--danger-4);
-  --yuanli-danger-5: var(--danger-5);
-  --yuanli-danger-6: var(--danger-6);
-  --yuanli-danger-7: var(--danger-7);
-  --yuanli-danger-8: var(--danger-8);
-  --yuanli-link-1: var(--link-1);
-  --yuanli-link-2: var(--link-2);
-  --yuanli-link-3: var(--link-3);
-  --yuanli-link-4: var(--link-4);
-  --yuanli-link-5: var(--link-5);
-  --yuanli-link-6: var(--link-6);
-  --yuanli-link-7: var(--link-7);
-  --yuanli-link-8: var(--link-8);
-  --yuanli-grey-1: var(--grey-1);
-  --yuanli-grey-2: var(--grey-2);
-  --yuanli-grey-3: var(--grey-3);
-  --yuanli-grey-4: var(--grey-4);
-  --yuanli-grey-5: var(--grey-5);
-  --yuanli-grey-6: var(--grey-6);
-  --yuanli-grey-7: var(--grey-7);
-  --yuanli-grey-8: var(--grey-8);
-  --yuanli-teal-1: var(--teal-1);
-  --yuanli-teal-2: var(--teal-2);
-  --yuanli-teal-3: var(--teal-3);
-  --yuanli-teal-4: var(--teal-4);
-  --yuanli-teal-5: var(--teal-5);
-  --yuanli-teal-6: var(--teal-6);
-  --yuanli-teal-7: var(--teal-7);
-  --yuanli-teal-8: var(--teal-8);
-  --yuanli-violet-1: var(--violet-1);
-  --yuanli-violet-2: var(--violet-2);
-  --yuanli-violet-3: var(--violet-3);
-  --yuanli-violet-4: var(--violet-4);
-  --yuanli-violet-5: var(--violet-5);
-  --yuanli-violet-6: var(--violet-6);
-  --yuanli-violet-7: var(--violet-7);
-  --yuanli-violet-8: var(--violet-8);
+  --shawn-primary-1: var(--primary-1);
+  --shawn-primary-2: var(--primary-2);
+  --shawn-primary-3: var(--primary-3);
+  --shawn-primary-4: var(--primary-4);
+  --shawn-primary-5: var(--primary-5);
+  --shawn-primary-6: var(--primary-6);
+  --shawn-primary-7: var(--primary-7);
+  --shawn-primary-8: var(--primary-8);
+  --shawn-success-1: var(--success-1);
+  --shawn-success-2: var(--success-2);
+  --shawn-success-3: var(--success-3);
+  --shawn-success-4: var(--success-4);
+  --shawn-success-5: var(--success-5);
+  --shawn-success-6: var(--success-6);
+  --shawn-success-7: var(--success-7);
+  --shawn-success-8: var(--success-8);
+  --shawn-warning-1: var(--warning-1);
+  --shawn-warning-2: var(--warning-2);
+  --shawn-warning-3: var(--warning-3);
+  --shawn-warning-4: var(--warning-4);
+  --shawn-warning-5: var(--warning-5);
+  --shawn-warning-6: var(--warning-6);
+  --shawn-warning-7: var(--warning-7);
+  --shawn-warning-8: var(--warning-8);
+  --shawn-danger-1: var(--danger-1);
+  --shawn-danger-2: var(--danger-2);
+  --shawn-danger-3: var(--danger-3);
+  --shawn-danger-4: var(--danger-4);
+  --shawn-danger-5: var(--danger-5);
+  --shawn-danger-6: var(--danger-6);
+  --shawn-danger-7: var(--danger-7);
+  --shawn-danger-8: var(--danger-8);
+  --shawn-link-1: var(--link-1);
+  --shawn-link-2: var(--link-2);
+  --shawn-link-3: var(--link-3);
+  --shawn-link-4: var(--link-4);
+  --shawn-link-5: var(--link-5);
+  --shawn-link-6: var(--link-6);
+  --shawn-link-7: var(--link-7);
+  --shawn-link-8: var(--link-8);
+  --shawn-grey-1: var(--grey-1);
+  --shawn-grey-2: var(--grey-2);
+  --shawn-grey-3: var(--grey-3);
+  --shawn-grey-4: var(--grey-4);
+  --shawn-grey-5: var(--grey-5);
+  --shawn-grey-6: var(--grey-6);
+  --shawn-grey-7: var(--grey-7);
+  --shawn-grey-8: var(--grey-8);
+  --shawn-teal-1: var(--teal-1);
+  --shawn-teal-2: var(--teal-2);
+  --shawn-teal-3: var(--teal-3);
+  --shawn-teal-4: var(--teal-4);
+  --shawn-teal-5: var(--teal-5);
+  --shawn-teal-6: var(--teal-6);
+  --shawn-teal-7: var(--teal-7);
+  --shawn-teal-8: var(--teal-8);
+  --shawn-violet-1: var(--violet-1);
+  --shawn-violet-2: var(--violet-2);
+  --shawn-violet-3: var(--violet-3);
+  --shawn-violet-4: var(--violet-4);
+  --shawn-violet-5: var(--violet-5);
+  --shawn-violet-6: var(--violet-6);
+  --shawn-violet-7: var(--violet-7);
+  --shawn-violet-8: var(--violet-8);
 
   /* ── Semantic Colors ── */
-  --yuanli-color-primary: var(--color-primary);
-  --yuanli-color-primary-hover: var(--color-primary-hover);
-  --yuanli-color-primary-click: var(--color-primary-click);
-  --yuanli-color-primary-disabled: var(--color-primary-disabled);
-  --yuanli-color-primary-bg: var(--color-primary-bg);
-  --yuanli-color-primary-tag-bg: var(--color-primary-tag-bg);
-  --yuanli-color-danger: var(--color-danger);
-  --yuanli-color-danger-hover: var(--color-danger-hover);
-  --yuanli-color-danger-click: var(--color-danger-click);
-  --yuanli-color-danger-disabled: var(--color-danger-disabled);
-  --yuanli-color-danger-bg: var(--color-danger-bg);
-  --yuanli-color-success: var(--color-success);
-  --yuanli-color-success-hover: var(--color-success-hover);
-  --yuanli-color-success-click: var(--color-success-click);
-  --yuanli-color-success-disabled: var(--color-success-disabled);
-  --yuanli-color-success-bg: var(--color-success-bg);
-  --yuanli-color-warning: var(--color-warning);
-  --yuanli-color-warning-hover: var(--color-warning-hover);
-  --yuanli-color-warning-click: var(--color-warning-click);
-  --yuanli-color-warning-disabled: var(--color-warning-disabled);
-  --yuanli-color-warning-bg: var(--color-warning-bg);
-  --yuanli-color-link: var(--color-link);
-  --yuanli-color-link-hover: var(--color-link-hover);
-  --yuanli-color-link-click: var(--color-link-click);
+  --shawn-color-primary: var(--color-primary);
+  --shawn-color-primary-hover: var(--color-primary-hover);
+  --shawn-color-primary-click: var(--color-primary-click);
+  --shawn-color-primary-disabled: var(--color-primary-disabled);
+  --shawn-color-primary-bg: var(--color-primary-bg);
+  --shawn-color-primary-tag-bg: var(--color-primary-tag-bg);
+  --shawn-color-danger: var(--color-danger);
+  --shawn-color-danger-hover: var(--color-danger-hover);
+  --shawn-color-danger-click: var(--color-danger-click);
+  --shawn-color-danger-disabled: var(--color-danger-disabled);
+  --shawn-color-danger-bg: var(--color-danger-bg);
+  --shawn-color-success: var(--color-success);
+  --shawn-color-success-hover: var(--color-success-hover);
+  --shawn-color-success-click: var(--color-success-click);
+  --shawn-color-success-disabled: var(--color-success-disabled);
+  --shawn-color-success-bg: var(--color-success-bg);
+  --shawn-color-warning: var(--color-warning);
+  --shawn-color-warning-hover: var(--color-warning-hover);
+  --shawn-color-warning-click: var(--color-warning-click);
+  --shawn-color-warning-disabled: var(--color-warning-disabled);
+  --shawn-color-warning-bg: var(--color-warning-bg);
+  --shawn-color-link: var(--color-link);
+  --shawn-color-link-hover: var(--color-link-hover);
+  --shawn-color-link-click: var(--color-link-click);
 
   /* ── Text ── */
-  --yuanli-color-text-1: var(--color-text-1);
-  --yuanli-color-text-2: var(--color-text-2);
-  --yuanli-color-text-3: var(--color-text-3);
-  --yuanli-color-text-4: var(--color-text-4);
-  --yuanli-color-white: var(--color-white);
-  --yuanli-color-text-primary: var(--color-text-primary);
-  --yuanli-color-text-secondary: var(--color-text-secondary);
-  --yuanli-color-text-tertiary: var(--color-text-tertiary);
-  --yuanli-color-text-disabled: var(--color-text-disabled);
-  --yuanli-color-text-placeholder: var(--color-text-placeholder);
-  --yuanli-color-text-muted: var(--color-text-muted);
+  --shawn-color-text-1: var(--color-text-1);
+  --shawn-color-text-2: var(--color-text-2);
+  --shawn-color-text-3: var(--color-text-3);
+  --shawn-color-text-4: var(--color-text-4);
+  --shawn-color-white: var(--color-white);
+  --shawn-color-text-primary: var(--color-text-primary);
+  --shawn-color-text-secondary: var(--color-text-secondary);
+  --shawn-color-text-tertiary: var(--color-text-tertiary);
+  --shawn-color-text-disabled: var(--color-text-disabled);
+  --shawn-color-text-placeholder: var(--color-text-placeholder);
+  --shawn-color-text-muted: var(--color-text-muted);
 
   /* ── Fill ── */
-  --yuanli-color-fill-1: var(--color-fill-1);
-  --yuanli-color-fill-2: var(--color-fill-2);
-  --yuanli-color-fill-3: var(--color-fill-3);
-  --yuanli-color-fill-4: var(--color-fill-4);
-  --yuanli-color-fill-5: var(--color-fill-5);
-  --yuanli-color-fill-6: var(--color-fill-6);
-  --yuanli-color-bg-white: var(--color-bg-white);
+  --shawn-color-fill-1: var(--color-fill-1);
+  --shawn-color-fill-2: var(--color-fill-2);
+  --shawn-color-fill-3: var(--color-fill-3);
+  --shawn-color-fill-4: var(--color-fill-4);
+  --shawn-color-fill-5: var(--color-fill-5);
+  --shawn-color-fill-6: var(--color-fill-6);
+  --shawn-color-bg-white: var(--color-bg-white);
 
   /* ── Background ── */
-  --yuanli-color-bg-1: var(--color-bg-1);
-  --yuanli-color-bg-2: var(--color-bg-2);
-  --yuanli-color-bg-3: var(--color-bg-3);
-  --yuanli-color-bg-4: var(--color-bg-4);
-  --yuanli-color-bg-5: var(--color-bg-5);
-  --yuanli-color-bg-7: var(--color-bg-7);
-  --yuanli-color-bg-8: var(--color-bg-8);
-  --yuanli-color-bg-9: var(--color-bg-9);
-  --yuanli-color-bg-page: var(--color-bg-page);
-  --yuanli-color-bg-card: var(--color-bg-card);
-  --yuanli-color-bg-hover: var(--color-bg-hover);
-  --yuanli-color-bg-active: var(--color-bg-active);
-  --yuanli-color-bg-subtle: var(--color-bg-subtle);
+  --shawn-color-bg-1: var(--color-bg-1);
+  --shawn-color-bg-2: var(--color-bg-2);
+  --shawn-color-bg-3: var(--color-bg-3);
+  --shawn-color-bg-4: var(--color-bg-4);
+  --shawn-color-bg-5: var(--color-bg-5);
+  --shawn-color-bg-7: var(--color-bg-7);
+  --shawn-color-bg-8: var(--color-bg-8);
+  --shawn-color-bg-9: var(--color-bg-9);
+  --shawn-color-bg-page: var(--color-bg-page);
+  --shawn-color-bg-card: var(--color-bg-card);
+  --shawn-color-bg-hover: var(--color-bg-hover);
+  --shawn-color-bg-active: var(--color-bg-active);
+  --shawn-color-bg-subtle: var(--color-bg-subtle);
 
   /* ── AI Background ── */
-  --yuanli-ai-color-bg-1: var(--ai-color-bg-1);
-  --yuanli-ai-color-bg-2: var(--ai-color-bg-2);
+  --shawn-ai-color-bg-1: var(--ai-color-bg-1);
+  --shawn-ai-color-bg-2: var(--ai-color-bg-2);
 
   /* ── Border ── */
-  --yuanli-color-border: var(--color-border);
-  --yuanli-color-border-2: var(--color-border-2);
-  --yuanli-color-border-3: var(--color-border-3);
-  --yuanli-color-border-light: var(--color-border-light);
-  --yuanli-color-border-hover: var(--color-border-hover);
+  --shawn-color-border: var(--color-border);
+  --shawn-color-border-2: var(--color-border-2);
+  --shawn-color-border-3: var(--color-border-3);
+  --shawn-color-border-light: var(--color-border-light);
+  --shawn-color-border-hover: var(--color-border-hover);
 
   /* ── Tag Background ── */
-  --yuanli-color-tag-success-bg: var(--color-tag-success-bg);
-  --yuanli-color-tag-warning-bg: var(--color-tag-warning-bg);
-  --yuanli-color-tag-danger-bg: var(--color-tag-danger-bg);
-  --yuanli-color-tag-info-bg: var(--color-tag-info-bg);
+  --shawn-color-tag-success-bg: var(--color-tag-success-bg);
+  --shawn-color-tag-warning-bg: var(--color-tag-warning-bg);
+  --shawn-color-tag-danger-bg: var(--color-tag-danger-bg);
+  --shawn-color-tag-info-bg: var(--color-tag-info-bg);
 
   /* ── Spacing ── */
-  --yuanli-spacing-xs: var(--spacing-xs);
-  --yuanli-spacing-sm: var(--spacing-sm);
-  --yuanli-spacing-md: var(--spacing-md);
-  --yuanli-spacing-lg: var(--spacing-lg);
-  --yuanli-spacing-xl: var(--spacing-xl);
-  --yuanli-spacing-xxl: var(--spacing-xxl);
+  --shawn-spacing-xs: var(--spacing-xs);
+  --shawn-spacing-sm: var(--spacing-sm);
+  --shawn-spacing-md: var(--spacing-md);
+  --shawn-spacing-lg: var(--spacing-lg);
+  --shawn-spacing-xl: var(--spacing-xl);
+  --shawn-spacing-xxl: var(--spacing-xxl);
 
   /* ── Radius ── */
-  --yuanli-radius-default: var(--radius-default);
+  --shawn-radius-default: var(--radius-default);
 
   /* ── Font ── */
-  --yuanli-font-size-xs: var(--font-size-xs);
-  --yuanli-font-size-sm: var(--font-size-sm);
-  --yuanli-font-size-md: var(--font-size-md);
-  --yuanli-font-size-lg: var(--font-size-lg);
-  --yuanli-font-size-xl: var(--font-size-xl);
-  --yuanli-font-size-xxl: var(--font-size-xxl);
-  --yuanli-font-size-title: var(--font-size-title);
-  --yuanli-font-family: var(--font-family);
+  --shawn-font-size-xs: var(--font-size-xs);
+  --shawn-font-size-sm: var(--font-size-sm);
+  --shawn-font-size-md: var(--font-size-md);
+  --shawn-font-size-lg: var(--font-size-lg);
+  --shawn-font-size-xl: var(--font-size-xl);
+  --shawn-font-size-xxl: var(--font-size-xxl);
+  --shawn-font-size-title: var(--font-size-title);
+  --shawn-font-family: var(--font-family);
 
   /* ── Shadow ── */
-  --yuanli-shadow-sm: var(--shadow-sm);
-  --yuanli-shadow-md: var(--shadow-md);
-  --yuanli-shadow-lg: var(--shadow-lg);
+  --shawn-shadow-sm: var(--shadow-sm);
+  --shawn-shadow-md: var(--shadow-md);
+  --shawn-shadow-lg: var(--shadow-lg);
 
   /* ── Component Aliases ── */
-  --yuanli-bg-4: var(--bg-4);
-  --yuanli-bg-7: var(--bg-7);
-  --yuanli-bg-white: var(--bg-white);
-  --yuanli-bg-hover: var(--bg-hover);
-  --yuanli-bg-subtle: var(--bg-subtle);
-  --yuanli-border-1: var(--border-1);
-  --yuanli-border-2: var(--border-2);
-  --yuanli-border-3: var(--border-3);
-  --yuanli-text-1: var(--text-1);
-  --yuanli-text-2: var(--text-2);
-  --yuanli-text-3: var(--text-3);
-  --yuanli-text-disabled: var(--text-disabled);
-  --yuanli-danger-hover: var(--danger-hover);
-  --yuanli-danger-active: var(--danger-active);
-  --yuanli-danger-disabled-bg: var(--danger-disabled-bg);
-  --yuanli-primary-hover: var(--primary-hover);
-  --yuanli-primary-active: var(--primary-active);
-  --yuanli-primary-disabled-bg: var(--primary-disabled-bg);
-  --yuanli-success-hover: var(--success-hover);
-  --yuanli-success-active: var(--success-active);
-  --yuanli-success-disabled-bg: var(--success-disabled-bg);
-  --yuanli-warning-hover: var(--warning-hover);
-  --yuanli-warning-active: var(--warning-active);
-  --yuanli-warning-disabled-bg: var(--warning-disabled-bg);
+  --shawn-bg-4: var(--bg-4);
+  --shawn-bg-7: var(--bg-7);
+  --shawn-bg-white: var(--bg-white);
+  --shawn-bg-hover: var(--bg-hover);
+  --shawn-bg-subtle: var(--bg-subtle);
+  --shawn-border-1: var(--border-1);
+  --shawn-border-2: var(--border-2);
+  --shawn-border-3: var(--border-3);
+  --shawn-text-1: var(--text-1);
+  --shawn-text-2: var(--text-2);
+  --shawn-text-3: var(--text-3);
+  --shawn-text-disabled: var(--text-disabled);
+  --shawn-danger-hover: var(--danger-hover);
+  --shawn-danger-active: var(--danger-active);
+  --shawn-danger-disabled-bg: var(--danger-disabled-bg);
+  --shawn-primary-hover: var(--primary-hover);
+  --shawn-primary-active: var(--primary-active);
+  --shawn-primary-disabled-bg: var(--primary-disabled-bg);
+  --shawn-success-hover: var(--success-hover);
+  --shawn-success-active: var(--success-active);
+  --shawn-success-disabled-bg: var(--success-disabled-bg);
+  --shawn-warning-hover: var(--warning-hover);
+  --shawn-warning-active: var(--warning-active);
+  --shawn-warning-disabled-bg: var(--warning-disabled-bg);
 
   /* ── Table ── */
-  --yuanli-color-table-header-bg: var(--color-table-header-bg);
-  --yuanli-color-table-header-text: var(--color-table-header-text);
-  --yuanli-color-table-cell-bg: var(--color-table-cell-bg);
-  --yuanli-color-table-cell-text: var(--color-table-cell-text);
-  --yuanli-color-table-row-hover: var(--color-table-row-hover);
-  --yuanli-color-table-row-stripe: var(--color-table-row-stripe);
-  --yuanli-color-table-border: var(--color-table-border);
-  --yuanli-color-table-action-primary: var(--color-table-action-primary);
-  --yuanli-color-table-action-danger: var(--color-table-action-danger);
+  --shawn-color-table-header-bg: var(--color-table-header-bg);
+  --shawn-color-table-header-text: var(--color-table-header-text);
+  --shawn-color-table-cell-bg: var(--color-table-cell-bg);
+  --shawn-color-table-cell-text: var(--color-table-cell-text);
+  --shawn-color-table-row-hover: var(--color-table-row-hover);
+  --shawn-color-table-row-stripe: var(--color-table-row-stripe);
+  --shawn-color-table-border: var(--color-table-border);
+  --shawn-color-table-action-primary: var(--color-table-action-primary);
+  --shawn-color-table-action-danger: var(--color-table-action-danger);
 
   /* ── Button Shadows ── */
-  --yuanli-shadow-blue: var(--shadow-blue);
-  --yuanli-shadow-blue-hover: var(--shadow-blue-hover);
-  --yuanli-shadow-gray: var(--shadow-gray);
-  --yuanli-shadow-gray-hover: var(--shadow-gray-hover);
-  --yuanli-shadow-danger: var(--shadow-danger);
-  --yuanli-shadow-success: var(--shadow-success);
-  --yuanli-shadow-warning: var(--shadow-warning);
+  --shawn-shadow-blue: var(--shadow-blue);
+  --shawn-shadow-blue-hover: var(--shadow-blue-hover);
+  --shawn-shadow-gray: var(--shadow-gray);
+  --shawn-shadow-gray-hover: var(--shadow-gray-hover);
+  --shawn-shadow-danger: var(--shadow-danger);
+  --shawn-shadow-success: var(--shadow-success);
+  --shawn-shadow-warning: var(--shadow-warning);
 
   /* ── Dark ── */
-  --yuanli-dark-bg: var(--dark-bg);
-  --yuanli-dark-text: var(--dark-text);
-  --yuanli-dark-text-secondary: var(--dark-text-secondary);
+  --shawn-dark-bg: var(--dark-bg);
+  --shawn-dark-text: var(--dark-text);
+  --shawn-dark-text-secondary: var(--dark-text-secondary);
 }

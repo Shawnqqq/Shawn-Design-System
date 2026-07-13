@@ -1,5 +1,5 @@
 ---
-name: "源力设计系统 (Yuanli Design System)"
+name: "Shawn Design System"
 description: //
 ---
 
@@ -40,7 +40,7 @@ description: //
 >
 > ### 图标规则
 >
-> - **Sidenav 图标**：从 `preview/component-sidenav.html` 复制 `<span class="menu-icon">` 中的完整 SVG。预置 6 种图标可混搭，如需更多从 `assets/icons/sidenav-icon/{name}.svg` 读取
+> - **Sidenav 图标**：使用 IconPark 风格线性 SVG（24x24 viewBox, 2px stroke）。预置 5 种通用图标：dashboard、users、database、cloud-server、settings，从 `assets/icons/sidenav-icon/{name}.svg` 读取
 > - **Logo**：从 `snippets/nav-logo.html` 读取
 > - **通用 UI 图标**：简单内联 `<svg>` + `stroke="currentColor"`
 > - 绝不使用 `<i class="lucide-xxx">` 语法
@@ -55,9 +55,9 @@ description: //
 > - 颜色用 `var(--color-primary)` 等语义变量，不硬编码 hex（SVG fill/stroke 除外）
 > - 禁止引入任何第三方 CSS 框架
 
-# 源力设计系统 (Yuanli Design System)
+# Shawn Design System
 
-企业级 B2B 管理后台设计规范，服务于字节跳动云服务（ByteCloud）产品线。主色 `#1664FF`（源力蓝），4px 栅格基准，32px 操作高度，48px 导航高度。
+企业级 B2B 管理后台设计规范，服务于企业级产品线。主色 `#1764E8`（Shawn Blue），4px 栅格基准，32px 操作高度，48px 导航高度。
 
 ---
 

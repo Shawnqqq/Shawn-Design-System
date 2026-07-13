@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   components.css — Yuanli Design System Component Definitions
+   components.css — Shawn Design System Component Definitions
    Auto-extracted from preview/component-*.html
    DO NOT EDIT MANUALLY — regenerate via extract-components-css.mjs
    ═══════════════════════════════════════════════════════════════ */
@@ -169,7 +169,7 @@
   text-align: center; color: var(--color-white); white-space: nowrap; box-sizing: border-box;
 }
 
-.badge-active { background: var(--status-yuanliDanger-5); border-color: var(--danger-5); }
+.badge-active { background: var(--status-shawnDanger-5); border-color: var(--danger-5); }
 .badge-ash { background: var(--grey-4); border-color: var(--grey-6); }
 .badge-dot { padding: 0; }
 .badge-dot.badge-small { width: 6px; height: 6px; }
@@ -194,7 +194,7 @@
 .badge-icon svg { width: 100%; height: 100%; }
 .badge-icon-success { color: var(--success-5); }
 .badge-icon-warning { color: var(--warning-3); }
-.badge-icon-error { color: var(--status-yuanliDanger-5); }
+.badge-icon-error { color: var(--status-shawnDanger-5); }
 .badge-icon-skip { color: var(--grey-4); }
 .badge-icon-awaiting { color: var(--primary-6); }
 .badge-wrapper { position: relative; display: inline-flex; align-items: flex-start; }
@@ -365,7 +365,7 @@
   font-weight: var(--font-weight-medium);
 }
 
-.cascader-item.disabled { color: var(--color-text-disabled, var(--text-yuanliNeutral-5)); cursor: not-allowed; }
+.cascader-item.disabled { color: var(--color-text-disabled, var(--text-shawnNeutral-5)); cursor: not-allowed; }
 
 .cascader-item-label {
   flex: 1 0 0; min-width: 0; overflow: hidden;
@@ -678,7 +678,7 @@
 .ui-input:focus { box-shadow: 0 0 0 1px var(--primary-6), 0 1px 1px rgba(0,0,0,0.05), 0 0 0 3px rgba(22,100,255,0.3); }
 .ui-input.input-error { box-shadow: 0 0 0 1px var(--danger-5), 0 1px 1px rgba(0,0,0,0.05), 0 0 0 3px rgba(245,63,63,0.12); }
 .ui-input.input-success { box-shadow: 0 0 0 1px var(--success-6), 0 1px 1px rgba(0,0,0,0.05); }
-.ui-input:disabled { background-color: var(--color-bg-4); color: var(--text-yuanliNeutral-5); cursor: not-allowed; }
+.ui-input:disabled { background-color: var(--color-bg-4); color: var(--text-shawnNeutral-5); cursor: not-allowed; }
 
 .ui-textarea {
   box-sizing: border-box; width: 100%; min-height: 72px; padding: 8px 12px; border: none;
@@ -822,9 +822,9 @@
   box-shadow: 0 0 0 1px var(--danger-5), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 3px rgba(245, 63, 63, 0.12);
 }
 .ui-input.disabled,
-.ui-input:disabled { background-color: var(--color-bg-4); color: var(--text-yuanliNeutral-5); cursor: not-allowed; }
+.ui-input:disabled { background-color: var(--color-bg-4); color: var(--text-shawnNeutral-5); cursor: not-allowed; }
 .ui-input.disabled::placeholder,
-.ui-input:disabled::placeholder { color: var(--text-yuanliNeutral-5); }
+.ui-input:disabled::placeholder { color: var(--text-shawnNeutral-5); }
 .ui-input.readonly,
 .ui-input[readonly] { background-color: var(--color-bg-4); color: var(--color-text-1); cursor: default; }
 
@@ -1131,13 +1131,13 @@ to { transform: rotate(360deg); }; }
 }
 
 .page-item.disabled {
-  color: var(--text-yuanliNeutral-5); border-color: var(--color-border-2);
+  color: var(--text-shawnNeutral-5); border-color: var(--color-border-2);
   cursor: not-allowed; pointer-events: none;
 }
 
 .page-icon { width: 12px; height: 12px; }
 .page-arrow { color: var(--color-text-2); }
-.page-arrow.disabled { color: var(--text-yuanliNeutral-5); }
+.page-arrow.disabled { color: var(--text-shawnNeutral-5); }
 .page-item-more { border-color: var(--color-border-3); letter-spacing: 2px; font-weight: var(--font-weight-medium); }
 .pagination-total { font-size: var(--font-size-lead); color: var(--color-text-3); white-space: nowrap; }
 
@@ -1243,7 +1243,7 @@ to { transform: rotate(360deg); }; }
 
 .popconfirm .btn-secondary:hover { background: var(--primary-1); color: var(--primary-6); }
 .popconfirm .btn-danger { background: var(--danger-5); color: var(--color-white); }
-.popconfirm .btn-danger:hover { background: var(--status-yuanliDanger-5); }
+.popconfirm .btn-danger:hover { background: var(--status-shawnDanger-5); }
 
 /* ==========================================================================
    Progress
@@ -1373,9 +1373,9 @@ to { transform: rotate(360deg); }; }
   box-shadow: 0 0 0 1px var(--color-border-3);
 }
 
-.select.disabled .select-value { color: var(--text-yuanliNeutral-5); }
-.select.disabled .select-placeholder { color: var(--text-yuanliNeutral-5); }
-.select.disabled .select-suffix { color: var(--text-yuanliNeutral-5); }
+.select.disabled .select-value { color: var(--text-shawnNeutral-5); }
+.select.disabled .select-placeholder { color: var(--text-shawnNeutral-5); }
+.select.disabled .select-suffix { color: var(--text-shawnNeutral-5); }
 .select.disabled:hover .select-trigger { box-shadow: 0 0 0 1px var(--color-border-3); }
 .select.readonly .select-trigger { background: var(--color-bg-4); cursor: default; box-shadow: 0 0 0 1px var(--color-border-3); }
 .select.readonly .select-value { color: var(--color-text-1); }
@@ -1979,7 +1979,7 @@ input[type="checkbox"] {
 .tabs-line .tab-item:hover:not(.active):not([disabled]) { color: rgba(22, 100, 255, 0.8); }
 .tabs-line .tab-item.active { color: var(--primary-6); font-weight: var(--font-weight-medium); }
 .tabs-line .tab-item.active::after { background: var(--primary-6); }
-.tabs-line .tab-item[disabled] { color: var(--text-yuanliNeutral-5); cursor: not-allowed; opacity: 0.5; }
+.tabs-line .tab-item[disabled] { color: var(--text-shawnNeutral-5); cursor: not-allowed; opacity: 0.5; }
 
 .tabs-line .tab-item .tab-icon {
   width: 14px; height: 14px; display: inline-flex;
@@ -2190,9 +2190,9 @@ input[type="checkbox"] {
   cursor: not-allowed;
 }
 
-.timepicker.disabled .timepicker-value { color: var(--text-yuanliNeutral-5); }
-.timepicker.disabled .timepicker-placeholder { color: var(--text-yuanliNeutral-5); }
-.timepicker.disabled .timepicker-suffix { color: var(--text-yuanliNeutral-5); }
+.timepicker.disabled .timepicker-value { color: var(--text-shawnNeutral-5); }
+.timepicker.disabled .timepicker-placeholder { color: var(--text-shawnNeutral-5); }
+.timepicker.disabled .timepicker-suffix { color: var(--text-shawnNeutral-5); }
 .timepicker-range .timepicker-input { min-width: 240px; }
 
 /* ==========================================================================

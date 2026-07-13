@@ -1,11 +1,11 @@
 ---
-name: '"源力设计系统 (Yuanli Design System)"'
+name: '"Shawn Design System"'
 description: //
 ---
 
-# 源力设计系统 (Yuanli Design System)
+# Shawn Design System
 
-企业级 B2B 管理后台设计规范，服务于字节跳动云服务（ByteCloud）产品线，提供高信息密度、三级骨架布局的纯 CSS/HTML 设计 Token 与组件体系。
+企业级 B2B 管理后台设计规范，服务于企业级产品线，提供高信息密度、三级骨架布局的纯 CSS/HTML 设计 Token 与组件体系。
 
 ---
 
@@ -86,14 +86,14 @@ Token 文件同时提供了排版工具类，可直接应用于 HTML 元素：
 
 | 分类 | Token 示例 | 值域 | 说明 |
 |------|-----------|------|------|
-| 主色阶 | `--primary-yuanliBlue-1` ~ `--primary-yuanliBlue-7` | #f3f7ff ~ #0055ff | 7 级蓝色递进，主色为 `--primary-yuanliBlue-6: #1664FF` |
-| 中性色 | `--text-yuanliNeutral-1` ~ `--text-yuanliNeutral-11` | #ffffff ~ #000b1a | 11 级灰阶，覆盖背景到正文 |
-| 边框色 | `--border-yuanliBorder-1` ~ `--border-yuanliBorder-4` | #eaedf1 ~ #959da5 | 4 级边框深度 |
-| 成功色 | `--status-yuanliSuccess-2` ~ `--status-yuanliSuccess-7` | #e2f5eb ~ #189959 | 背景到文字 |
-| 危险色 | `--status-yuanliDanger-2` ~ `--status-yuanliDanger-7` | #feeced ~ #c43138 | 背景到文字 |
-| 警告色 | `--status-yuanliWarning-2` ~ `--status-yuanliWarning-7` | #fdf3de ~ #de9400 | 背景到文字 |
+| 主色阶 | `--primary-shawnPrimary-1` ~ `--primary-shawnPrimary-7` | #f3f6fe ~ #1250ba | 7 级蓝色递进，主色为 `--primary-shawnPrimary-6: #1764E8` |
+| 中性色 | `--text-shawnNeutral-1` ~ `--text-shawnNeutral-11` | #ffffff ~ #000b1a | 11 级灰阶，覆盖背景到正文 |
+| 边框色 | `--border-shawnBorder-1` ~ `--border-shawnBorder-4` | #eaedf1 ~ #959da5 | 4 级边框深度 |
+| 成功色 | `--status-shawnSuccess-2` ~ `--status-shawnSuccess-7` | #e2f5eb ~ #189959 | 背景到文字 |
+| 危险色 | `--status-shawnDanger-2` ~ `--status-shawnDanger-7` | #feeced ~ #c43138 | 背景到文字 |
+| 警告色 | `--status-shawnWarning-2` ~ `--status-shawnWarning-7` | #fdf3de ~ #de9400 | 背景到文字 |
 | 语义别名 | `--color-primary`, `--color-surface`, `--color-border` | 按主题映射 | 解耦色值与场景 |
-| 图表色 | `--chart-1` ~ `--chart-5` | #1664ff ~ #4e5969 | 数据可视化配色 |
+| 图表色 | `--chart-1` ~ `--chart-5` | #1764e8 ~ #4e5969 | 数据可视化配色 |
 | 交互状态 | `--state-hover`, `--state-focus`, `--state-press` | rgba(22,100,255, 0.08/0.12/0.16) | 通用交互反馈 |
 
 ### 字体 Token
@@ -213,7 +213,7 @@ Token 文件同时提供了排版工具类，可直接应用于 HTML 元素：
 
 ## 页面骨架
 
-源力设计系统采用固定的三级骨架布局，所有页面必须遵循此结构：
+Shawn Design System采用固定的三级骨架布局，所有页面必须遵循此结构：
 
 ```
 +------------------------------------------------------------------+
@@ -263,7 +263,7 @@ Token 文件同时提供了排版工具类，可直接应用于 HTML 元素：
 
 ## Dark Mode 支持
 
-源力设计系统提供完整的深色主题支持，通过 `.dark` CSS 选择器激活。Dark Mode 覆盖 70+ 个 CSS 变量，包括：
+Shawn Design System提供完整的深色主题支持，通过 `.dark` CSS 选择器激活。Dark Mode 覆盖 70+ 个 CSS 变量，包括：
 
 ### 切换方式
 
@@ -284,20 +284,20 @@ Token 文件同时提供了排版工具类，可直接应用于 HTML 元素：
 | 侧栏 `--color-sidebar` | #fcfdfe | #1d2129 |
 | 边框 `--color-border` | #dde2e9 | #333333 |
 | 弱化文字 `--color-muted-foreground` | #86909c | #c9cdd4 |
-| 主色 `--color-primary` | #1664ff | #1664ff |
+| 主色 `--color-primary` | #1764e8 | #1764e8 |
 | 成功色 `--color-success` | #2a814b | #7ccd94 |
 | 危险色 `--color-danger` | #d7312a | #ff706d |
 | 警告色 `--color-warning` | #bd7e00 | #f0a50f |
 | 阴影（以 shadow-2 为例） | `rgba(12,13,14,0.08)` | `rgba(0,0,0,0.32)` |
 
-深色模式下阴影透明度显著提高以维持层级感知，状态色切换至高明度变体以保证深色背景上的可读性。主色 `#1664FF` 在两种模式下保持一致，作为品牌锚点。
+深色模式下阴影透明度显著提高以维持层级感知，状态色切换至高明度变体以保证深色背景上的可读性。主色 `#1764E8` 在两种模式下保持一致，作为品牌锚点。
 
 ---
 
 ## 文件索引
 
 ```
-yuanli-page-generator-v2/
+shawn-page-generator-v2/
 |
 +-- SKILL.md                          # 页面生成规则与设计规范文档
 +-- README.md                         # 本文件 - 品牌文档
@@ -377,7 +377,7 @@ yuanli-page-generator-v2/
 
 ## 页面类型支持
 
-源力设计系统定义了三种标准页面类型，每种类型有独立的设计规范和还原校验清单：
+Shawn Design System定义了三种标准页面类型，每种类型有独立的设计规范和还原校验清单：
 
 | 页面类型 | 背景色 | 核心构成 | 规范章节 |
 |----------|--------|----------|----------|
@@ -391,8 +391,8 @@ yuanli-page-generator-v2/
 
 | 属性 | 值 |
 |------|-----|
-| 主色名称 | 源力蓝 (Yuanli Blue) |
-| 主色色值 | #1664FF |
+| 主色名称 | Shawn Blue |
+| 主色色值 | #1764E8 |
 | 字体族 | PingFang SC / Microsoft YaHei / Helvetica Neue |
 | 设计基准 | 4px 栅格、32px 操作高度、48px 导航高度 |
-| 适用场景 | 字节跳动云服务（ByteCloud）B2B 管理后台 |
+| 适用场景 | 企业级B2B 管理后台 |

@@ -136,20 +136,10 @@
     "contractBasis": "Derived from preview markup; original design evidence not available."
   },
   "assetsConsumed": [
-    "assets/icons/sidenav-icon/CRB-p.svg",
-    "assets/icons/sidenav-icon/DTS-p.svg",
-    "assets/icons/sidenav-icon/ECS-p.svg",
-    "assets/icons/sidenav-icon/cloud-native-monitor-p.svg",
-    "assets/icons/sidenav-icon/cloud-network-p.svg",
-    "assets/icons/sidenav-icon/cloud-security-p.svg",
-    "assets/icons/sidenav-icon/data-platform.svg",
-    "assets/icons/sidenav-icon/database-management.svg",
-    "assets/icons/sidenav-icon/database-workbench.svg",
+    "assets/icons/sidenav-icon/dashboard.svg",
+    "assets/icons/sidenav-icon/users.svg",
     "assets/icons/sidenav-icon/database.svg",
-    "assets/icons/sidenav-icon/dc.svg",
-    "assets/icons/sidenav-icon/elastic-scaling-p.svg",
-    "assets/icons/sidenav-icon/encryption-of-permissions-grey.svg",
-    "assets/icons/sidenav-icon/file-NAS-p.svg",
-    "assets/icons/sidenav-icon/hacker-grey.svg"
+    "assets/icons/sidenav-icon/cloud-server.svg",
+    "assets/icons/sidenav-icon/settings.svg"
   ]
 }

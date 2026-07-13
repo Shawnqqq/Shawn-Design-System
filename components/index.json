@@ -1,8 +1,8 @@
 {
   "schemaVersion": 2,
-  "library": "源力设计系统",
+  "library": "Shawn Design System",
   "sourceKind": "preview-contract",
-  "summary": "源力设计系统组件集，面向 ByteCloud B2B 管理后台场景，包含 32 个组件，从 preview HTML 契约文件派生。",
+  "summary": "Shawn Design System组件集，面向通用 B2B 管理后台场景，包含 30 个组件，从 preview HTML 契约文件派生。",
   "crossComponentPatterns": [
     "Token surface consumed through colors_and_type.css.",
     "Preview CSS is aggregated into components.css.",
@@ -115,16 +115,6 @@
       "tokensConsumedCount": 0
     },
     {
-      "slug": "descriptions",
-      "name": "Descriptions",
-      "category": "data-display",
-      "preview": "preview/component-descriptions.html",
-      "contract": "components/descriptions.json",
-      "sourceKind": "preview-contract",
-      "confidence": "medium",
-      "tokensConsumedCount": 0
-    },
-    {
       "slug": "drawer",
       "name": "Drawer",
       "category": "overlay",
@@ -210,16 +200,6 @@
       "category": "navigation",
       "preview": "preview/component-pagination.html",
       "contract": "components/pagination.json",
-      "sourceKind": "preview-contract",
-      "confidence": "medium",
-      "tokensConsumedCount": 0
-    },
-    {
-      "slug": "popconfirm",
-      "name": "Popconfirm",
-      "category": "overlay",
-      "preview": "preview/component-popconfirm.html",
-      "contract": "components/popconfirm.json",
       "sourceKind": "preview-contract",
       "confidence": "medium",
       "tokensConsumedCount": 0
