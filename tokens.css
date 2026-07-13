@@ -5,8 +5,15 @@
 
 :root {
   /* ── 品牌主色 ── */
-  --primary: #1764E8;
-  --primary-light: rgba(23, 100, 232, 0.08);
+  --primary-1: #f3f6fe;   /* 最浅背景 */
+  --primary-2: #e6edfc;   /* 浅背景、标签底色 */
+  --primary-3: #a5bff2;   /* 禁用状态 */
+  --primary-4: #7da4ec;   /* 辅助 */
+  --primary-5: #3678e2;   /* hover */
+  --primary-6: #1764e8;   /* 主色 ★ */
+  --primary-7: #1250ba;   /* active/pressed */
+  --primary: #1764E8;     /* 等同 --primary-6 */
+  --primary-light: rgba(23, 100, 232, 0.08);  /* 主色浅底 */
 
   /* ── 状态色 ── */
   --success: #67C23A;
