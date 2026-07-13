@@ -85,7 +85,24 @@ description: "B2B 后台设计规范。使用 Element Plus 组件 + 统一视觉
 - 替换按钮文字和操作
 - **保留所有 class 名称和 DOM 结构不变**
 
-### Step 5: 应用组件二次开发样式
+### Step 5: 选择组件变体
+
+当页面中使用 Element Plus 组件时，参考 `templates/component-variants.html` 选择合适的变体：
+
+| 场景 | 推荐变体 |
+|------|---------|
+| 紧凑表格（数据密集） | 行高 40px，字号 13px |
+| 标准表格 | 行高 48px，字号 14px |
+| 筛选表单 | inline 模式，label 放 placeholder |
+| 详情信息 | el-descriptions border 模式，label 背景 #fafafa |
+| 弹框表单 | label-width: 100px，间距 12px |
+| 状态标签 | el-tag success/warning/danger/info |
+| 操作按钮 | 带图标 link 按钮，gap: 6px |
+| 分页 | 默认 50 条，选项 20/50/100/200/500 |
+
+详细示例见 `templates/component-variants.html`。
+
+### Step 6: 应用组件二次开发样式
 
 如果页面需要紧凑型组件效果，参考 `templates/component-overrides.html` 中的样式：
 
@@ -227,6 +244,7 @@ description: "B2B 后台设计规范。使用 Element Plus 组件 + 统一视觉
 | 独立表单页 | `templates/form-page.html` | 返回按钮+分区表单+提交按钮 |
 | 弹框（el-dialog） | `templates/dialog-form.html` | 弹框内嵌表单 |
 | 组件二次开发示例 | `templates/component-overrides.html` | el-table/el-form/el-descriptions 样式调整参考 |
+| 组件变体展示 | `templates/component-variants.html` | 8大类组件的各种场景变体（输入/选择/表格/表单/描述/标签/按钮/分页） |
 
 ---
 

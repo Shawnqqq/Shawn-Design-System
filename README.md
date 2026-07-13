@@ -64,6 +64,8 @@ B2B 管理后台设计规范。紧凑、务实、信息密集型风格。
 | 数据仪表盘 | `templates/dashboard.html` | 统计卡+图表+表格 |
 | 独立表单页 | `templates/form-page.html` | 返回+分区表单 |
 | 弹框（el-dialog） | `templates/dialog-form.html` | 弹框内表单 |
+| 组件二次开发示例 | `templates/component-overrides.html` | el-table/el-form/el-descriptions 样式调整 |
+| 组件变体展示 | `templates/component-variants.html` | 8大类组件的各种场景变体 |
 
 ## 设计规范
 

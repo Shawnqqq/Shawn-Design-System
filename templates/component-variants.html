@@ -1,0 +1,1266 @@
+<!--
+  Shawn Design System — 组件变体展示
+  展示 Element Plus 组件在设计系统风格下的各种场景变体。
+  AI 参考此文件选择合适的组件样式。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shawn Design System — 组件变体展示</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <style>
+    /* ========== Design Tokens ========== */
+    :root {
+      --primary-1: #f3f6fe;
+      --primary-2: #e6edfc;
+      --primary-6: #1764e8;
+      --primary-7: #1250ba;
+      --primary: #1764E8;
+      --primary-light: rgba(23, 100, 232, 0.08);
+      --success: #67C23A;
+      --warning: #E6A23C;
+      --danger: #F56C6C;
+      --text-primary: rgba(0,0,0,0.85);
+      --text-secondary: rgba(0,0,0,0.65);
+      --text-tertiary: rgba(0,0,0,0.45);
+      --text-disabled: rgba(0,0,0,0.25);
+      --bg-page: #f5f7fa;
+      --bg-card: #ffffff;
+      --bg-header: #fafafa;
+      --divider: rgba(0,0,0,0.08);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-stack);
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--bg-page);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ========== Page Layout ========== */
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: var(--text-tertiary);
+      margin-bottom: 28px;
+    }
+
+    /* ========== Section ========== */
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* ========== Variant Card ========== */
+    .variant-card {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .variant-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-left: 3px solid #1764E8;
+      padding-left: 12px;
+      margin-bottom: 16px;
+    }
+
+    .variant-card .el-form-item {
+      margin-bottom: 16px;
+    }
+
+    .variant-card .el-form-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ========== Demo Helpers ========== */
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .demo-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .demo-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .demo-label {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+
+    .demo-separator {
+      width: 100%;
+      height: 1px;
+      background: var(--divider);
+      margin: 16px 0;
+    }
+
+    /* Input variants */
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .input-grid .el-input,
+    .input-grid .el-select,
+    .input-grid .el-input-number {
+      max-width: 400px;
+    }
+
+    .input-full {
+      max-width: 600px;
+    }
+
+    .textarea-demo .el-textarea {
+      max-width: 600px;
+    }
+
+    /* Table variants */
+    .compact-table .el-table {
+      --el-table-border-color: rgba(0,0,0,0.06);
+      --el-table-header-bg-color: var(--bg-header);
+      font-size: 13px;
+    }
+
+    .compact-table .el-table th.el-table__cell {
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--bg-header);
+    }
+
+    .compact-table .el-table .el-table__row td {
+      height: 40px;
+      padding: 6px 0;
+    }
+
+    .standard-table .el-table {
+      --el-table-border-color: rgba(0,0,0,0.06);
+      --el-table-header-bg-color: var(--bg-header);
+      font-size: 14px;
+    }
+
+    .standard-table .el-table th.el-table__cell {
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--bg-header);
+    }
+
+    .standard-table .el-table .el-table__row td {
+      height: 48px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+      height: auto;
+      font-size: 13px;
+    }
+
+    .action-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .action-btn--edit {
+      color: var(--primary);
+    }
+
+    .action-btn--edit:hover {
+      color: #3d85f0;
+    }
+
+    .action-btn--delete {
+      color: var(--danger);
+    }
+
+    .action-btn--delete:hover {
+      color: #f78989;
+    }
+
+    .col-number {
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .expand-detail {
+      padding: 12px 16px;
+      background: var(--primary-light);
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Descriptions variants */
+    .desc-compact .el-descriptions__label,
+    .desc-compact .el-descriptions__content {
+      padding: 6px 10px;
+    }
+
+    /* Pagination */
+    .pagination-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pagination-demo .pagination-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .pagination-total {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+    }
+
+    /* Tag sizes */
+    .el-tag.is-large {
+      height: 28px;
+      padding: 0 12px;
+      font-size: 14px;
+    }
+
+    /* Button group */
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="page-container">
+      <h1 class="page-title">组件变体展示</h1>
+      <p class="page-desc">Shawn Design System 风格下 Element Plus 组件的常见场景变体，供 AI 在不同场景中选择合适的组件样式。</p>
+
+      <!-- ============================================================ -->
+      <!-- 1. 输入框（el-input）变体 -->
+      <!-- ============================================================ -->
+      <div class="section">
+        <h2 class="section-title">输入框（el-input）变体</h2>
+
+        <!-- 基础输入框 -->
+        <div class="variant-card">
+          <div class="variant-card-title">基础输入框</div>
+          <div class="input-grid">
+            <div>
+              <div class="demo-label">带 placeholder 引导</div>
+              <el-input v-model="inputs.basic1" placeholder="请输入名称" clearable />
+            </div>
+            <div>
+              <div class="demo-label">带默认值</div>
+              <el-input v-model="inputs.basic2" placeholder="请输入内容" clearable />
+            </div>
+            <div>
+              <div class="demo-label">禁用状态</div>
+              <el-input v-model="inputs.basic3" placeholder="不可编辑" disabled />
+            </div>
+            <div>
+              <div class="demo-label">只读状态</div>
+              <el-input v-model="inputs.basic4" readonly />
+            </div>
+          </div>
+        </div>
+
+        <!-- 带 label 输入框 -->
+        <div class="variant-card">
+          <div class="variant-card-title">带 label 输入框</div>
+          <el-form label-width="100px">
+            <el-form-item label="项目名称">
+              <el-input v-model="inputs.label1" placeholder="请输入项目名称" clearable />
+            </el-form-item>
+            <el-form-item label="负责人">
+              <el-input v-model="inputs.label2" placeholder="请输入负责人姓名" clearable />
+            </el-form-item>
+            <el-form-item label="备注">
+              <el-input v-model="inputs.label3" placeholder="请输入备注信息" clearable />
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <!-- 带图标输入框 -->
+        <div class="variant-card">
+          <div class="variant-card-title">带图标输入框</div>
+          <div class="input-grid">
+            <div>
+              <div class="demo-label">前缀搜索图标</div>
+              <el-input v-model="inputs.icon1" placeholder="搜索...">
+                <template #prefix>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                </template>
+              </el-input>
+            </div>
+            <div>
+              <div class="demo-label">后缀清除图标（clearable）</div>
+              <el-input v-model="inputs.icon2" placeholder="输入后可清除" clearable>
+                <template #suffix>
+                  <el-icon v-if="inputs.icon2" @click.stop="inputs.icon2 = ''" style="cursor:pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                  </el-icon>
+                </template>
+              </el-input>
+            </div>
+            <div>
+              <div class="demo-label">前缀用户图标</div>
+              <el-input v-model="inputs.icon3" placeholder="请输入用户名">
+                <template #prefix>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </template>
+              </el-input>
+            </div>
+            <div>
+              <div class="demo-label">前缀邮件图标</div>
+              <el-input v-model="inputs.icon4" placeholder="请输入邮箱">
+                <template #prefix>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </template>
+              </el-input>
+            </div>
+          </div>
+        </div>
+
+        <!-- 搜索输入框 -->
+        <div class="variant-card">
+          <div class="variant-card-title">搜索输入框</div>
+          <div class="input-full">
+            <el-input v-model="inputs.search" placeholder="输入关键词搜索" clearable @keyup.enter="handleSearch">
+              <template #prefix>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </template>
+              <template #append>
+                <el-button @click="handleSearch">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                  搜索
+                </el-button>
+              </template>
+            </el-input>
+          </div>
+        </div>
+
+        <!-- 文本域 -->
+        <div class="variant-card">
+          <div class="variant-card-title">文本域</div>
+          <div class="textarea-demo demo-col">
+            <div>
+              <div class="demo-label">3 行文本域</div>
+              <el-input v-model="inputs.textarea1" type="textarea" :rows="3" placeholder="请输入详细描述..." />
+            </div>
+            <div>
+              <div class="demo-label">5 行文本域</div>
+              <el-input v-model="inputs.textarea2" type="textarea" :rows="5" placeholder="请输入更长的内容..." />
+            </div>
+            <div>
+              <div class="demo-label">自适应高度文本域</div>
+              <el-input v-model="inputs.textarea3" type="textarea" autosize placeholder="输入内容后自动撑高..." />
+            </div>
+          </div>
+        </div>
+
+        <!-- 数字输入框 -->
+        <div class="variant-card">
+          <div class="variant-card-title">数字输入框</div>
+          <div class="input-grid">
+            <div>
+              <div class="demo-label">基础数字输入</div>
+              <el-input-number v-model="inputs.number1" :min="1" :max="100" />
+            </div>
+            <div>
+              <div class="demo-label">带步进器（step=5）</div>
+              <el-input-number v-model="inputs.number2" :min="0" :max="100" :step="5" />
+            </div>
+            <div>
+              <div class="demo-label">精度控制（2位小数）</div>
+              <el-input-number v-model="inputs.number3" :min="0" :precision="2" :step="0.1" />
+            </div>
+            <div>
+              <div class="demo-label">严格步进</div>
+              <el-input-number v-model="inputs.number4" :min="0" :max="100" :step="10" step-strictly />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 2. 选择器（el-select）变体 -->
+      <!-- ============================================================ -->
+      <div class="section">
+        <h2 class="section-title">选择器（el-select）变体</h2>
+
+        <!-- 基础选择器 -->
+        <div class="variant-card">
+          <div class="variant-card-title">基础选择器</div>
+          <div class="input-grid">
+            <div>
+              <div class="demo-label">无 label</div>
+              <el-select v-model="selects.basic" placeholder="请选择状态" clearable>
+                <el-option label="启用" value="active" />
+                <el-option label="禁用" value="disabled" />
+                <el-option label="草稿" value="draft" />
+              </el-select>
+            </div>
+            <div>
+              <div class="demo-label">带默认值</div>
+              <el-select v-model="selects.basicDefault" placeholder="请选择">
+                <el-option label="全部" value="" />
+                <el-option label="进行中" value="running" />
+                <el-option label="已完成" value="done" />
+                <el-option label="已关闭" value="closed" />
+              </el-select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 带 label 选择器 -->
+        <div class="variant-card">
+          <div class="variant-card-title">带 label 选择器</div>
+          <el-form label-width="100px">
+            <el-form-item label="所属部门">
+              <el-select v-model="selects.label1" placeholder="请选择部门" clearable style="width: 300px">
+                <el-option label="技术部" value="tech" />
+                <el-option label="产品部" value="product" />
+                <el-option label="设计部" value="design" />
+                <el-option label="市场部" value="marketing" />
+                <el-option label="人力资源部" value="hr" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="优先级">
+              <el-select v-model="selects.label2" placeholder="请选择优先级" style="width: 300px">
+                <el-option label="紧急" value="urgent" />
+                <el-option label="高" value="high" />
+                <el-option label="中" value="medium" />
+                <el-option label="低" value="low" />
+              </el-select>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <!-- 多选选择器 -->
+        <div class="variant-card">
+          <div class="variant-card-title">多选选择器</div>
+          <div class="input-grid">
+            <div>
+              <div class="demo-label">multiple 模式，展示 tag</div>
+              <el-select v-model="selects.multi" multiple placeholder="请选择标签" style="width: 360px">
+                <el-option label="前端开发" value="frontend" />
+                <el-option label="后端开发" value="backend" />
+                <el-option label="UI 设计" value="ui" />
+                <el-option label="产品经理" value="pm" />
+                <el-option label="数据分析" value="data" />
+                <el-option label="运维" value="ops" />
+              </el-select>
+            </div>
+            <div>
+              <div class="demo-label">多选 + collapse-tags</div>
+              <el-select v-model="selects.multiCollapse" multiple collapse-tags collapse-tags-tooltip placeholder="请选择" style="width: 360px">
+                <el-option label="Vue.js" value="vue" />
+                <el-option label="React" value="react" />
+                <el-option label="Angular" value="angular" />
+                <el-option label="Svelte" value="svelte" />
+                <el-option label="Next.js" value="next" />
+                <el-option label="Nuxt" value="nuxt" />
+              </el-select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 带搜索的选择器 -->
+        <div class="variant-card">
+          <div class="variant-card-title">带搜索的选择器</div>
+          <div class="input-grid">
+            <div>
+              <div class="demo-label">filterable 模式</div>
+              <el-select v-model="selects.filterable" filterable placeholder="输入搜索..." style="width: 300px">
+                <el-option v-for="city in cityOptions" :key="city" :label="city" :value="city" />
+              </el-select>
+            </div>
+            <div>
+              <div class="demo-label">filterable + multiple</div>
+              <el-select v-model="selects.filterMulti" filterable multiple placeholder="搜索并多选..." style="width: 360px">
+                <el-option v-for="city in cityOptions" :key="city" :label="city" :value="city" />
+              </el-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 3. 表格（el-table）变体 -->
+      <!-- ============================================================ -->
+      <div class="section">
+        <h2 class="section-title">表格（el-table）变体</h2>
+
+        <!-- 紧凑表格 -->
+        <div class="variant-card">
+          <div class="variant-card-title">紧凑表格（行高 40px，字号 13px）</div>
+          <div class="compact-table">
+            <el-table :data="tableData" border stripe style="width: 100%">
+              <el-table-column prop="id" label="ID" width="70" align="center" />
+              <el-table-column prop="name" label="名称" min-width="180" show-overflow-tooltip />
+              <el-table-column prop="department" label="部门" width="120" />
+              <el-table-column prop="status" label="状态" width="100" align="center">
+                <template #default="{ row }">
+                  <el-tag :type="statusTagType(row.status)" size="small" effect="light">{{ statusLabel(row.status) }}</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column prop="amount" label="金额" width="120" align="right">
+                <template #default="{ row }">
+                  <span class="col-number">{{ row.amount.toLocaleString() }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="date" label="日期" width="120" />
+            </el-table>
+          </div>
+        </div>
+
+        <!-- 标准表格 -->
+        <div class="variant-card">
+          <div class="variant-card-title">标准表格（行高 48px，字号 14px）</div>
+          <div class="standard-table">
+            <el-table :data="tableData" border stripe style="width: 100%">
+              <el-table-column prop="id" label="ID" width="70" align="center" />
+              <el-table-column prop="name" label="名称" min-width="200" show-overflow-tooltip />
+              <el-table-column prop="department" label="部门" width="120" />
+              <el-table-column prop="status" label="状态" width="100" align="center">
+                <template #default="{ row }">
+                  <el-tag :type="statusTagType(row.status)" size="small" effect="light">{{ statusLabel(row.status) }}</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column prop="amount" label="金额" width="130" align="right">
+                <template #default="{ row }">
+                  <span class="col-number">¥{{ row.amount.toLocaleString() }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="date" label="日期" width="130" />
+            </el-table>
+          </div>
+        </div>
+
+        <!-- 带操作列表格 -->
+        <div class="variant-card">
+          <div class="variant-card-title">带操作列表格</div>
+          <div class="standard-table">
+            <el-table :data="tableData.slice(0, 5)" border style="width: 100%">
+              <el-table-column prop="id" label="ID" width="70" align="center" />
+              <el-table-column prop="name" label="名称" min-width="200" show-overflow-tooltip />
+              <el-table-column prop="department" label="部门" width="120" />
+              <el-table-column prop="status" label="状态" width="100" align="center">
+                <template #default="{ row }">
+                  <el-tag :type="statusTagType(row.status)" size="small" effect="light">{{ statusLabel(row.status) }}</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="180" fixed="right" align="center">
+                <template #default="{ row }">
+                  <el-button class="action-btn action-btn--edit" type="primary" link @click="handleAction('查看', row)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    查看
+                  </el-button>
+                  <el-button class="action-btn action-btn--edit" type="primary" link @click="handleAction('编辑', row)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                    编辑
+                  </el-button>
+                  <el-button class="action-btn action-btn--delete" type="danger" link @click="handleAction('删除', row)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                    删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
+
+        <!-- 带统计行表格 -->
+        <div class="variant-card">
+          <div class="variant-card-title">带统计行表格</div>
+          <div class="standard-table">
+            <el-table :data="tableData" border show-summary :summary-method="getSummary" style="width: 100%">
+              <el-table-column prop="id" label="ID" width="70" align="center" />
+              <el-table-column prop="name" label="名称" min-width="200" show-overflow-tooltip />
+              <el-table-column prop="department" label="部门" width="120" />
+              <el-table-column prop="status" label="状态" width="100" align="center">
+                <template #default="{ row }">
+                  <el-tag :type="statusTagType(row.status)" size="small" effect="light">{{ statusLabel(row.status) }}</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column prop="amount" label="金额" width="130" align="right">
+                <template #default="{ row }">
+                  <span class="col-number">¥{{ row.amount.toLocaleString() }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column prop="date" label="日期" width="130" />
+            </el-table>
+          </div>
+        </div>
+
+        <!-- 可展开表格 -->
+        <div class="variant-card">
+          <div class="variant-card-title">可展开表格</div>
+          <div class="standard-table">
+            <el-table :data="tableData.slice(0, 4)" border style="width: 100%">
+              <el-table-column type="expand">
+                <template #default="{ row }">
+                  <div class="expand-detail">
+                    <p><strong>项目描述：</strong>{{ row.description }}</p>
+                    <p style="margin-top:6px"><strong>创建人：</strong>{{ row.department }} 部门</p>
+                    <p style="margin-top:6px"><strong>创建时间：</strong>{{ row.date }}</p>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="id" label="ID" width="70" align="center" />
+              <el-table-column prop="name" label="名称" min-width="220" show-overflow-tooltip />
+              <el-table-column prop="department" label="部门" width="120" />
+              <el-table-column prop="status" label="状态" width="100" align="center">
+                <template #default="{ row }">
+                  <el-tag :type="statusTagType(row.status)" size="small" effect="light">{{ statusLabel(row.status) }}</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column prop="amount" label="金额" width="130" align="right">
+                <template #default="{ row }">
+                  <span class="col-number">¥{{ row.amount.toLocaleString() }}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 4. 表单（el-form）变体 -->
+      <!-- ============================================================ -->
+      <div class="section">
+        <h2 class="section-title">表单（el-form）变体</h2>
+
+        <!-- 垂直表单 -->
+        <div class="variant-card">
+          <div class="variant-card-title">垂直表单（label 在上方）</div>
+          <el-form label-position="top" style="max-width: 600px">
+            <el-form-item label="项目名称">
+              <el-input v-model="forms.vertical.name" placeholder="请输入项目名称" />
+            </el-form-item>
+            <el-form-item label="所属部门">
+              <el-select v-model="forms.vertical.dept" placeholder="请选择部门" style="width: 100%">
+                <el-option label="技术部" value="tech" />
+                <el-option label="产品部" value="product" />
+                <el-option label="设计部" value="design" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="项目描述">
+              <el-input v-model="forms.vertical.desc" type="textarea" :rows="3" placeholder="请输入项目描述" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary">提交</el-button>
+              <el-button>取消</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <!-- 水平表单 -->
+        <div class="variant-card">
+          <div class="variant-card-title">水平表单（label 在左侧）</div>
+          <el-form label-width="100px" style="max-width: 600px">
+            <el-form-item label="项目名称">
+              <el-input v-model="forms.horizontal.name" placeholder="请输入项目名称" />
+            </el-form-item>
+            <el-form-item label="所属部门">
+              <el-select v-model="forms.horizontal.dept" placeholder="请选择部门" style="width: 100%">
+                <el-option label="技术部" value="tech" />
+                <el-option label="产品部" value="product" />
+                <el-option label="设计部" value="design" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="预算金额">
+              <el-input-number v-model="forms.horizontal.budget" :min="0" :step="1000" style="width: 100%" />
+            </el-form-item>
+            <el-form-item label="项目描述">
+              <el-input v-model="forms.horizontal.desc" type="textarea" :rows="3" placeholder="请输入项目描述" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary">提交</el-button>
+              <el-button>取消</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <!-- 行内表单 -->
+        <div class="variant-card">
+          <div class="variant-card-title">行内表单</div>
+          <el-form :inline="true" :model="forms.inline">
+            <el-form-item>
+              <el-input v-model="forms.inline.keyword" placeholder="搜索关键词" clearable />
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="forms.inline.status" placeholder="状态" clearable>
+                <el-option label="启用" value="active" />
+                <el-option label="禁用" value="disabled" />
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-date-picker v-model="forms.inline.date" type="date" placeholder="选择日期" value-format="YYYY-MM-DD" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary">查询</el-button>
+              <el-button>重置</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <!-- 紧凑表单 -->
+        <div class="variant-card">
+          <div class="variant-card-title">紧凑表单（margin-bottom: 12px）</div>
+          <el-form label-width="100px" style="max-width: 600px" class="compact-form">
+            <el-form-item label="姓名" style="margin-bottom: 12px">
+              <el-input v-model="forms.compact.name" placeholder="请输入姓名" />
+            </el-form-item>
+            <el-form-item label="手机号" style="margin-bottom: 12px">
+              <el-input v-model="forms.compact.phone" placeholder="请输入手机号" />
+            </el-form-item>
+            <el-form-item label="邮箱" style="margin-bottom: 12px">
+              <el-input v-model="forms.compact.email" placeholder="请输入邮箱" />
+            </el-form-item>
+            <el-form-item label="部门" style="margin-bottom: 12px">
+              <el-select v-model="forms.compact.dept" placeholder="请选择" style="width: 100%">
+                <el-option label="技术部" value="tech" />
+                <el-option label="产品部" value="product" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="职级" style="margin-bottom: 12px">
+              <el-select v-model="forms.compact.level" placeholder="请选择" style="width: 100%">
+                <el-option label="P5" value="p5" />
+                <el-option label="P6" value="p6" />
+                <el-option label="P7" value="p7" />
+                <el-option label="P8" value="p8" />
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary">保存</el-button>
+              <el-button>取消</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 5. 描述列表（el-descriptions）变体 -->
+      <!-- ============================================================ -->
+      <div class="section">
+        <h2 class="section-title">描述列表（el-descriptions）变体</h2>
+
+        <!-- 标准模式 -->
+        <div class="variant-card">
+          <div class="variant-card-title">标准模式（border）</div>
+          <el-descriptions :column="2" border>
+            <el-descriptions-item label="项目名称">企业数字化转型平台建设</el-descriptions-item>
+            <el-descriptions-item label="项目编号">PRJ-2026-00128</el-descriptions-item>
+            <el-descriptions-item label="负责人">张三</el-descriptions-item>
+            <el-descriptions-item label="所属部门">技术部</el-descriptions-item>
+            <el-descriptions-item label="状态">
+              <el-tag type="success" size="small" effect="light">进行中</el-tag>
+            </el-descriptions-item>
+            <el-descriptions-item label="预算">¥ 1,280,000</el-descriptions-item>
+            <el-descriptions-item label="开始日期">2026-01-15</el-descriptions-item>
+            <el-descriptions-item label="结束日期">2026-12-31</el-descriptions-item>
+            <el-descriptions-item label="项目描述" :span="2">
+              本项目旨在构建统一的企业数字化平台，整合现有 OA、CRM、ERP 系统，实现数据互通与业务流程自动化，提升整体运营效率。
+            </el-descriptions-item>
+          </el-descriptions>
+        </div>
+
+        <!-- 紧凑模式 -->
+        <div class="variant-card">
+          <div class="variant-card-title">紧凑模式</div>
+          <el-descriptions :column="3" border size="small">
+            <el-descriptions-item label="姓名">李四</el-descriptions-item>
+            <el-descriptions-item label="工号">EMP-20260156</el-descriptions-item>
+            <el-descriptions-item label="入职日期">2026-03-01</el-descriptions-item>
+            <el-descriptions-item label="部门">产品部</el-descriptions-item>
+            <el-descriptions-item label="职级">P7</el-descriptions-item>
+            <el-descriptions-item label="邮箱">lisi@example.com</el-descriptions-item>
+            <el-descriptions-item label="手机号">138****6789</el-descriptions-item>
+            <el-descriptions-item label="办公地点">北京·望京 A 座 12F</el-descriptions-item>
+            <el-descriptions-item label="直属上级">王五</el-descriptions-item>
+          </el-descriptions>
+        </div>
+
+        <!-- 无边框模式 -->
+        <div class="variant-card">
+          <div class="variant-card-title">无边框模式</div>
+          <el-descriptions :column="2">
+            <el-descriptions-item label="应用名称">PDHub 知识管理平台</el-descriptions-item>
+            <el-descriptions-item label="版本号">v3.2.1</el-descriptions-item>
+            <el-descriptions-item label="部署环境">生产环境</el-descriptions-item>
+            <el-descriptions-item label="运行状态">
+              <el-tag type="success" size="small" effect="light">正常运行</el-tag>
+            </el-descriptions-item>
+            <el-descriptions-item label="最近更新">2026-07-10 14:30:00</el-descriptions-item>
+            <el-descriptions-item label="累计用户">12,680</el-descriptions-item>
+          </el-descriptions>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 6. 标签（el-tag）变体 -->
+      <!-- ============================================================ -->
+      <div class="section">
+        <h2 class="section-title">标签（el-tag）变体</h2>
+
+        <!-- 不同颜色 -->
+        <div class="variant-card">
+          <div class="variant-card-title">不同颜色</div>
+          <div class="demo-row">
+            <el-tag>默认</el-tag>
+            <el-tag type="success">成功</el-tag>
+            <el-tag type="warning">警告</el-tag>
+            <el-tag type="danger">危险</el-tag>
+            <el-tag type="info">信息</el-tag>
+          </div>
+        </div>
+
+        <!-- 不同尺寸 -->
+        <div class="variant-card">
+          <div class="variant-card-title">不同尺寸</div>
+          <div class="demo-row" style="align-items: flex-end;">
+            <el-tag size="large">大号标签</el-tag>
+            <el-tag>默认标签</el-tag>
+            <el-tag size="small">小号标签</el-tag>
+          </div>
+        </div>
+
+        <!-- 不同效果 -->
+        <div class="variant-card">
+          <div class="variant-card-title">不同效果（dark / light / plain）</div>
+          <div class="demo-col">
+            <div>
+              <div class="demo-label">dark 效果</div>
+              <div class="demo-row">
+                <el-tag effect="dark">默认</el-tag>
+                <el-tag effect="dark" type="success">成功</el-tag>
+                <el-tag effect="dark" type="warning">警告</el-tag>
+                <el-tag effect="dark" type="danger">危险</el-tag>
+                <el-tag effect="dark" type="info">信息</el-tag>
+              </div>
+            </div>
+            <div>
+              <div class="demo-label">light 效果</div>
+              <div class="demo-row">
+                <el-tag effect="light">默认</el-tag>
+                <el-tag effect="light" type="success">成功</el-tag>
+                <el-tag effect="light" type="warning">警告</el-tag>
+                <el-tag effect="light" type="danger">危险</el-tag>
+                <el-tag effect="light" type="info">信息</el-tag>
+              </div>
+            </div>
+            <div>
+              <div class="demo-label">plain 效果</div>
+              <div class="demo-row">
+                <el-tag effect="plain">默认</el-tag>
+                <el-tag effect="plain" type="success">成功</el-tag>
+                <el-tag effect="plain" type="warning">警告</el-tag>
+                <el-tag effect="plain" type="danger">危险</el-tag>
+                <el-tag effect="plain" type="info">信息</el-tag>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 可关闭标签 -->
+        <div class="variant-card">
+          <div class="variant-card-title">可关闭标签</div>
+          <div class="demo-row">
+            <el-tag
+              v-for="tag in tags.closable"
+              :key="tag.label"
+              :type="tag.type"
+              closable
+              @close="handleTagClose(tag)"
+            >
+              {{ tag.label }}
+            </el-tag>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 7. 按钮（el-button）变体 -->
+      <!-- ============================================================ -->
+      <div class="section">
+        <h2 class="section-title">按钮（el-button）变体</h2>
+
+        <!-- 不同类型 -->
+        <div class="variant-card">
+          <div class="variant-card-title">不同类型</div>
+          <div class="button-group">
+            <el-button>默认按钮</el-button>
+            <el-button type="primary">主要按钮</el-button>
+            <el-button type="success">成功按钮</el-button>
+            <el-button type="warning">警告按钮</el-button>
+            <el-button type="danger">危险按钮</el-button>
+            <el-button type="info">信息按钮</el-button>
+          </div>
+          <div class="demo-separator"></div>
+          <div class="button-group">
+            <el-button plain>朴素按钮</el-button>
+            <el-button type="primary" plain>主要</el-button>
+            <el-button type="success" plain>成功</el-button>
+            <el-button type="warning" plain>警告</el-button>
+            <el-button type="danger" plain>危险</el-button>
+            <el-button type="info" plain>信息</el-button>
+          </div>
+        </div>
+
+        <!-- 不同尺寸 -->
+        <div class="variant-card">
+          <div class="variant-card-title">不同尺寸</div>
+          <div class="button-group" style="align-items: flex-end;">
+            <el-button size="large">大按钮</el-button>
+            <el-button>默认按钮</el-button>
+            <el-button size="small">小按钮</el-button>
+          </div>
+        </div>
+
+        <!-- 带图标按钮 -->
+        <div class="variant-card">
+          <div class="variant-card-title">带图标按钮</div>
+          <div class="button-group">
+            <el-button type="primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              新建
+            </el-button>
+            <el-button type="primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              导出
+            </el-button>
+            <el-button type="primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+              编辑
+            </el-button>
+            <el-button type="danger">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+              删除
+            </el-button>
+            <el-button>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              刷新
+            </el-button>
+          </div>
+        </div>
+
+        <!-- 纯图标按钮 -->
+        <div class="variant-card">
+          <div class="variant-card-title">纯图标按钮（circle）</div>
+          <div class="button-group">
+            <el-button type="primary" circle>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </el-button>
+            <el-button type="success" circle>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </el-button>
+            <el-button type="warning" circle>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            </el-button>
+            <el-button type="danger" circle>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+            </el-button>
+            <el-button circle>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </el-button>
+          </div>
+        </div>
+
+        <!-- 文字按钮 -->
+        <div class="variant-card">
+          <div class="variant-card-title">文字按钮（link）</div>
+          <div class="button-group">
+            <el-button type="primary" link>主要链接</el-button>
+            <el-button type="success" link>成功链接</el-button>
+            <el-button type="warning" link>警告链接</el-button>
+            <el-button type="danger" link>危险链接</el-button>
+            <el-button type="info" link>信息链接</el-button>
+            <el-button link>默认链接</el-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 8. 分页（el-pagination）变体 -->
+      <!-- ============================================================ -->
+      <div class="section">
+        <h2 class="section-title">分页（el-pagination）变体</h2>
+
+        <!-- 标准分页 -->
+        <div class="variant-card">
+          <div class="variant-card-title">标准分页（sizes + prev + pager + next + jumper）</div>
+          <el-pagination
+            v-model:current-page="pagination.page"
+            v-model:page-size="pagination.pageSize"
+            :page-sizes="[20, 50, 100, 200]"
+            :total="256"
+            layout="sizes, prev, pager, next, jumper"
+            background
+          />
+        </div>
+
+        <!-- 简洁分页 -->
+        <div class="variant-card">
+          <div class="variant-card-title">简洁分页（prev + pager + next）</div>
+          <el-pagination
+            v-model:current-page="pagination.pageSimple"
+            :total="256"
+            :page-size="20"
+            layout="prev, pager, next"
+            background
+          />
+        </div>
+
+        <!-- 带总数分页 -->
+        <div class="variant-card">
+          <div class="variant-card-title">带总数分页</div>
+          <div style="display:flex; align-items:center; gap: 16px;">
+            <span class="pagination-total">共 256 条</span>
+            <el-pagination
+              v-model:current-page="pagination.pageTotal"
+              :total="256"
+              :page-size="20"
+              layout="prev, pager, next"
+              background
+            />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script>
+    const { createApp, ref, reactive } = Vue;
+
+    /* ---- 中文语言包 ---- */
+    const zhCn = {
+      name: 'zh-cn',
+      el: {
+        pagination: { goto: '前往', pagesize: '条/页', total: '共 {total} 条', pageClassifier: '页', page: '页', prev: '上一页', next: '下一页', currentPage: '第 {pager} 页' },
+        select: { loading: '加载中', noMatch: '无匹配数据', noData: '暂无数据', placeholder: '请选择' },
+        table: { emptyText: '暂无数据', confirmFilter: '确认', resetFilter: '重置', clearFilter: '全部', sumText: '合计' },
+        datepicker: { now: '此刻', today: '今天', cancel: '取消', clear: '清空', confirm: '确定', startDate: '开始日期', startTime: '开始时间', endDate: '结束日期', endTime: '结束时间', prevYear: '前一年', nextYear: '后一年', prevMonth: '上个月', nextMonth: '下个月', year: '年', month1: '1月', month2: '2月', month3: '3月', month4: '4月', month5: '5月', month6: '6月', month7: '7月', month8: '8月', month9: '9月', month10: '10月', month11: '11月', month12: '12月', weeks: { sun: '日', mon: '一', tue: '二', wed: '三', thu: '四', fri: '五', sat: '六' }, months: { jan: '一月', feb: '二月', mar: '三月', apr: '四月', may: '五月', jun: '六月', jul: '七月', aug: '八月', sep: '九月', oct: '十月', nov: '十一月', dec: '十二月' } },
+      },
+    };
+
+    const app = createApp({
+      setup() {
+        /* ---- 输入框 ---- */
+        const inputs = reactive({
+          basic1: '',
+          basic2: '默认内容示例',
+          basic3: '禁用状态的值',
+          basic4: '只读状态的值',
+          label1: '',
+          label2: '',
+          label3: '',
+          icon1: '',
+          icon2: '已输入的内容',
+          icon3: '',
+          icon4: '',
+          search: '',
+          textarea1: '',
+          textarea2: '',
+          textarea3: '',
+          number1: 10,
+          number2: 20,
+          number3: 3.14,
+          number4: 50,
+        });
+
+        /* ---- 选择器 ---- */
+        const selects = reactive({
+          basic: '',
+          basicDefault: 'running',
+          label1: '',
+          label2: '',
+          multi: ['frontend', 'ui'],
+          multiCollapse: ['vue', 'react', 'angular', 'svelte'],
+          filterable: '',
+          filterMulti: [],
+        });
+
+        const cityOptions = ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '南京', '西安', '重庆', '天津', '苏州'];
+
+        /* ---- 表格 ---- */
+        const tableData = ref([
+          { id: 1,  name: '2026年新员工入职培训计划',       department: '人力资源', status: 'active',   amount: 12800,  date: '2026-07-10', description: '面向Q3季度新入职员工的标准化培训方案，涵盖企业文化、制度规范、岗位技能三大模块。' },
+          { id: 2,  name: '供应链管理高级研修班',           department: '运营',     status: 'active',   amount: 56000,  date: '2026-07-09', description: '与知名商学院合作开设的供应链专题课程，面向中高层管理人员，为期12周。' },
+          { id: 3,  name: '客户关系管理系统升级项目',       department: '技术',     status: 'disabled', amount: 198000, date: '2026-07-08', description: 'CRM平台从v2.x迁移至v3.x，涉及数据清洗、接口重构、权限体系重建等工作。' },
+          { id: 4,  name: '企业内训师认证与激励方案',       department: '人力资源', status: 'draft',    amount: 45000,  date: '2026-07-07', description: '建立内部讲师选拔、培训、认证及课酬激励的完整体系，预计首批认证30名内训师。' },
+          { id: 5,  name: '数据同步中间件性能优化',         department: '技术',     status: 'active',   amount: 32000,  date: '2026-07-06', description: '基于CDC的实时数据同步服务在高并发场景下存在延迟，需优化消费端批量写入策略。' },
+          { id: 6,  name: '销售团队季度冲刺培训',           department: '销售',     status: 'active',   amount: 18500,  date: '2026-07-05', description: '针对华东区销售团队的季度业绩冲刺专项培训，包含话术演练、客户画像分析等实战内容。' },
+          { id: 7,  name: '权限网关服务安全审计',           department: '安全',     status: 'active',   amount: 86000,  date: '2026-07-04', description: '对统一认证中心进行年度安全审计，覆盖OAuth2.0流程、Token管理、SSO会话等关键环节。' },
+          { id: 8,  name: '财务报表引擎自动化测试建设',     department: '财务',     status: 'draft',    amount: 27600,  date: '2026-07-03', description: '为资产负债表、利润表、现金流量表等核心报表搭建自动化回归测试框架与用例集。' },
+        ]);
+
+        function statusTagType(status) {
+          const map = { active: 'success', disabled: 'danger', draft: 'warning' };
+          return map[status] || 'info';
+        }
+
+        function statusLabel(status) {
+          const map = { active: '启用', disabled: '禁用', draft: '草稿' };
+          return map[status] || status;
+        }
+
+        function getSummary({ columns, data }) {
+          const sums = [];
+          columns.forEach((column, index) => {
+            if (index === 0) { sums[index] = '合计'; return; }
+            if (column.property === 'amount') {
+              const total = data.reduce((acc, row) => acc + (row.amount || 0), 0);
+              sums[index] = '¥' + total.toLocaleString();
+            } else {
+              sums[index] = '';
+            }
+          });
+          return sums;
+        }
+
+        /* ---- 表单 ---- */
+        const forms = reactive({
+          vertical: { name: '', dept: '', desc: '' },
+          horizontal: { name: '', dept: '', budget: 0, desc: '' },
+          inline: { keyword: '', status: '', date: '' },
+          compact: { name: '', phone: '', email: '', dept: '', level: '' },
+        });
+
+        /* ---- 标签 ---- */
+        const tags = reactive({
+          closable: [
+            { label: '前端开发', type: '' },
+            { label: 'UI 设计', type: 'success' },
+            { label: '待审核', type: 'warning' },
+            { label: '已过期', type: 'danger' },
+            { label: '已归档', type: 'info' },
+          ],
+        });
+
+        function handleTagClose(tag) {
+          const idx = tags.closable.indexOf(tag);
+          if (idx > -1) tags.closable.splice(idx, 1);
+        }
+
+        /* ---- 分页 ---- */
+        const pagination = reactive({
+          page: 1,
+          pageSize: 20,
+          pageSimple: 1,
+          pageTotal: 1,
+        });
+
+        /* ---- 通用 ---- */
+        function handleSearch() {
+          ElementPlus.ElMessage.success('搜索：' + inputs.search);
+        }
+
+        function handleAction(action, row) {
+          ElementPlus.ElMessage.info(action + '：' + row.name);
+        }
+
+        return {
+          inputs,
+          selects,
+          cityOptions,
+          tableData,
+          statusTagType,
+          statusLabel,
+          getSummary,
+          forms,
+          tags,
+          handleTagClose,
+          pagination,
+          handleSearch,
+          handleAction,
+        };
+      },
+    });
+
+    app.use(ElementPlus, { locale: zhCn });
+    app.mount('#app');
+  </script>
+</body>
+</html>
