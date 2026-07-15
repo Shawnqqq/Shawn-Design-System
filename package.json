@@ -1,0 +1,22 @@
+{
+  "name": "shawn-design-spec",
+  "version": "1.0.0",
+  "description": "B2B 管理后台设计规范 + 代码规范，基于 Element Plus，确保页面风格统一、代码结构一致。",
+  "keywords": ["design-spec", "element-plus", "b2b", "admin", "zcode-skill"],
+  "author": "Shawn",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shawnqqq/Shawn-Design-System.git"
+  },
+  "bin": {
+    "shawn-design-spec": "./bin/install.js"
+  },
+  "files": [
+    "SKILL.md",
+    "references/",
+    "assets/",
+    "bin/",
+    "README.md"
+  ]
+}
