@@ -1,8 +1,8 @@
 <!--
   Shawn Design System — 列表页（统计 + Tabs）
-  变体：顶部统计卡片 + 标签页切换 + 筛选 + 表格 + 分页
+  变体：顶部统计卡片（可点击/带趋势）+ 标签页切换（带徽标）+ 动态筛选 + 表格 + 分页
   使用方法：复制此文件，替换文字和数据内容。
-  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  变量声明在 :root，按需取用。
   禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
 -->
 <!DOCTYPE html>
@@ -11,23 +11,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>统计 + Tabs 列表页</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.css" />
   <style>
     /* ========== Design Tokens ========== */
     :root {
       --color-primary: #1764E8;
       --color-success: #67C23A;
       --color-warning: #E6A23C;
-      --color-danger:  #F56C6C;
-      --text-primary:   rgba(0,0,0,0.85);
-      --text-secondary: rgba(0,0,0,0.65);
-      --text-muted:     rgba(0,0,0,0.45);
-      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --color-danger: #F56C6C;
+      --text-primary: rgba(0, 0, 0, 0.85);
+      --text-secondary: rgba(0, 0, 0, 0.65);
+      --text-muted: rgba(0, 0, 0, 0.45);
       --page-bg: #f5f7fa;
       --card-bg: #fff;
-      --card-radius: 8px;
-      --table-header-bg: #fafafa;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+                    'PingFang SC', 'Microsoft YaHei', sans-serif;
     }
 
     /* ========== Reset & Base ========== */
@@ -44,15 +42,30 @@
       font-family: var(--font-stack);
       font-size: 14px;
       color: var(--text-primary);
-      background: #f5f7fa;
+      background: var(--page-bg);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ========== Page Container ========== */
     .page-container {
       padding: 20px;
       min-height: 100vh;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      font-size: 14px;
+      color: var(--text-secondary);
     }
 
     /* ========== Stats Row ========== */
@@ -66,8 +79,26 @@
       flex: 1;
       background: var(--card-bg);
       padding: 16px 20px;
-      border-radius: var(--card-radius);
-      box-shadow: var(--shadow-sm);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      border: 2px solid transparent;
+      user-select: none;
+    }
+
+    .stat-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-card.is-active {
+      border-color: var(--color-primary);
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
     }
 
     .stat-value {
@@ -81,6 +112,25 @@
       color: var(--color-primary);
     }
 
+    .stat-trend {
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .stat-trend--up {
+      color: var(--color-danger);
+      background: rgba(245, 108, 108, 0.08);
+    }
+
+    .stat-trend--down {
+      color: var(--color-success);
+      background: rgba(103, 194, 58, 0.08);
+    }
+
     .stat-label {
       font-size: 12px;
       color: var(--text-muted);
@@ -90,29 +140,65 @@
     /* ========== Tabs Card ========== */
     .tabs-card {
       background: var(--card-bg);
-      border-radius: var(--card-radius);
-      box-shadow: var(--shadow-sm);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
       overflow: hidden;
     }
 
     .tabs-card .el-tabs__header {
-      padding: 0 16px;
+      padding: 0 12px;
       margin-bottom: 0;
     }
 
     .tabs-card .el-tabs__nav-wrap::after {
       height: 1px;
-      background: rgba(0,0,0,0.06);
+      background: rgba(0, 0, 0, 0.06);
     }
 
     .tabs-card .el-tabs__content {
       padding: 0;
     }
 
-    /* ========== Filter Bar (inside tabs-card) ========== */
+    .tab-content {
+      padding: 0 12px 12px;
+    }
+
+    .tabs-card .el-table tr th,
+    .tabs-card .el-table tr td {
+      padding: 4px;
+      font-size: 12px;
+    }
+
+    /* ========== Tab Badge ========== */
+    .tab-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.06);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .el-tabs__item.is-active .tab-badge {
+      background: rgba(23, 100, 232, 0.1);
+      color: var(--color-primary);
+    }
+
+    /* ========== Filter Bar ========== */
     .filter-bar {
-      padding: 16px 16px 12px;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
 
     .filter-bar .el-form--inline {
@@ -133,92 +219,44 @@
       width: 180px;
     }
 
-    .filter-bar .el-button { display: inline-flex; align-items: center; gap: 6px; }
+    .filter-bar .el-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 0;
+    }
 
     .filter-bar .el-date-editor--daterange {
       width: 260px;
     }
 
-    .filter-bar .el-button {
-      display: inline-flex;
+    .filter-actions {
+      margin-left: auto;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
-    /* ========== Table ========== */
-    .tabs-card .el-table {
-      --el-table-border-color: rgba(0,0,0,0.06);
-      --el-table-header-bg-color: var(--table-header-bg);
-      --el-table-row-height: 48px;
-      --el-table-header-text-color: var(--text-primary);
-      --el-table-text-color: var(--text-secondary);
-      font-size: 14px;
-    }
-
-    .tabs-card .el-table th.el-table__cell {
-      font-weight: 600;
-      color: var(--text-primary);
-      background: var(--table-header-bg);
-    }
-
-    .tabs-card .el-table .el-table__row td {
-      height: 48px;
-    }
-
-    /* 数字列右对齐 */
-    .col-number {
-      font-variant-numeric: tabular-nums;
-      text-align: right;
-    }
-
-    /* ========== Action Buttons ========== */
-    .action-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 0;
-      height: auto;
-      font-size: 13px;
-    }
-
-    .action-btn svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
-
-    .action-btn--edit {
-      color: var(--color-primary);
-    }
-
-    .action-btn--edit:hover {
-      color: #3d85f0;
-    }
-
-    .action-btn--delete {
-      color: var(--color-danger);
-    }
-
-    .action-btn--delete:hover {
-      color: #f78989;
+    .filter-actions .el-button {
+      margin-left: 0;
     }
 
     /* ========== Pagination Bar ========== */
     .pagination-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-top: 1px solid rgba(0,0,0,0.06);
+      justify-content: flex-end;
+      padding-top: 12px;
+      gap: 16px;
     }
 
     .pagination-total {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
     }
 
     .pagination-bar .el-pagination {
-      --el-pagination-font-size: 13px;
+      --el-pagination-font-size: 12px;
     }
 
     .pagination-bar .el-pagination .el-input {
@@ -229,179 +267,201 @@
 <body>
   <div id="app">
     <div class="page-container">
-      <!-- 统计卡片 -->
+      <div class="page-header">
+        <h1>列表页（统计+tabs）</h1>
+        <p>顶部可点击统计卡片（含趋势） + Tab 切换 + 每个 Tab 独立筛选项</p>
+      </div>
+
+      <!-- 统计卡片（可点击切换 tab） -->
       <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-value stat-value--primary">{{ stats.total.toLocaleString() }}</div>
-          <div class="stat-label">总任务</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">{{ stats.pending }}</div>
-          <div class="stat-label">待处理</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">{{ stats.inProgress }}</div>
-          <div class="stat-label">进行中</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">{{ stats.completed.toLocaleString() }}</div>
-          <div class="stat-label">已完成</div>
+        <div
+          v-for="card in statCards"
+          :key="card.key"
+          class="stat-card"
+          :class="{ 'is-active': activeTab === card.key }"
+          @click="activeTab = card.key"
+        >
+          <div class="stat-header">
+            <div class="stat-value" :class="{ 'stat-value--primary': activeTab === card.key }">
+              {{ card.value.toLocaleString() }}
+            </div>
+            <span v-if="card.trend" class="stat-trend" :class="card.trend > 0 ? 'stat-trend--up' : 'stat-trend--down'">
+              <el-icon v-if="card.trend > 0"><Top></Top></el-icon>
+              <el-icon v-else><Bottom></Bottom></el-icon>
+              {{ Math.abs(card.trend) }}%
+            </span>
+          </div>
+          <div class="stat-label">{{ card.label }}</div>
         </div>
       </div>
 
       <!-- Tabs + 表格卡片 -->
       <div class="tabs-card">
         <el-tabs v-model="activeTab" @tab-change="handleTabChange">
-          <el-tab-pane label="全部" name="all" />
-          <el-tab-pane label="待处理" name="pending" />
-          <el-tab-pane label="已完成" name="completed" />
+          <el-tab-pane name="all">
+            <template #label>
+              <span class="tab-label">全部<span class="tab-badge">{{ stats.total }}</span></span>
+            </template>
+          </el-tab-pane>
+          <el-tab-pane name="pending">
+            <template #label>
+              <span class="tab-label">待处理<span class="tab-badge">{{ stats.pending }}</span></span>
+            </template>
+          </el-tab-pane>
+          <el-tab-pane name="completed">
+            <template #label>
+              <span class="tab-label">已完成<span class="tab-badge">{{ stats.completed }}</span></span>
+            </template>
+          </el-tab-pane>
         </el-tabs>
 
-        <!-- 筛选区 -->
-        <div class="filter-bar">
-          <el-form :inline="true" :model="filterForm" @submit.prevent="handleSearch">
-            <el-form-item>
-              <el-input
-                v-model="filterForm.keyword"
-                placeholder="搜索任务名称"
-                clearable
-                @keyup.enter="handleSearch"
-              >
-                <template #prefix>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"/>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                  </svg>
-                </template>
-              </el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-select v-model="filterForm.priority" placeholder="优先级" clearable>
-                <el-option label="高" value="high" />
-                <el-option label="中" value="medium" />
-                <el-option label="低" value="low" />
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-date-picker
-                v-model="filterForm.dateRange"
-                type="daterange"
-                range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                value-format="YYYY-MM-DD"
-              />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="handleSearch">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="8"/>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                查询
-              </el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button @click="handleReset">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="1 4 1 10 7 10"/>
-                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
-                </svg>
-                重置
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </div>
+        <div class="tab-content">
+          <!-- 筛选区 -->
+          <div class="filter-bar">
+            <el-form :inline="true" :model="filterForm" @submit.prevent="handleSearch">
+              <el-form-item>
+                <el-input
+                  v-model="filterForm.keyword"
+                  placeholder="搜索任务名称"
+                  clearable
+                  @keyup.enter="handleSearch"
+                >
+                  <template #prefix>
+                    <el-icon><Search></Search></el-icon>
+                  </template>
+                </el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-select v-model="filterForm.priority" placeholder="优先级" clearable>
+                  <el-option label="高" value="high"></el-option>
+                  <el-option label="中" value="medium"></el-option>
+                  <el-option label="低" value="low"></el-option>
+                </el-select>
+              </el-form-item>
 
-        <!-- 表格 -->
-        <el-table
-          :data="tableData"
-          border
-          stripe
-          style="width: 100%"
-        >
-          <el-table-column prop="name" label="任务名称" min-width="180" show-overflow-tooltip />
-          <el-table-column prop="description" label="描述" min-width="260" show-overflow-tooltip />
-          <el-table-column prop="status" label="状态" width="100" align="center">
-            <template #default="{ row }">
-              <el-tag
-                :type="statusTagType(row.status)"
-                size="small"
-                effect="light"
-              >
-                {{ statusLabel(row.status) }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="priority" label="优先级" width="90" align="center">
-            <template #default="{ row }">
-              <el-tag
-                :type="priorityTagType(row.priority)"
-                size="small"
-                effect="plain"
-              >
-                {{ priorityLabel(row.priority) }}
-              </el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="assignee" label="负责人" width="100" />
-          <el-table-column prop="workHours" label="工时(h)" width="100" align="right">
-            <template #default="{ row }">
-              <span class="col-number">{{ row.workHours }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="createdAt" label="创建时间" width="160" />
-          <el-table-column label="操作" width="150" fixed="right" align="center">
-            <template #default="{ row }">
-              <el-button
-                class="action-btn action-btn--edit"
-                type="primary"
-                link
-                @click="handleEdit(row)"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
-                </svg>
-                编辑
-              </el-button>
-              <el-button
-                class="action-btn action-btn--delete"
-                type="danger"
-                link
-                @click="handleDelete(row)"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="3 6 5 6 21 6"/>
-                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                  <path d="M10 11v6"/>
-                  <path d="M14 11v6"/>
-                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
-                </svg>
-                删除
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+              <!-- 待处理 tab：紧急程度筛选 -->
+              <el-form-item v-if="activeTab === 'pending'">
+                <el-select v-model="filterForm.urgency" placeholder="紧急程度" clearable>
+                  <el-option label="紧急" value="urgent"></el-option>
+                  <el-option label="一般" value="normal"></el-option>
+                  <el-option label="可暂缓" value="low"></el-option>
+                </el-select>
+              </el-form-item>
 
-        <!-- 分页栏 -->
-        <div class="pagination-bar">
-          <span class="pagination-total">共 {{ total }} 条</span>
-          <el-pagination
-            v-model:current-page="pagination.page"
-            v-model:page-size="pagination.pageSize"
-            :page-sizes="[20, 50, 100, 200, 500]"
-            :total="total"
-            layout="sizes, prev, pager, next, jumper"
-            @size-change="handlePageChange"
-            @current-change="handlePageChange"
-          />
+              <!-- 已完成 tab：完成时间范围 -->
+              <el-form-item v-if="activeTab === 'completed'">
+                <el-date-picker
+                  v-model="filterForm.completedRange"
+                  type="daterange"
+                  range-separator="-"
+                  start-placeholder="完成开始"
+                  end-placeholder="完成结束"
+                  value-format="YYYY-MM-DD"
+                ></el-date-picker>
+              </el-form-item>
+
+              <el-form-item>
+                <el-date-picker
+                  v-model="filterForm.dateRange"
+                  type="daterange"
+                  range-separator="-"
+                  start-placeholder="创建开始"
+                  end-placeholder="创建结束"
+                  value-format="YYYY-MM-DD"
+                ></el-date-picker>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="handleSearch">
+                  <el-icon><Search></Search></el-icon>
+                  查询
+                </el-button>
+              </el-form-item>
+              <el-form-item>
+                <el-button @click="handleReset">
+                  <el-icon><Refresh></Refresh></el-icon>
+                  重置
+                </el-button>
+              </el-form-item>
+              <div class="filter-actions">
+                <el-button type="primary" @click="handleAdd">
+                  <el-icon><Plus></Plus></el-icon>
+                  新增
+                </el-button>
+              </div>
+            </el-form>
+          </div>
+
+          <!-- 表格 -->
+          <el-table
+            v-loading="loading"
+            :data="tableData"
+            border
+            stripe
+            style="width: 100%"
+          >
+            <el-table-column prop="name" label="任务名称" min-width="180" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="code" label="编号" width="130"></el-table-column>
+            <el-table-column prop="priority" label="优先级" width="80" align="center">
+              <template #default="{ row }">
+                <el-tag :type="priorityTagType(row.priority)" size="small" effect="dark">
+                  {{ priorityLabel(row.priority) }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="category" label="分类" width="120"></el-table-column>
+            <el-table-column prop="owner" label="负责人" width="100"></el-table-column>
+            <el-table-column prop="createdAt" label="创建时间" width="165"></el-table-column>
+            <el-table-column prop="amount" label="金额" width="130" align="right">
+              <template #default="{ row }">
+                ¥{{ row.amount.toLocaleString() }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="notes" label="备注" min-width="220" show-overflow-tooltip></el-table-column>
+            <el-table-column prop="status" label="状态" width="270" align="center" fixed="right">
+              <template #default="{ row }">
+                <el-radio-group v-model="row.status" size="small" @change="handleStatusChange(row)">
+                  <el-radio-button label="筹备中" value="preparing"></el-radio-button>
+                  <el-radio-button label="未开始" value="pending"></el-radio-button>
+                  <el-radio-button label="进行中" value="inProgress"></el-radio-button>
+                  <el-radio-button label="已结班" value="completed"></el-radio-button>
+                </el-radio-group>
+              </template>
+            </el-table-column>
+            <el-table-column prop="onShelf" label="上架" width="80" align="center" fixed="right">
+              <template #default="{ row }">
+                <el-switch v-model="row.onShelf" @change="handleShelfChange(row)"></el-switch>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="120" fixed="right" align="center">
+              <template #default="{ row }">
+                <el-button type="primary" link @click="handleEdit(row)">编辑</el-button>
+                <el-divider direction="vertical"></el-divider>
+                <el-button type="danger" link @click="handleDelete(row)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+
+          <!-- 分页栏 -->
+          <div class="pagination-bar">
+            <span class="pagination-total" style="margin-right: auto;">共 {{ total }} 条</span>
+            <el-pagination
+              v-model:current-page="pagination.page"
+              v-model:page-size="pagination.pageSize"
+              :page-sizes="[20, 50, 100, 200, 500]"
+              :total="total"
+              layout="sizes, prev, pager, next, jumper"
+              @size-change="handlePageChange"
+              @current-change="handlePageChange"
+            ></el-pagination>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@element-plus/icons-vue@2.3.1/dist/index.iife.min.js"></script>
   <script>
     const { createApp, ref, reactive, computed } = Vue;
 
@@ -426,6 +486,14 @@
           completed: 1112,
         });
 
+        /* ---- 统计卡片配置（含趋势） ---- */
+        const statCards = computed(() => [
+          { key: 'all',       label: '总任务', value: stats.total,     trend: 8 },
+          { key: 'pending',   label: '待处理', value: stats.pending,   trend: 12 },
+          { key: 'inProgress', label: '进行中', value: stats.inProgress, trend: -5 },
+          { key: 'completed', label: '已完成', value: stats.completed, trend: -3 },
+        ]);
+
         /* ---- Tabs ---- */
         const activeTab = ref('all');
 
@@ -434,7 +502,12 @@
           keyword: '',
           priority: '',
           dateRange: null,
+          urgency: '',
+          completedRange: null,
         });
+
+        /* ---- 加载状态 ---- */
+        const loading = ref(false);
 
         /* ---- 分页 ---- */
         const pagination = reactive({
@@ -445,36 +518,27 @@
 
         /* ---- 示例数据 ---- */
         const allData = [
-          { id: 1,  name: '用户权限模块重构',             description: '重构RBAC权限模型，支持多租户数据隔离与动态菜单配置',                       status: 'completed',  priority: 'high',   assignee: '张三', workHours: 128, createdAt: '2026-07-10 09:30:00' },
-          { id: 2,  name: '订单导出功能优化',             description: '将全量导出改为流式导出，支持百万级订单数据异步生成Excel',                   status: 'pending',    priority: 'medium', assignee: '李四', workHours: 40,  createdAt: '2026-07-09 14:20:00' },
-          { id: 3,  name: '首页性能瓶颈排查',             description: '排查首屏加载耗时超过3s的根因，定位到第三方SDK阻塞渲染问题',               status: 'inProgress', priority: 'high',   assignee: '王五', workHours: 64,  createdAt: '2026-07-08 11:05:00' },
-          { id: 4,  name: '消息中心推送对接',             description: '对接极光推送与企业微信，实现站内信、APP推送、企微消息三通道触达',           status: 'pending',    priority: 'low',    assignee: '赵六', workHours: 24,  createdAt: '2026-07-07 16:45:00' },
-          { id: 5,  name: '数据看板图表组件升级',         description: '将ECharts从4.x升级至5.x，适配暗色主题并优化大数据量渲染性能',             status: 'completed',  priority: 'medium', assignee: '孙七', workHours: 56,  createdAt: '2026-07-06 08:10:00' },
-          { id: 6,  name: '国际化多语言适配',             description: '新增阿拉伯语RTL布局支持，调整日期、货币等本地化格式处理逻辑',              status: 'inProgress', priority: 'medium', assignee: '张三', workHours: 80,  createdAt: '2026-07-05 10:20:00' },
-          { id: 7,  name: 'API网关限流策略调整',          description: '基于业务峰值QPS数据，重新评估各接口限流阈值并优化令牌桶算法参数',           status: 'completed',  priority: 'high',   assignee: '李四', workHours: 32,  createdAt: '2026-07-04 15:30:00' },
-          { id: 8,  name: '文件上传组件重构',             description: '重构为分片上传架构，支持断点续传、并发上传及上传进度实时反馈',             status: 'pending',    priority: 'low',    assignee: '王五', workHours: 48,  createdAt: '2026-07-03 09:00:00' },
+          { id: 1,  name: '用户权限模块重构',             code: 'TASK-001', status: 'completed',   onShelf: true,  priority: 'high',   category: '后端开发',   owner: '张三', createdAt: '2026-07-10 09:30:00', amount: 12800,  notes: '重构RBAC权限模型，支持多租户数据隔离与动态菜单配置，已完成权限矩阵设计与核心接口开发' },
+          { id: 2,  name: '订单导出功能优化',             code: 'TASK-002', status: 'pending',     onShelf: true,  priority: 'medium', category: '后端开发',   owner: '李四', createdAt: '2026-07-09 14:20:00', amount: 4500,   notes: '将全量导出改为流式导出，支持百万级订单数据异步生成Excel，预计可将导出耗时从30分钟降至2分钟' },
+          { id: 3,  name: '首页性能瓶颈排查',             code: 'TASK-003', status: 'inProgress',  onShelf: false, priority: 'high',   category: '前端开发',   owner: '王五', createdAt: '2026-07-08 11:05:00', amount: 6400,   notes: '排查首屏加载耗时超过3s的根因，已定位到第三方SDK阻塞渲染问题，正在制定异步加载方案' },
+          { id: 4,  name: '消息中心推送对接',             code: 'TASK-004', status: 'preparing',   onShelf: false, priority: 'low',    category: '后端开发',   owner: '赵六', createdAt: '2026-07-07 16:45:00', amount: 2400,   notes: '对接极光推送与企业微信，实现站内信、APP推送、企微消息三通道触达，待产品确认推送策略' },
+          { id: 5,  name: '数据看板图表组件升级',         code: 'TASK-005', status: 'completed',   onShelf: true,  priority: 'medium', category: '前端开发',   owner: '孙七', createdAt: '2026-07-06 08:10:00', amount: 5600,   notes: '将ECharts从4.x升级至5.x，适配暗色主题并优化大数据量渲染性能，已通过全部回归测试' },
+          { id: 6,  name: '国际化多语言适配',             code: 'TASK-006', status: 'inProgress',  onShelf: true,  priority: 'medium', category: '前端开发',   owner: '张三', createdAt: '2026-07-05 10:20:00', amount: 8000,   notes: '新增阿拉伯语RTL布局支持，调整日期、货币等本地化格式处理逻辑，已完成60%的页面适配' },
+          { id: 7,  name: 'API网关限流策略调整',          code: 'TASK-007', status: 'completed',   onShelf: true,  priority: 'high',   category: '基础设施',   owner: '李四', createdAt: '2026-07-04 15:30:00', amount: 3200,   notes: '基于业务峰值QPS数据，重新评估各接口限流阈值并优化令牌桶算法参数，限流误触发率已降至0.1%以下' },
+          { id: 8,  name: '文件上传组件重构',             code: 'TASK-008', status: 'pending',     onShelf: false, priority: 'low',    category: '前端开发',   owner: '王五', createdAt: '2026-07-03 09:00:00', amount: 4800,   notes: '重构为分片上传架构，支持断点续传、并发上传及上传进度实时反馈，技术方案已评审通过' },
         ];
 
         const tableData = computed(() => {
           let data = allData;
           if (activeTab.value === 'pending') {
-            data = data.filter(r => r.status === 'pending');
+            data = data.filter(r => r.status === 'pending' || r.status === 'preparing');
           } else if (activeTab.value === 'completed') {
             data = data.filter(r => r.status === 'completed');
+          } else if (activeTab.value === 'inProgress') {
+            data = data.filter(r => r.status === 'inProgress');
           }
           return data;
         });
-
-        /* ---- 状态映射 ---- */
-        function statusTagType(status) {
-          const map = { completed: 'success', pending: 'warning', inProgress: '' };
-          return map[status] || 'info';
-        }
-
-        function statusLabel(status) {
-          const map = { completed: '已完成', pending: '待处理', inProgress: '进行中' };
-          return map[status] || status;
-        }
 
         /* ---- 优先级映射 ---- */
         function priorityTagType(priority) {
@@ -487,22 +551,43 @@
           return map[priority] || priority;
         }
 
+        function handleStatusChange(row) {
+          ElementPlus.ElMessage.info(row.name + ' 状态已变更');
+        }
+
+        function handleShelfChange(row) {
+          ElementPlus.ElMessage.info(row.name + (row.onShelf ? ' 已上架' : ' 已下架'));
+        }
+
         /* ---- 事件处理 ---- */
         function handleTabChange(tab) {
           pagination.page = 1;
-          // 替换为实际接口调用，按 tab 筛选
+          filterForm.urgency = '';
+          filterForm.completedRange = null;
         }
 
         function handleSearch() {
-          ElementPlus.ElMessage.success('查询条件：' + JSON.stringify({ keyword: filterForm.keyword, priority: filterForm.priority, dateRange: filterForm.dateRange }));
+          ElementPlus.ElMessage.success('查询条件：' + JSON.stringify({
+            keyword: filterForm.keyword,
+            priority: filterForm.priority,
+            urgency: filterForm.urgency,
+            completedRange: filterForm.completedRange,
+            dateRange: filterForm.dateRange,
+          }));
         }
 
         function handleReset() {
           filterForm.keyword = '';
           filterForm.priority = '';
           filterForm.dateRange = null;
+          filterForm.urgency = '';
+          filterForm.completedRange = null;
           pagination.page = 1;
           ElementPlus.ElMessage.info('已重置筛选条件');
+        }
+
+        function handleAdd() {
+          ElementPlus.ElMessage.info('新增');
         }
 
         function handleEdit(row) {
@@ -525,18 +610,21 @@
 
         return {
           stats,
+          statCards,
           activeTab,
           filterForm,
+          loading,
           pagination,
           total,
           tableData,
-          statusTagType,
-          statusLabel,
           priorityTagType,
           priorityLabel,
+          handleStatusChange,
+          handleShelfChange,
           handleTabChange,
           handleSearch,
           handleReset,
+          handleAdd,
           handleEdit,
           handleDelete,
           handlePageChange,
@@ -545,6 +633,9 @@
     });
 
     app.use(ElementPlus, { locale: zhCn });
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      app.component(key, component);
+    }
     app.mount('#app');
   </script>
 </body>

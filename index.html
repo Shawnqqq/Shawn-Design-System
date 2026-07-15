@@ -168,63 +168,6 @@
     .welcome .stat .num { font-size: 20px; font-weight: 700; color: #1d2129; }
     .welcome .stat .label { font-size: 10px; color: #86909c; margin-top: 2px; }
 
-    /* ========== Design Specs ========== */
-    .spec-list {
-      padding: 20px;
-      max-width: 640px;
-    }
-    .spec-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border: 1px solid #e5e6eb;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .spec-item:hover { border-color: #1764E8; box-shadow: 0 2px 8px rgba(23,100,232,0.08); }
-    .spec-icon {
-      width: 36px;
-      height: 36px;
-      background: #f0f5ff;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .spec-icon svg { width: 18px; height: 18px; color: #1764E8; }
-    .spec-name { font-size: 13px; font-weight: 500; color: #1d2129; }
-    .spec-desc { font-size: 11px; color: #86909c; margin-top: 2px; }
-    .spec-content {
-      display: none;
-      padding: 20px;
-    }
-    .spec-content.show { display: block; }
-    .spec-back {
-      font-size: 12px;
-      color: #86909c;
-      cursor: pointer;
-      margin-bottom: 16px;
-      display: inline-block;
-    }
-    .spec-back:hover { color: #1764E8; }
-    .spec-text {
-      font-size: 12px;
-      line-height: 1.8;
-      color: #4e5969;
-      white-space: pre-wrap;
-      font-family: "SFMono-Regular", "SF Mono", "Menlo", monospace;
-      max-height: calc(100vh - 200px);
-      overflow-y: auto;
-      background: #f7f8fa;
-      padding: 16px;
-      border-radius: 6px;
-    }
-    .spec-text::-webkit-scrollbar { width: 4px; }
-    .spec-text::-webkit-scrollbar-thumb { background: #e5e6eb; border-radius: 2px; }
   </style>
 </head>
 <body>
@@ -236,11 +179,10 @@
         <span class="title">Shawn Design System</span>
       </div>
     </div>
-    <p class="desc">Shawn B2B Admin 设计规范系统 — 色彩、字体、间距、组件与页面模板的完整定义。</p>
+    <p class="desc">Shawn B2B Admin 设计规范系统 — 基础 Token + 组件规范 + 页面布局参考的完整定义。AI 参考布局思路 + 使用设计 Token 自主开发。</p>
     <nav class="tabs">
       <div class="tab active" data-tab="theme">主题</div>
       <div class="tab" data-tab="components">组件</div>
-      <div class="tab" data-tab="specs">设计规范</div>
     </nav>
   </header>
 
@@ -269,16 +211,13 @@
         <div class="nav-group-title">页面模板（Element Plus）</div>
         <div class="nav-item" data-page="templates/list-standard.html">列表页（标准）</div>
         <div class="nav-item" data-page="templates/list-multi-filter.html">列表页（多筛选多按钮）</div>
-        <div class="nav-item" data-page="templates/list-custom-table.html">列表页（含自定义表格）</div>
         <div class="nav-item" data-page="templates/list-stats-tabs.html">列表页（统计+tabs）</div>
         <div class="nav-item" data-page="templates/detail-tabs.html">详情页（tabs）</div>
         <div class="nav-item" data-page="templates/detail-info.html">详情页（信息展示）</div>
         <div class="nav-item" data-page="templates/detail-drawer.html">详情页（抽屉）</div>
         <div class="nav-item" data-page="templates/dashboard.html">数据仪表盘</div>
         <div class="nav-item" data-page="templates/form-page.html">独立表单页</div>
-        <div class="nav-item" data-page="templates/dialog-form.html">弹框（el-dialog）</div>
-        <div class="nav-item" data-page="templates/component-overrides.html">组件二次开发示例</div>
-        <div class="nav-item" data-page="templates/component-variants.html">组件变体展示</div>
+        <div class="nav-item" data-page="templates/dialog-form.html">弹框表单</div>
 
         <div class="nav-group-title">核心组件</div>
         <div class="nav-item" data-page="preview/component-topnav.html">顶栏 TopNav</div>
@@ -305,6 +244,7 @@
         <div class="nav-item" data-page="preview/component-avatar.html">头像 Avatar</div>
         <div class="nav-item" data-page="preview/component-badge.html">徽标 Badge</div>
         <div class="nav-item" data-page="preview/component-progress.html">进度条 Progress</div>
+        <div class="nav-item" data-page="preview/component-descriptions.html">描述列表 Descriptions</div>
 
         <div class="nav-group-title">反馈</div>
         <div class="nav-item" data-page="preview/component-alert.html">警告提示 Alert</div>
@@ -328,44 +268,14 @@
           <h2>Shawn Design System</h2>
           <p>从左侧导航选择一个组件或页面模板，右侧将展示完整的预览效果。</p>
           <div class="stats">
-            <div class="stat"><div class="num">7</div><div class="label">页面模板</div></div>
-            <div class="stat"><div class="num">31</div><div class="label">组件</div></div>
+            <div class="stat"><div class="num">10</div><div class="label">页面布局</div></div>
+            <div class="stat"><div class="num">30+</div><div class="label">组件变体</div></div>
+            <div class="stat"><div class="num">4</div><div class="label">基础规范</div></div>
           </div>
         </div>
         <iframe id="compFrame" style="display:none"></iframe>
       </div>
     </div>
-
-    <!-- ==================== SPECS TAB ==================== -->
-    <div class="panel" id="panel-specs">
-      <div class="main">
-        <div class="spec-list" id="specList">
-          <div class="spec-item" data-file="README.md">
-            <div class="spec-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            </div>
-            <div>
-              <div class="spec-name">README</div>
-              <div class="spec-desc">设计系统概览、设计理念、组件清单与使用说明</div>
-            </div>
-          </div>
-          <div class="spec-item" data-file="SKILL.md">
-            <div class="spec-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            </div>
-            <div>
-              <div class="spec-name">SKILL</div>
-              <div class="spec-desc">AI 生成规则、禁止模式、页面组装工作流与硬约束</div>
-            </div>
-          </div>
-        </div>
-        <div class="spec-content" id="specContent">
-          <div class="spec-back" id="specBack">← 返回列表</div>
-          <pre class="spec-text" id="specText"></pre>
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <script>
@@ -383,7 +293,7 @@
 
     // Hash routing
     const hash = location.hash.slice(1);
-    if (['theme','components','specs'].includes(hash)) switchTab(hash);
+    if (['theme','components'].includes(hash)) switchTab(hash);
 
     // ========== Sidebar Navigation ==========
     function setupSidebar(sidebarId, frameId, welcomeId) {
@@ -405,28 +315,11 @@
     setupSidebar('themeSidebar', 'themeFrame');
     setupSidebar('compSidebar', 'compFrame', 'compWelcome');
 
-    // ========== Design Specs ==========
-    document.querySelectorAll('.spec-item[data-file]').forEach(item => {
-      item.addEventListener('click', () => {
-        fetch(item.dataset.file)
-          .then(r => r.text())
-          .then(text => {
-            document.getElementById('specText').textContent = text;
-            document.getElementById('specList').style.display = 'none';
-            document.getElementById('specContent').classList.add('show');
-          });
-      });
-    });
-
-    document.getElementById('specBack').addEventListener('click', () => {
-      document.getElementById('specList').style.display = '';
-      document.getElementById('specContent').classList.remove('show');
-    });
 
     // ========== Keyboard ==========
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
-        document.getElementById('specBack').click();
+        // 返回欢迎页
       }
     });
   </script>

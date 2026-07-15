@@ -1,7 +1,7 @@
 <!--
   Shawn Design System — 详情页（信息展示）
   使用方法：复制此文件，替换文字和数据内容。
-  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  变量声明在 :root，按需取用。
   禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
 -->
 <!DOCTYPE html>
@@ -10,22 +10,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>认证考核详情</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.css" />
   <style>
     /* ========== Design Tokens ========== */
     :root {
       --color-primary: #1764E8;
       --color-success: #67C23A;
       --color-warning: #E6A23C;
-      --color-danger:  #F56C6C;
-      --text-primary:   rgba(0,0,0,0.85);
-      --text-secondary: rgba(0,0,0,0.65);
-      --text-muted:     rgba(0,0,0,0.45);
-      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --color-danger: #F56C6C;
+      --text-primary: rgba(0, 0, 0, 0.85);
+      --text-secondary: rgba(0, 0, 0, 0.65);
+      --text-muted: rgba(0, 0, 0, 0.45);
       --page-bg: #f5f7fa;
       --card-bg: #fff;
-      --card-radius: 8px;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+                    'PingFang SC', 'Microsoft YaHei', sans-serif;
     }
 
     /* ========== Reset & Base ========== */
@@ -42,152 +41,128 @@
       font-family: var(--font-stack);
       font-size: 14px;
       color: var(--text-primary);
-      background: #f5f7fa;
+      background: var(--page-bg);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ========== Page Container ========== */
     .page-container {
       padding: 20px;
       min-height: 100vh;
     }
 
-    /* ========== Detail Banner (Page Header) ========== */
-    .detail-banner {
+    /* ========== Detail Header Card ========== */
+    .detail-header-card {
       background: var(--card-bg);
-      border-radius: var(--card-radius);
-      padding: 20px 24px 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      padding: 16px 20px;
       margin-bottom: 16px;
-      box-shadow: var(--shadow-sm);
     }
 
-    .banner-top {
+    .preview-header {
+      margin-bottom: 32px;
+    }
+
+    .preview-header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .preview-header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .page-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
 
-    .banner-left {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .banner-breadcrumb {
+    .page-header-left {
       display: flex;
       align-items: center;
-      gap: 4px;
-      font-size: 13px;
-      color: var(--text-muted);
+      gap: 12px;
     }
 
-    .banner-breadcrumb a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .banner-breadcrumb a:hover {
-      color: var(--color-primary);
-    }
-
-    .banner-breadcrumb .breadcrumb-sep {
-      display: inline-flex;
-      align-items: center;
-      color: var(--text-muted);
-    }
-
-    .banner-breadcrumb .breadcrumb-sep svg {
-      width: 14px;
-      height: 14px;
-    }
-
-    .banner-breadcrumb .breadcrumb-current {
-      color: var(--text-secondary);
-    }
-
-    .banner-title-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .banner-title {
+    .page-title {
       font-size: 20px;
       font-weight: 600;
       color: var(--text-primary);
       line-height: 1.3;
     }
 
-    .banner-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 10px;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 20px;
-      white-space: nowrap;
-    }
-
-    .banner-tag-icon {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .banner-tag-icon svg {
-      width: 14px;
-      height: 14px;
-    }
-
-    .banner-tag--success {
-      background: #f0f9eb;
-      color: #67c23a;
-    }
-
-    .banner-tag--warning {
-      background: #fdf6ec;
-      color: #e6a23c;
-    }
-
-    .banner-tag--danger {
-      background: #fef0f0;
-      color: #f56c6c;
-    }
-
-    .banner-tag--info {
-      background: #ecf5ff;
-      color: #1764e8;
-    }
-
-    .banner-actions {
+    .page-header-right {
       display: flex;
       align-items: center;
       gap: 8px;
-      flex-shrink: 0;
+    }
+
+    .page-header-right .el-button {
+      margin-left: 0;
+    }
+
+    /* ========== Breadcrumb ========== */
+    .page-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .page-breadcrumb a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .page-breadcrumb a:hover {
+      color: var(--color-primary);
+    }
+
+    .page-breadcrumb .breadcrumb-sep {
+      display: inline-flex;
+      align-items: center;
+      color: var(--text-muted);
+    }
+
+    /* ========== Section Title（蓝色左边线） ========== */
+    .section-title {
+      position: relative;
+      margin: 0 0 12px 14px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 16px;
+      background-color: #1764e8;
+      border-top: 4px solid #C9D8F2;
+      border-bottom: 4px solid #C9D8F2;
     }
 
     /* ========== Info Section ========== */
     .info-section {
       background: var(--card-bg);
-      border-radius: var(--card-radius);
-      padding: 24px;
+      border-radius: 8px;
+      padding: 16px 20px;
       margin-bottom: 16px;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
     }
 
-    .section-title {
-      font-size: 16px;
-      font-weight: 600;
-      padding-left: 12px;
-      border-left: 3px solid #1764E8;
-      margin-bottom: 16px;
-    }
-
-    /* el-descriptions 覆盖 */
     .info-section .el-descriptions {
       --el-descriptions-item-bordered-label-background: #fafafa;
     }
@@ -202,28 +177,18 @@
       color: var(--text-primary);
     }
 
-    /* ========== Back Link ========== */
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 13px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      cursor: pointer;
-      margin-bottom: 12px;
+    /* ========== Score Display ========== */
+    .score-pass {
+      color: var(--color-success);
+      font-weight: 600;
     }
 
-    .back-link:hover {
-      color: var(--color-primary);
+    .score-fail {
+      color: var(--color-danger);
+      font-weight: 600;
     }
 
-    .back-link svg {
-      width: 14px;
-      height: 14px;
-    }
-
-    /* ========== Status Link (inline) ========== */
+    /* ========== Info Link ========== */
     .info-link {
       color: var(--color-primary);
       text-decoration: none;
@@ -238,36 +203,36 @@
 <body>
   <div id="app">
     <div class="page-container">
-      <!-- 顶部 Banner -->
-      <div class="detail-banner">
-        <div class="banner-top">
-          <div class="banner-left">
-            <nav class="banner-breadcrumb">
-              <a @click="handleBack">认证管理</a>
-              <span class="breadcrumb-sep">
-                <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              <a @click="handleBack">考核列表</a>
-              <span class="breadcrumb-sep">
-                <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              <span class="breadcrumb-current">详情</span>
-            </nav>
-            <div class="banner-title-row">
-              <h1 class="banner-title">{{ detail.name }}</h1>
-              <span class="banner-tag" :class="'banner-tag--' + detail.statusType">
-                <span class="banner-tag-icon">
-                  <svg v-if="detail.status === 'passed'" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="var(--color-success)"/><path d="M4.5 7l2 2 3.5-3.5" stroke="var(--color-white)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  <svg v-else-if="detail.status === 'in_progress'" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="var(--color-warning)"/><path d="M7 4v4" stroke="var(--color-white)" stroke-width="1.5" stroke-linecap="round"/><circle cx="7" cy="10.5" r="0.75" fill="var(--color-white)"/></svg>
-                  <svg v-else viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" fill="var(--color-primary)"/><path d="M7 6v4" stroke="var(--color-white)" stroke-width="1.5" stroke-linecap="round"/><circle cx="7" cy="4" r="0.75" fill="var(--color-white)"/></svg>
-                </span>
-                {{ detail.statusLabel }}
-              </span>
-            </div>
+      <div class="preview-header">
+        <h1>详情页（信息展示）</h1>
+        <p>顶部 Banner + Descriptions 描述列表，适用于字段较少的详情展示</p>
+      </div>
+
+      <!-- 详情头部卡片 -->
+      <div class="detail-header-card">
+        <nav class="page-breadcrumb">
+          <a @click="handleBack">认证管理</a>
+          <span class="breadcrumb-sep">/</span>
+          <a @click="handleBack">考核列表</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>详情</span>
+        </nav>
+        <div class="page-header">
+          <div class="page-header-left">
+            <span class="page-title">{{ detail.name }}</span>
+            <el-tag :type="detail.statusType === 'success' ? 'success' : detail.statusType === 'warning' ? 'warning' : 'primary'" size="small" effect="light">
+              {{ detail.statusLabel }}
+            </el-tag>
           </div>
-          <div class="banner-actions">
-            <el-button @click="handleBack">返回</el-button>
-            <el-button type="primary" @click="handleEdit">编辑</el-button>
+          <div class="page-header-right">
+            <el-button @click="handleBack">
+              <el-icon><Back></Back></el-icon>
+              返回
+            </el-button>
+            <el-button type="primary" @click="handleEdit">
+              <el-icon><Edit></Edit></el-icon>
+              编辑
+            </el-button>
           </div>
         </div>
       </div>
@@ -303,7 +268,7 @@
           <el-descriptions-item label="考核方式">{{ detail.method }}</el-descriptions-item>
           <el-descriptions-item label="满分/及格分">{{ detail.totalScore }} / {{ detail.passScore }}</el-descriptions-item>
           <el-descriptions-item label="实际得分">
-            <span :style="{ color: detail.actualScore >= detail.passScore ? 'var(--color-success)' : 'var(--color-danger)', fontWeight: 600 }">
+            <span :class="detail.actualScore >= detail.passScore ? 'score-pass' : 'score-fail'">
               {{ detail.actualScore }}
             </span>
           </el-descriptions-item>
@@ -331,10 +296,22 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@element-plus/icons-vue@2.3.1/dist/index.iife.min.js"></script>
   <script>
     const { createApp, reactive } = Vue;
+
+    /* ---- 中文语言包 ---- */
+    const zhCn = {
+      name: 'zh-cn',
+      el: {
+        pagination: { goto: '前往', pagesize: '条/页', total: '共 {total} 条', pageClassifier: '页', page: '页', prev: '上一页', next: '下一页', currentPage: '第 {pager} 页' },
+        select: { loading: '加载中', noMatch: '无匹配数据', noData: '暂无数据', placeholder: '请选择' },
+        table: { emptyText: '暂无数据', confirmFilter: '确认', resetFilter: '重置', clearFilter: '全部', sumText: '合计' },
+        datepicker: { now: '此刻', today: '今天', cancel: '取消', clear: '清空', confirm: '确定', startDate: '开始日期', startTime: '开始时间', endDate: '结束日期', endTime: '结束时间', prevYear: '前一年', nextYear: '后一年', prevMonth: '上个月', nextMonth: '下个月', year: '年', month1: '1月', month2: '2月', month3: '3月', month4: '4月', month5: '5月', month6: '6月', month7: '7月', month8: '8月', month9: '9月', month10: '10月', month11: '11月', month12: '12月', weeks: { sun: '日', mon: '一', tue: '二', wed: '三', thu: '四', fri: '五', sat: '六' }, months: { jan: '一月', feb: '二月', mar: '三月', apr: '四月', may: '五月', jun: '六月', jul: '七月', aug: '八月', sep: '九月', oct: '十月', nov: '十一月', dec: '十二月' } },
+      },
+    };
 
     const app = createApp({
       setup() {
@@ -391,7 +368,10 @@
       },
     });
 
-    app.use(ElementPlus);
+    app.use(ElementPlus, { locale: zhCn });
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      app.component(key, component);
+    }
     app.mount('#app');
   </script>
 </body>

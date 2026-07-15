@@ -2,145 +2,192 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>Badge 徽标数</title>
-  <link rel="stylesheet" href="preview-scaffold.css">
-  <link rel="stylesheet" href="../colors_and_type.css">
-  <link rel="stylesheet" href="../components.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badge 徽标</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.css">
+  <style>
+    :root {
+      --color-primary: #1764E8;
+      --color-success: #67C23A;
+      --color-warning: #E6A23C;
+      --color-danger: #F56C6C;
+      --text-primary: rgba(0, 0, 0, 0.85);
+      --text-secondary: rgba(0, 0, 0, 0.65);
+      --text-muted: rgba(0, 0, 0, 0.45);
+      --page-bg: #f5f7fa;
+      --card-bg: #fff;
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-stack);
+      background: var(--page-bg);
+      color: var(--text-primary);
+      padding: 40px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      position: relative;
+      margin: 0 0 12px 14px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 16px;
+      background-color: #1764e8;
+      border-top: 4px solid #C9D8F2;
+      border-bottom: 4px solid #C9D8F2;
+    }
+
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .demo-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .demo-group {
+      margin-bottom: 24px;
+    }
+
+    .demo-group:last-child {
+      margin-bottom: 0;
+    }
+  </style>
 </head>
 <body>
-  <div class="pv-header">
-    <h1>Badge 徽标数</h1>
-    <p>通知标记组件，覆盖 Dot 圆点、Number 数字、NumberPlus 超量数字与 Icon 图标四种类型，支持激活/置灰双色态。</p>
-  </div>
+  <div id="app">
+    <div class="page-header">
+      <h1>Badge 徽标</h1>
+      <p>出现在按钮、图标旁边的数字或状态标记。</p>
+    </div>
 
-  <!-- ===== Dot 圆点 ===== -->
-  <div class="pv-section">
-    <div class="pv-section__title">Dot 圆点</div>
-    <div class="pv-section__sub">三种尺寸 × 激活/置灰</div>
-    <div class="stack-12">
-      <div class="demo-label">激活态</div>
-      <div class="row">
-        <span class="badge badge-dot badge-small badge-active" data-component="badge" data-type="dot" data-size="small" data-ash="false"></span>
-        <span class="badge badge-dot badge-active" data-component="badge" data-type="dot" data-size="default" data-ash="false"></span>
-        <span class="badge badge-dot badge-large badge-active" data-component="badge" data-type="dot" data-size="large" data-ash="false"></span>
+    <!-- 基础用法 -->
+    <div class="section-title">基础用法</div>
+    <div class="section">
+      <div class="demo-row">
+        <el-badge :value="12" class="item">
+          <el-button>评论</el-button>
+        </el-badge>
+        <el-badge :value="3" class="item">
+          <el-button>回复</el-button>
+        </el-badge>
+        <el-badge :value="1" class="item" type="primary">
+          <el-button>评论</el-button>
+        </el-badge>
+        <el-badge :value="2" class="item" type="warning">
+          <el-button>回复</el-button>
+        </el-badge>
       </div>
-      <div class="demo-label">置灰态</div>
-      <div class="row">
-        <span class="badge badge-dot badge-small badge-ash" data-component="badge" data-type="dot" data-size="small" data-ash="true"></span>
-        <span class="badge badge-dot badge-ash" data-component="badge" data-type="dot" data-size="default" data-ash="true"></span>
-        <span class="badge badge-dot badge-large badge-ash" data-component="badge" data-type="dot" data-size="large" data-ash="true"></span>
+    </div>
+
+    <!-- 最大值 -->
+    <div class="section-title">最大值</div>
+    <div class="section">
+      <div class="demo-row">
+        <el-badge :value="200" :max="99" class="item">
+          <el-button>评论</el-button>
+        </el-badge>
+        <el-badge :value="100" :max="10" class="item">
+          <el-button>回复</el-button>
+        </el-badge>
+      </div>
+    </div>
+
+    <!-- 小圆点 -->
+    <div class="section-title">小圆点</div>
+    <div class="section">
+      <div class="demo-row">
+        <el-badge is-dot class="item">数据查询</el-badge>
+        <el-badge is-dot class="item">
+          <el-button class="share-button" :icon="Share" type="primary"></el-button>
+        </el-badge>
+      </div>
+    </div>
+
+    <!-- 自定义内容 -->
+    <div class="section-title">自定义内容</div>
+    <div class="section">
+      <div class="demo-row">
+        <el-badge value="new" class="item">
+          <el-button>评论</el-button>
+        </el-badge>
+        <el-badge value="hot" class="item">
+          <el-button>回复</el-button>
+        </el-badge>
       </div>
     </div>
   </div>
 
-  <!-- ===== Number 数字 ===== -->
-  <div class="pv-section">
-    <div class="pv-section__title">Number 数字</div>
-    <div class="pv-section__sub">三种尺寸 × 激活/置灰</div>
-    <div class="stack-12">
-      <div class="demo-label">激活态</div>
-      <div class="row">
-        <span class="badge badge-number badge-small badge-active" data-component="badge" data-type="number" data-size="small" data-ash="false">2</span>
-        <span class="badge badge-number badge-active" data-component="badge" data-type="number" data-size="default" data-ash="false">2</span>
-        <span class="badge badge-number badge-large badge-active" data-component="badge" data-type="number" data-size="large" data-ash="false">2</span>
-      </div>
-      <div class="demo-label">置灰态</div>
-      <div class="row">
-        <span class="badge badge-number badge-small badge-ash" data-component="badge" data-type="number" data-size="small" data-ash="true">2</span>
-        <span class="badge badge-number badge-ash" data-component="badge" data-type="number" data-size="default" data-ash="true">2</span>
-        <span class="badge badge-number badge-large badge-ash" data-component="badge" data-type="number" data-size="large" data-ash="true">2</span>
-      </div>
-    </div>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@element-plus/icons-vue@2.3.1/dist/index.iife.min.js"></script>
+  <script>
+    const { createApp } = Vue;
 
-  <!-- ===== NumberPlus 超量数字 ===== -->
-  <div class="pv-section">
-    <div class="pv-section__title">NumberPlus 超量数字</div>
-    <div class="pv-section__sub">当数字超出阈值时显示 "99+" 形式</div>
-    <div class="stack-12">
-      <div class="demo-label">激活态</div>
-      <div class="row">
-        <span class="badge badge-number-plus badge-small badge-active" data-component="badge" data-type="number-plus" data-size="small" data-ash="false">99+</span>
-        <span class="badge badge-number-plus badge-active" data-component="badge" data-type="number-plus" data-size="default" data-ash="false">99+</span>
-        <span class="badge badge-number-plus badge-large badge-active" data-component="badge" data-type="number-plus" data-size="large" data-ash="false">99+</span>
-      </div>
-      <div class="demo-label">置灰态</div>
-      <div class="row">
-        <span class="badge badge-number-plus badge-small badge-ash" data-component="badge" data-type="number-plus" data-size="small" data-ash="true">99+</span>
-        <span class="badge badge-number-plus badge-ash" data-component="badge" data-type="number-plus" data-size="default" data-ash="true">99+</span>
-        <span class="badge badge-number-plus badge-large badge-ash" data-component="badge" data-type="number-plus" data-size="large" data-ash="true">99+</span>
-      </div>
-    </div>
-  </div>
+    const app = createApp({
+      setup() {
+        return {
+          Share: ElementPlusIconsVue.Share
+        };
+      }
+    });
 
-  <!-- ===== Icon 图标徽标 ===== -->
-  <div class="pv-section">
-    <div class="pv-section__title">Icon 图标徽标</div>
-    <div class="pv-section__sub">语义化图标，支持 Success / Warning / Error / Skip / Awaiting 五种状态</div>
-    <div class="stack-12">
-      <div class="demo-label">尺寸变体 (Success)</div>
-      <div class="row">
-        <span class="badge badge-icon badge-small badge-icon-success" data-component="badge" data-type="icon" data-size="small" data-state="success">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zm2.854 4.146a.5.5 0 00-.708 0L7.5 8.293 6.354 7.146a.5.5 0 10-.708.708l1.5 1.5a.5.5 0 00.708 0l3-3a.5.5 0 000-.708z"/></svg>
-        </span>
-        <span class="badge badge-icon badge-icon-success" data-component="badge" data-type="icon" data-size="default" data-state="success">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zm2.854 4.146a.5.5 0 00-.708 0L7.5 8.293 6.354 7.146a.5.5 0 10-.708.708l1.5 1.5a.5.5 0 00.708 0l3-3a.5.5 0 000-.708z"/></svg>
-        </span>
-        <span class="badge badge-icon badge-large badge-icon-success" data-component="badge" data-type="icon" data-size="large" data-state="success">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zm2.854 4.146a.5.5 0 00-.708 0L7.5 8.293 6.354 7.146a.5.5 0 10-.708.708l1.5 1.5a.5.5 0 00.708 0l3-3a.5.5 0 000-.708z"/></svg>
-        </span>
-      </div>
-      <div class="demo-label">各状态</div>
-      <div class="row">
-        <span class="badge badge-icon badge-icon-success" data-component="badge" data-type="icon" data-size="default" data-state="success">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zm2.854 4.146a.5.5 0 00-.708 0L7.5 8.293 6.354 7.146a.5.5 0 10-.708.708l1.5 1.5a.5.5 0 00.708 0l3-3a.5.5 0 000-.708z"/></svg>
-        </span>
-        <span class="badge badge-icon badge-icon-warning" data-component="badge" data-type="icon" data-size="default" data-state="warning">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zM8 4.5a.75.75 0 00-.75.75v3.5a.75.75 0 001.5 0v-3.5A.75.75 0 008 4.5zM8 11a.75.75 0 100-1.5.75.75 0 000 1.5z"/></svg>
-        </span>
-        <span class="badge badge-icon badge-icon-error" data-component="badge" data-type="icon" data-size="default" data-state="error">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zm2.354 4.146a.5.5 0 00-.708 0L8 7.293 6.354 5.646a.5.5 0 10-.708.708L7.293 8l-1.647 1.646a.5.5 0 00.708.708L8 8.707l1.646 1.647a.5.5 0 00.708-.708L8.707 8l1.647-1.646a.5.5 0 000-.708z"/></svg>
-        </span>
-        <span class="badge badge-icon badge-icon-skip" data-component="badge" data-type="icon" data-size="default" data-state="skip">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zM6 5.75a.75.75 0 00-.75.75v3a.75.75 0 001.5 0v-3A.75.75 0 006 5.75zm4 0a.75.75 0 00-.75.75v3a.75.75 0 001.5 0v-3A.75.75 0 0010 5.75z"/></svg>
-        </span>
-        <span class="badge badge-icon badge-icon-awaiting" data-component="badge" data-type="icon" data-size="default" data-state="awaiting">
-          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5a6.5 6.5 0 110 13 6.5 6.5 0 010-13zM8.5 5a.5.5 0 00-1 0v3.5a.5.5 0 00.252.434l2 1.15a.5.5 0 10.496-.868L8.5 8.13V5z"/></svg>
-        </span>
-      </div>
-    </div>
-  </div>
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      app.component(key, component);
+    }
 
-  <!-- ===== Badge + Avatar 组合 ===== -->
-  <div class="pv-section">
-    <div class="pv-section__title">Badge + Avatar 组合</div>
-    <div class="pv-section__sub">徽标叠加在头像右上角，适配不同尺寸</div>
-    <div class="row-16">
-      <div class="badge-wrapper badge-avatar-mini" data-component="badge" data-type="number" data-size="mini" data-ash="false">
-        <div class="badge-avatar">
-          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="2.5" fill="currentColor"/><path d="M3.5 13a4.5 4.5 0 019 0" stroke="currentColor" stroke-width="1.2"/></svg>
-        </div>
-        <span class="badge badge-number badge-small badge-active">2</span>
-      </div>
-      <div class="badge-wrapper badge-avatar-small" data-component="badge" data-type="number" data-size="small" data-ash="false">
-        <div class="badge-avatar">
-          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="2.5" fill="currentColor"/><path d="M3.5 13a4.5 4.5 0 019 0" stroke="currentColor" stroke-width="1.2"/></svg>
-        </div>
-        <span class="badge badge-number badge-small badge-active">2</span>
-      </div>
-      <div class="badge-wrapper badge-avatar-default" data-component="badge" data-type="number" data-size="default" data-ash="false">
-        <div class="badge-avatar">
-          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="2.5" fill="currentColor"/><path d="M3.5 13a4.5 4.5 0 019 0" stroke="currentColor" stroke-width="1.2"/></svg>
-        </div>
-        <span class="badge badge-number badge-active">2</span>
-      </div>
-      <div class="badge-wrapper badge-avatar-large" data-component="badge" data-type="number" data-size="large" data-ash="false">
-        <div class="badge-avatar">
-          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="2.5" fill="currentColor"/><path d="M3.5 13a4.5 4.5 0 019 0" stroke="currentColor" stroke-width="1.2"/></svg>
-        </div>
-        <span class="badge badge-number badge-large badge-active">2</span>
-      </div>
-    </div>
-  </div>
+    const zhCn = {
+      name: 'zh-cn',
+      el: {
+        pagination: { goto: '前往', pagesize: '条/页', total: '共 {total} 条', pageClassifier: '页', page: '页', prev: '上一页', next: '下一页', currentPage: '第 {pager} 页' },
+        select: { loading: '加载中', noMatch: '无匹配数据', noData: '暂无数据', placeholder: '请选择' },
+        table: { emptyText: '暂无数据', confirmFilter: '确认', resetFilter: '重置', clearFilter: '全部', sumText: '合计' },
+        pageHeader: { title: '返回' },
+        datepicker: { now: '此刻', today: '今天', cancel: '取消', clear: '清空', confirm: '确定', startDate: '开始日期', startTime: '开始时间', endDate: '结束日期', endTime: '结束时间', prevYear: '前一年', nextYear: '后一年', prevMonth: '上个月', nextMonth: '下个月', year: '年', month1: '1月', month2: '2月', month3: '3月', month4: '4月', month5: '5月', month6: '6月', month7: '7月', month8: '8月', month9: '9月', month10: '10月', month11: '11月', month12: '12月', weeks: { sun: '日', mon: '一', tue: '二', wed: '三', thu: '四', fri: '五', sat: '六' }, months: { jan: '一月', feb: '二月', mar: '三月', apr: '四月', may: '五月', jun: '六月', jul: '七月', aug: '八月', sep: '九月', oct: '十月', nov: '十一月', dec: '十二月' } }
+      }
+    };    app.use(ElementPlus, { locale: zhCn });
+    app.mount('#app');
+  </script>
 </body>
 </html>

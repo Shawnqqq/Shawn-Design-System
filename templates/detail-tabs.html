@@ -1,7 +1,7 @@
 <!--
   Shawn Design System — 详情页（Tabs）
   使用方法：复制此文件，替换文字和数据内容。
-  在 <style> 顶部注入用到的 CSS 变量（参考 tokens.css）。
+  变量声明在 :root，按需取用。
   禁止：Tailwind CSS、Lucide 图标、CDN CSS 框架。
 -->
 <!DOCTYPE html>
@@ -10,23 +10,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>详情页 - Tabs</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.css" />
   <style>
     /* ========== Design Tokens ========== */
     :root {
       --color-primary: #1764E8;
       --color-success: #67C23A;
       --color-warning: #E6A23C;
-      --color-danger:  #F56C6C;
-      --text-primary:   rgba(0,0,0,0.85);
-      --text-secondary: rgba(0,0,0,0.65);
-      --text-muted:     rgba(0,0,0,0.45);
-      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --color-danger: #F56C6C;
+      --text-primary: rgba(0, 0, 0, 0.85);
+      --text-secondary: rgba(0, 0, 0, 0.65);
+      --text-muted: rgba(0, 0, 0, 0.45);
       --page-bg: #f5f7fa;
       --card-bg: #fff;
-      --card-radius: 8px;
       --table-header-bg: #fafafa;
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
+                    'PingFang SC', 'Microsoft YaHei', sans-serif;
     }
 
     /* ========== Reset & Base ========== */
@@ -43,78 +42,124 @@
       font-family: var(--font-stack);
       font-size: 14px;
       color: var(--text-primary);
-      background: #f5f7fa;
+      background: var(--page-bg);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ========== Page Container ========== */
     .page-container {
       padding: 20px;
       min-height: 100vh;
     }
 
-    /* ========== Detail Banner ========== */
-    .detail-banner {
-      position: relative;
+    /* ========== Detail Header Card ========== */
+    .detail-header-card {
       background: var(--card-bg);
-      padding: 20px 24px 16px;
-      border-radius: var(--card-radius);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      padding: 16px 20px;
       margin-bottom: 16px;
-      box-shadow: var(--shadow-sm);
     }
 
-    .banner-header {
+    .preview-header {
+      margin-bottom: 32px;
+    }
+
+    .preview-header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .preview-header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .page-header-left {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .banner-header .page-title {
+    .page-title {
       font-size: 20px;
       font-weight: 600;
       color: var(--text-primary);
       line-height: 1.4;
     }
 
-    .banner-meta {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 8px;
-      line-height: 1.6;
-    }
-
-    .banner-meta .meta-separator {
-      margin: 0 8px;
-      color: rgba(0,0,0,0.15);
-    }
-
-    .banner-actions {
-      position: absolute;
-      right: 24px;
-      top: 20px;
+    .page-header-right {
       display: flex;
+      align-items: center;
       gap: 8px;
     }
 
-    /* ========== Content Card ========== */
+    .page-header-right .el-button {
+      margin-left: 0;
+    }
+
+    .detail-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .detail-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ========== Section Title（蓝色左边线） ========== */
+    .section-title {
+      position: relative;
+      margin: 0 0 12px 14px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 16px;
+      background-color: #1764e8;
+      border-top: 4px solid #C9D8F2;
+      border-bottom: 4px solid #C9D8F2;
+    }
+
+    /* ========== Content Card（Tabs） ========== */
     .content-card {
       background: var(--card-bg);
-      border-radius: var(--card-radius);
-      box-shadow: var(--shadow-sm);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
       overflow: hidden;
     }
 
-    /* Tabs header */
     .content-card .el-tabs {
       --el-tabs-header-height: 48px;
     }
 
     .content-card .el-tabs__header {
       margin: 0;
-      padding: 0 24px;
+      padding: 0 20px;
       background: var(--card-bg);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
 
     .content-card .el-tabs__nav-wrap::after {
@@ -139,20 +184,11 @@
       background-color: var(--color-primary);
     }
 
-    /* Tab content area */
-    .content-card .el-tabs__content {
-      padding: 16px 24px;
-    }
-
     .tab-pane-body {
-      padding: 16px 24px 24px;
+      padding: 16px 20px 20px;
     }
 
-    /* ========== Descriptions Overrides ========== */
-    .detail-descriptions {
-      margin: 0;
-    }
-
+    /* ========== Descriptions ========== */
     .detail-descriptions .el-descriptions__label {
       font-weight: 500;
       color: var(--text-secondary);
@@ -165,23 +201,31 @@
     }
 
     /* ========== Table in Tab ========== */
-    .tab-table {
-      --el-table-border-color: rgba(0,0,0,0.06);
-      --el-table-header-bg-color: var(--table-header-bg);
-      --el-table-row-height: 48px;
-      --el-table-header-text-color: var(--text-primary);
-      --el-table-text-color: var(--text-secondary);
-      font-size: 14px;
+    .tab-table .el-table tr th,
+    .tab-table .el-table tr td {
+      padding: 4px;
+      font-size: 12px;
     }
 
-    .tab-table th.el-table__cell {
+    .completion-cell {
+      width: 100px;
+      display: inline-flex;
+    }
+
+    .score-value {
       font-weight: 600;
-      color: var(--text-primary);
-      background: var(--table-header-bg);
     }
 
-    .tab-table .el-table__row td {
-      height: 48px;
+    .score-value--high {
+      color: var(--color-success);
+    }
+
+    .score-value--mid {
+      color: var(--color-warning);
+    }
+
+    .score-value--low {
+      color: var(--color-danger);
     }
 
     /* ========== Timeline in Tab ========== */
@@ -190,7 +234,7 @@
     }
 
     .log-timeline .el-timeline-item__timestamp {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
     }
 
@@ -201,7 +245,7 @@
     }
 
     .log-item-user {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-secondary);
       flex-shrink: 0;
     }
@@ -210,63 +254,40 @@
       font-size: 14px;
       color: var(--text-primary);
     }
-
-    /* ========== Action Buttons (shared with list) ========== */
-    .action-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 0;
-      height: auto;
-      font-size: 13px;
-    }
-
-    .action-btn svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
-
-    .action-btn--edit {
-      color: var(--color-primary);
-    }
-
-    .action-btn--edit:hover {
-      color: #3d85f0;
-    }
   </style>
 </head>
 <body>
   <div id="app">
     <div class="page-container">
-      <!-- Banner 区 -->
-      <div class="detail-banner">
-        <div class="banner-header">
-          <span class="page-title">{{ detail.name }}</span>
-          <el-tag :type="statusTagType(detail.status)" size="small" effect="light">
-            {{ statusLabel(detail.status) }}
-          </el-tag>
+      <div class="preview-header">
+        <h1>详情页（tabs）</h1>
+        <p>顶部 Banner + 多标签页详情展示，适用于复杂实体的详情查看</p>
+      </div>
+
+      <!-- 详情头部卡片 -->
+      <div class="detail-header-card">
+        <div class="page-header">
+          <div class="page-header-left">
+            <span class="page-title">{{ detail.name }}</span>
+            <el-tag :type="statusTagType(detail.status)" size="small" effect="light">
+              {{ statusLabel(detail.status) }}
+            </el-tag>
+          </div>
+          <div class="page-header-right">
+            <el-button @click="handleBack">
+              <el-icon><Back></Back></el-icon>
+              返回
+            </el-button>
+            <el-button type="primary" @click="handleEdit">
+              <el-icon><Edit></Edit></el-icon>
+              编辑
+            </el-button>
+          </div>
         </div>
-        <div class="banner-meta">
-          创建人：{{ detail.creator }}
-          <span class="meta-separator">|</span>
-          创建时间：{{ detail.createdAt }}
-          <span class="meta-separator">|</span>
-          更新时间：{{ detail.updatedAt }}
-        </div>
-        <div class="banner-actions">
-          <el-button type="primary" @click="handleEdit">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
-            </svg>
-            编辑
-          </el-button>
-          <el-button @click="handleBack">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="15 18 9 12 15 6"/>
-            </svg>
-            返回
-          </el-button>
+        <div class="detail-meta">
+          <span class="detail-meta-item">创建人：{{ detail.creator }}</span>
+          <span class="detail-meta-item">创建时间：{{ detail.createdAt }}</span>
+          <span class="detail-meta-item">更新时间：{{ detail.updatedAt }}</span>
         </div>
       </div>
 
@@ -277,6 +298,7 @@
           <!-- Tab 1: 基础信息 -->
           <el-tab-pane label="基础信息" name="basic">
             <div class="tab-pane-body">
+              <div class="section-title">基本信息</div>
               <el-descriptions class="detail-descriptions" border :column="2">
                 <el-descriptions-item label="计划名称">{{ detail.name }}</el-descriptions-item>
                 <el-descriptions-item label="计划类型">{{ detail.type }}</el-descriptions-item>
@@ -298,60 +320,54 @@
           <!-- Tab 2: 关联数据 -->
           <el-tab-pane label="关联数据" name="related">
             <div class="tab-pane-body">
-              <el-table :data="relatedData" border class="tab-table" style="width: 100%">
-                <el-table-column prop="courseName" label="课程名称" min-width="200" show-overflow-tooltip />
+              <div class="section-title">课程列表</div>
+              <el-table :data="relatedData" border stripe class="tab-table" style="width: 100%">
+                <el-table-column prop="courseName" label="课程名称" min-width="200" show-overflow-tooltip></el-table-column>
                 <el-table-column prop="category" label="课程分类" width="110" align="center">
                   <template #default="{ row }">
-                    <el-tag
-                      :type="categoryTagType(row.category)"
-                      size="small"
-                      effect="plain"
-                    >
+                    <el-tag :type="categoryTagType(row.category)" size="small" effect="plain">
                       {{ row.category }}
                     </el-tag>
                   </template>
                 </el-table-column>
-                <el-table-column prop="trainer" label="培训讲师" width="100" />
-                <el-table-column prop="trainerDept" label="讲师部门" width="120" />
-                <el-table-column prop="duration" label="课时" width="80" align="center" />
-                <el-table-column prop="participants" label="参训人数" width="90" align="center" />
-                <el-table-column prop="scheduledDate" label="计划日期" width="120" align="center" />
+                <el-table-column prop="trainer" label="培训讲师" width="100"></el-table-column>
+                <el-table-column prop="trainerDept" label="讲师部门" width="120"></el-table-column>
+                <el-table-column prop="duration" label="课时" width="80" align="center"></el-table-column>
+                <el-table-column prop="participants" label="参训人数" width="90" align="center"></el-table-column>
+                <el-table-column prop="scheduledDate" label="计划日期" width="120" align="center"></el-table-column>
                 <el-table-column prop="completionRate" label="完成率" width="140" align="center">
                   <template #default="{ row }">
                     <el-progress
                       :percentage="row.completionRate"
                       :stroke-width="6"
                       :color="row.completionRate >= 80 ? '#67C23A' : row.completionRate >= 50 ? '#E6A23C' : '#F56C6C'"
-                      style="width: 100px; display: inline-flex"
-                    />
+                      class="completion-cell"
+                    ></el-progress>
                   </template>
                 </el-table-column>
                 <el-table-column prop="avgScore" label="平均分" width="80" align="center">
                   <template #default="{ row }">
-                    <span :style="{ color: row.avgScore >= 80 ? 'var(--color-success)' : row.avgScore >= 60 ? 'var(--color-warning)' : 'var(--color-danger)', fontWeight: 600 }">
-                      {{ row.avgScore }}
+                    <span class="score-value" :class="{
+                      'score-value--high': row.avgScore >= 80,
+                      'score-value--mid': row.avgScore >= 60 && row.avgScore < 80,
+                      'score-value--low': row.avgScore > 0 && row.avgScore < 60
+                    }">
+                      {{ row.avgScore || '-' }}
                     </span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="status" label="状态" width="100" align="center">
                   <template #default="{ row }">
-                    <el-tag
-                      :type="courseStatusType(row.status)"
-                      size="small"
-                      effect="light"
-                    >
+                    <el-tag :type="courseStatusType(row.status)" size="small" effect="light">
                       {{ row.status }}
                     </el-tag>
                   </template>
                 </el-table-column>
                 <el-table-column label="操作" width="140" fixed="right" align="center">
                   <template #default="{ row }">
-                    <el-button class="action-btn action-btn--edit" type="primary" link @click="handleViewCourse(row)">
-                      查看
-                    </el-button>
-                    <el-button class="action-btn action-btn--edit" type="primary" link @click="handleEditCourse(row)">
-                      编辑
-                    </el-button>
+                    <el-button type="primary" link @click="handleViewCourse(row)">查看</el-button>
+                    <el-divider direction="vertical"></el-divider>
+                    <el-button type="primary" link @click="handleEditCourse(row)">编辑</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -361,6 +377,7 @@
           <!-- Tab 3: 操作日志 -->
           <el-tab-pane label="操作日志" name="logs">
             <div class="tab-pane-body">
+              <div class="section-title">操作记录</div>
               <el-timeline class="log-timeline">
                 <el-timeline-item
                   v-for="log in operationLogs"
@@ -383,10 +400,22 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/element-plus/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@element-plus/icons-vue@2.3.1/dist/index.iife.min.js"></script>
   <script>
     const { createApp, ref, reactive } = Vue;
+
+    /* ---- 中文语言包 ---- */
+    const zhCn = {
+      name: 'zh-cn',
+      el: {
+        pagination: { goto: '前往', pagesize: '条/页', total: '共 {total} 条', pageClassifier: '页', page: '页', prev: '上一页', next: '下一页', currentPage: '第 {pager} 页' },
+        select: { loading: '加载中', noMatch: '无匹配数据', noData: '暂无数据', placeholder: '请选择' },
+        table: { emptyText: '暂无数据', confirmFilter: '确认', resetFilter: '重置', clearFilter: '全部', sumText: '合计' },
+        datepicker: { now: '此刻', today: '今天', cancel: '取消', clear: '清空', confirm: '确定', startDate: '开始日期', startTime: '开始时间', endDate: '结束日期', endTime: '结束时间', prevYear: '前一年', nextYear: '后一年', prevMonth: '上个月', nextMonth: '下个月', year: '年', month1: '1月', month2: '2月', month3: '3月', month4: '4月', month5: '5月', month6: '6月', month7: '7月', month8: '8月', month9: '9月', month10: '10月', month11: '11月', month12: '12月', weeks: { sun: '日', mon: '一', tue: '二', wed: '三', thu: '四', fri: '五', sat: '六' }, months: { jan: '一月', feb: '二月', mar: '三月', apr: '四月', may: '五月', jun: '六月', jul: '七月', aug: '八月', sep: '九月', oct: '十月', nov: '十一月', dec: '十二月' } },
+      },
+    };
 
     const app = createApp({
       setup() {
@@ -441,7 +470,7 @@
         }
 
         function courseStatusType(status) {
-          const map = { '已完成': 'success', '进行中': 'primary', '待开始': 'info' };
+          const map = { '已完成': 'success', '进行中': '', '待开始': 'info' };
           return map[status] || 'info';
         }
 
@@ -484,7 +513,10 @@
       },
     });
 
-    app.use(ElementPlus);
+    app.use(ElementPlus, { locale: zhCn });
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      app.component(key, component);
+    }
     app.mount('#app');
   </script>
 </body>

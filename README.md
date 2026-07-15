@@ -1,126 +1,91 @@
-# Shawn Design System
+# shawn-design-spec
 
-B2B 管理后台设计规范。紧凑、务实、信息密集型风格。
+B2B 管理后台设计规范 + 代码规范。紧凑、务实、信息密集型风格。
 
-## 定位
+## 这是什么
 
-设计规范工程，不是组件库。为 AI 和开发者提供统一的视觉规范，保证生成的页面风格一致。
+为 AI 和开发者提供统一视觉规范和代码规范的工程。基于 Element Plus v2.8.5，保证生成的页面风格一致、代码结构统一。
 
-- 基于 Element Plus v2.8.5 组件
-- 页面模板自带完整样式，复制即可用
-- 只有少量品牌变量需要注入
+**不是组件库，是设计规范。** 不需要安装依赖，只需要遵循规范中定义的 Token、间距、字号、颜色、交互模式和代码规范。
 
-## 快速开始
+### 核心文件
 
-### AI 使用
+| 文件 | 作用 |
+|------|------|
+| `SKILL.md` | 入口文件（AI 第一个读的）：硬规则 + Token 速查 + 工作流程 + 文件索引 |
+| `DESIGN-SPEC.md` | 分层索引 + 速查表（Token/组件/布局/场景） |
+| `specs/tokens.md` | Token 详细定义（色阶、字体行高、间距场景等） |
+| `specs/components.md` | Element Plus 组件规范（表格/表单/弹框等） |
+| `specs/templates.md` | 页面模板使用指南（何时用哪个模板） |
+| `specs/code-standards.md` | Vue/API/SQL 代码规范 |
+| `index.html` | 可视化导航（浏览器打开预览） |
 
-1. 读取 `SKILL.md` 了解设计规范
-2. 根据需求选择 `templates/` 下的模板
-3. 复制模板 HTML，替换文字和数据
-4. 在 `<style>` 顶部注入用到的 CSS 变量（参考 `tokens.css`）
+## 使用方式
 
-### 开发者使用
+### 方式一：AI 开发时参考
 
-1. 引入 `components/overrides.css` 统一弹框/抽屉样式
-2. 页面结构参照 `templates/` 下的模板
-3. 使用 Element Plus 组件，遵循 SKILL.md 中的规范
+AI 在生成 B2B 后台页面时：
 
-## 设计 Token
+1. 先读 `SKILL.md` 了解硬规则和工作流程
+2. 根据任务查 `DESIGN-SPEC.md` 索引 → 定位到具体 spec 文件
+3. 按需读取 `specs/` 下的详细文件
+4. 参考 `templates/` 和 `preview/` 生成代码
 
-| 类别 | 变量 | 值 |
-|------|------|-----|
-| 主色阶 1 | `--primary-1` | #f3f6fe（最浅背景） |
-| 主色阶 2 | `--primary-2` | #e6edfc（浅背景） |
-| 主色阶 3 | `--primary-3` | #a5bff2（禁用状态） |
-| 主色阶 4 | `--primary-4` | #7da4ec（辅助） |
-| 主色阶 5 | `--primary-5` | #3678e2（hover） |
-| 主色阶 6 | `--primary-6` | #1764e8（主色 ★） |
-| 主色阶 7 | `--primary-7` | #1250ba（active） |
-| 主色 | `--primary` | #1764E8 |
-| 成功 | `--success` | #67C23A |
-| 警告 | `--warning` | #E6A23C |
-| 危险 | `--danger` | #F56C6C |
-| 主文字 | `--text-primary` | rgba(0,0,0,0.85) |
-| 次文字 | `--text-secondary` | rgba(0,0,0,0.65) |
-| 辅助文字 | `--text-tertiary` | rgba(0,0,0,0.45) |
-| 禁用文字 | `--text-disabled` | rgba(0,0,0,0.25) |
-| 页面背景 | `--bg-page` | #f5f7fa |
-| 卡片背景 | `--bg-card` | #ffffff |
-| 分割线 | `--divider` | rgba(0,0,0,0.08) |
+### 方式二：开发者手动参考
 
-完整 Token 定义见 `tokens.css`。
+1. 打开 `index.html`，浏览「主题」和「组件」标签页，了解视觉规范
+2. 打开 `DESIGN-SPEC.md`，查阅需要的规范和 CSS 代码片段
+3. 将 CSS 变量复制到项目全局样式中
 
-## 页面模板
+## 三层规范
+
+### 第一层：基础 Token
+
+| 类别 | 内容 | 详细定义 |
+|------|------|---------|
+| 色彩 | 主色 #1764E8 + 状态色 + 文字色 rgba 方案 | `specs/tokens.md#1-色彩` |
+| 字体 | 12-24px 字阶 + 系统字体栈 | `specs/tokens.md#2-字体` |
+| 间距 | 4-64px 间距体系 + 常用布局间距 | `specs/tokens.md#3-间距` |
+| 圆角 & 阴影 | 2/4/8/12px 圆角 + 4 级阴影 | `specs/tokens.md#4-圆角与阴影` |
+
+### 第二层：组件规范
+
+| 分类 | 组件 | 详细规范 |
+|------|------|---------|
+| 输入 | Input / Select / Checkbox / Switch / Slider / Cascader / TimePicker / Segmented | `specs/components.md` |
+| 展示 | Table / Icon / Avatar / Badge / Progress / StatusTag / Descriptions | `specs/components.md` |
+| 反馈 | Alert / Message / Modal / Drawer / Tooltip / Dropdown | `specs/components.md` |
+| 导航 | Breadcrumb / Anchor / Pagination / Steps / Tabs | `specs/components.md` |
+| 布局 | TopNav / Sidenav / PageHeader / Form | `specs/components.md` |
+
+### 第三层：页面布局参考
 
 | 模板 | 文件 | 适用场景 |
 |------|------|---------|
 | 列表页（标准） | `templates/list-standard.html` | 筛选+表格+分页 |
 | 列表页（多筛选多按钮） | `templates/list-multi-filter.html` | 多行筛选+多操作按钮 |
-| 列表页（含自定义表格） | `templates/list-custom-table.html` | 可勾选列+批量操作 |
 | 列表页（统计+tabs） | `templates/list-stats-tabs.html` | 顶部统计+tabs切换 |
 | 详情页（tabs） | `templates/detail-tabs.html` | banner+多标签页 |
 | 详情页（信息展示） | `templates/detail-info.html` | banner+描述列表 |
 | 详情页（抽屉） | `templates/detail-drawer.html` | 抽屉内表单/详情 |
 | 数据仪表盘 | `templates/dashboard.html` | 统计卡+图表+表格 |
 | 独立表单页 | `templates/form-page.html` | 返回+分区表单 |
-| 弹框（el-dialog） | `templates/dialog-form.html` | 弹框内表单 |
-| 组件二次开发示例 | `templates/component-overrides.html` | el-table/el-form/el-descriptions 样式调整 |
-| 组件变体展示 | `templates/component-variants.html` | 8大类组件的各种场景变体 |
-
-## 设计规范
-
-### 字体
-
-```
-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif
-```
-
-| 字号 | 用途 |
-|------|------|
-| 12px | 辅助文字、表格单元格 |
-| 14px | 正文默认 |
-| 16px | 小标题 |
-| 20px | 标题 |
-| 24px | 大标题 |
-| 32px | 页面标题 |
-
-### 间距
-
-- 页面内边距: 20px
-- 卡片间距: 16px
-- 按钮间距: 8px
-- 表单标签宽度: 120px
-
-### 分页标准
-
-- 默认每页: 50 条
-- 可选: 20 / 50 / 100 / 200 / 500
-- 所有页面统一此标准
-
-### 阴影
-
-| 级别 | 值 | 用途 |
-|------|-----|------|
-| sm | 0 1px 2px rgba(0,0,0,0.06) | 卡片默认 |
-| md | 0 4px 12px rgba(0,0,0,0.08) | 下拉、悬浮 |
-| lg | 0 8px 24px rgba(0,0,0,0.12) | 弹窗 |
+| 弹框表单 | `templates/dialog-form.html` | 弹框内表单 |
 
 ## 文件结构
 
 ```
-├── SKILL.md           # AI 指令源
-├── README.md          # 本文档
-├── tokens.css         # Token 定义参考
-├── templates/         # 10 个页面模板
-├── components/
-│   └── overrides.css  # Element Plus 样式覆盖
-├── snippets/
-│   └── nav-logo.html  # Logo
-└── assets/icons/      # 图标资源
+shawn-design-spec/
+├── SKILL.md                    # 入口文件
+├── DESIGN-SPEC.md              # 分层索引 + 速查表
+├── specs/                      # 详细规范文件
+│   ├── tokens.md               # Token 详细定义
+│   ├── components.md           # 组件规范
+│   ├── templates.md            # 模板指南
+│   └── code-standards.md       # 代码规范
+├── templates/                  # 页面模板（9 个）
+├── preview/                    # 组件预览（34 个）
+├── index.html                  # 可视化导航
+├── README.md                   # 本文件
+└── colors_and_type.css         # 完整 CSS 变量定义
 ```
-
-## 约束
-
-- **禁止** Tailwind CSS、Lucide/Heroicons 图标、CDN CSS 框架
-- **使用** Element Plus 组件 + 内联 SVG 图标
-- **字体** 使用系统字体栈，不引入外部字体

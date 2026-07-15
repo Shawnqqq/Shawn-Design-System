@@ -2,90 +2,192 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>Message 全局提示</title>
-  <link rel="stylesheet" href="preview-scaffold.css">
-  <link rel="stylesheet" href="../colors_and_type.css">
-  <link rel="stylesheet" href="../components.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message 消息提示</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.css">
+  <style>
+    :root {
+      --color-primary: #1764E8;
+      --color-success: #67C23A;
+      --color-warning: #E6A23C;
+      --color-danger: #F56C6C;
+      --text-primary: rgba(0, 0, 0, 0.85);
+      --text-secondary: rgba(0, 0, 0, 0.65);
+      --text-muted: rgba(0, 0, 0, 0.45);
+      --page-bg: #f5f7fa;
+      --card-bg: #fff;
+      --font-stack: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-stack);
+      background: var(--page-bg);
+      color: var(--text-primary);
+      padding: 40px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      position: relative;
+      margin: 0 0 12px 14px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 16px;
+      background-color: #1764e8;
+      border-top: 4px solid #C9D8F2;
+      border-bottom: 4px solid #C9D8F2;
+    }
+
+    .demo-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .demo-code {
+      background: #f5f7fa;
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .demo-code pre {
+      font-family: 'Menlo', 'Monaco', 'Consolas', monospace;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
-  <div class="pv-header">
-    <h1>Message 全局提示</h1>
-    <p>顶部居中的全局反馈消息，用于主动操作后的结果通知，支持多种语义类型。</p>
-  </div>
+  <div id="app">
+    <div class="page-header">
+      <h1>Message 消息提示</h1>
+      <p>常用于主动操作后的反馈提示，通过按钮触发不同类型的消息。</p>
+    </div>
 
-  <div class="pv-section">
-    <div class="pv-section__title">Success 成功</div>
-    <div class="stack-12">
-      <div class="message message-success" data-component="message" data-type="success" data-closable="true">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zm3.7 5.3a.75.75 0 0 0-1.06 0L9 9.94 7.36 8.3a.75.75 0 1 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.06 0l4.1-4.1a.75.75 0 0 0 0-1.06z"/></svg>
-        <span class="message-content">操作成功</span>
-        <button class="message-close" aria-label="关闭"><svg viewBox="0 0 16 16"><path d="M8 6.94L11.47 3.47a.75.75 0 1 1 1.06 1.06L9.06 8l3.47 3.47a.75.75 0 1 1-1.06 1.06L8 9.06l-3.47 3.47a.75.75 0 0 1-1.06-1.06L6.94 8 3.47 4.53a.75.75 0 0 1 1.06-1.06L8 6.94z"/></svg></button>
+    <!-- 触发不同类型 -->
+    <div class="section-title">触发不同类型</div>
+    <div class="section">
+      <div class="demo-row">
+        <el-button @click="showSuccess">Success 成功</el-button>
+        <el-button @click="showWarning">Warning 警告</el-button>
+        <el-button @click="showError">Error 错误</el-button>
+        <el-button @click="showInfo">Info 信息</el-button>
       </div>
-      <div class="message message-success" data-component="message" data-type="success" data-closable="false">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zm3.7 5.3a.75.75 0 0 0-1.06 0L9 9.94 7.36 8.3a.75.75 0 1 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.06 0l4.1-4.1a.75.75 0 0 0 0-1.06z"/></svg>
-        <span class="message-content">操作成功</span>
+    </div>
+
+    <!-- 调用方式 -->
+    <div class="section-title">调用方式</div>
+    <div class="section">
+      <div class="demo-code">
+        <pre>// 成功消息
+ElementPlus.ElMessage.success('操作成功')
+
+// 警告消息
+ElementPlus.ElMessage.warning('请注意')
+
+// 错误消息
+ElementPlus.ElMessage.error('操作失败')
+
+// 信息消息
+ElementPlus.ElMessage.info('提示信息')
+
+// 带自定义配置
+ElementPlus.ElMessage({
+  message: '这是一条自定义消息',
+  type: 'success',
+  duration: 3000,
+  showClose: true
+})</pre>
       </div>
     </div>
   </div>
 
-  <div class="pv-section">
-    <div class="pv-section__title">Warning 警告</div>
-    <div class="stack-12">
-      <div class="message message-warning" data-component="message" data-type="warning" data-closable="true">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zm0 4.5a.75.75 0 0 0-.75.75v4a.75.75 0 0 0 1.5 0v-4A.75.75 0 0 0 10 5.5zM10 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
-        <span class="message-content">请注意</span>
-        <button class="message-close" aria-label="关闭"><svg viewBox="0 0 16 16"><path d="M8 6.94L11.47 3.47a.75.75 0 1 1 1.06 1.06L9.06 8l3.47 3.47a.75.75 0 1 1-1.06 1.06L8 9.06l-3.47 3.47a.75.75 0 0 1-1.06-1.06L6.94 8 3.47 4.53a.75.75 0 0 1 1.06-1.06L8 6.94z"/></svg></button>
-      </div>
-      <div class="message message-warning" data-component="message" data-type="warning" data-closable="false">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zm0 4.5a.75.75 0 0 0-.75.75v4a.75.75 0 0 0 1.5 0v-4A.75.75 0 0 0 10 5.5zM10 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>
-        <span class="message-content">请注意</span>
-      </div>
-    </div>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/element-plus@2.8.5/dist/index.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@element-plus/icons-vue@2.3.1/dist/index.iife.min.js"></script>
+  <script>
+    const { createApp } = Vue;
 
-  <div class="pv-section">
-    <div class="pv-section__title">Error 错误</div>
-    <div class="stack-12">
-      <div class="message message-error" data-component="message" data-type="error" data-closable="true">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zm2.83 5.17a.75.75 0 0 0-1.06 0L10 7.94 8.23 6.17a.75.75 0 1 0-1.06 1.06L8.94 9l-1.77 1.77a.75.75 0 1 0 1.06 1.06L10 10.06l1.77 1.77a.75.75 0 1 0 1.06-1.06L11.06 9l1.77-1.77a.75.75 0 0 0 0-1.06z"/></svg>
-        <span class="message-content">操作失败</span>
-        <button class="message-close" aria-label="关闭"><svg viewBox="0 0 16 16"><path d="M8 6.94L11.47 3.47a.75.75 0 1 1 1.06 1.06L9.06 8l3.47 3.47a.75.75 0 1 1-1.06 1.06L8 9.06l-3.47 3.47a.75.75 0 0 1-1.06-1.06L6.94 8 3.47 4.53a.75.75 0 0 1 1.06-1.06L8 6.94z"/></svg></button>
-      </div>
-      <div class="message message-error" data-component="message" data-type="error" data-closable="false">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zm2.83 5.17a.75.75 0 0 0-1.06 0L10 7.94 8.23 6.17a.75.75 0 1 0-1.06 1.06L8.94 9l-1.77 1.77a.75.75 0 1 0 1.06 1.06L10 10.06l1.77 1.77a.75.75 0 1 0 1.06-1.06L11.06 9l1.77-1.77a.75.75 0 0 0 0-1.06z"/></svg>
-        <span class="message-content">操作失败</span>
-      </div>
-    </div>
-  </div>
+    const app = createApp({
+      setup() {
+        const showSuccess = () => {
+          ElementPlus.ElMessage.success('操作成功');
+        };
 
-  <div class="pv-section">
-    <div class="pv-section__title">Info 信息</div>
-    <div class="stack-12">
-      <div class="message message-info" data-component="message" data-type="info" data-closable="true">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zM10 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-.75 4a.75.75 0 0 0 0 1.5h.01v2.75a.75.75 0 0 0 1.5 0V10.75a.75.75 0 0 0-.75-.75h-.76z"/></svg>
-        <span class="message-content">提示信息</span>
-        <button class="message-close" aria-label="关闭"><svg viewBox="0 0 16 16"><path d="M8 6.94L11.47 3.47a.75.75 0 1 1 1.06 1.06L9.06 8l3.47 3.47a.75.75 0 1 1-1.06 1.06L8 9.06l-3.47 3.47a.75.75 0 0 1-1.06-1.06L6.94 8 3.47 4.53a.75.75 0 0 1 1.06-1.06L8 6.94z"/></svg></button>
-      </div>
-      <div class="message message-info" data-component="message" data-type="info" data-closable="false">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1a9 9 0 1 1 0 18A9 9 0 0 1 10 1zM10 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-.75 4a.75.75 0 0 0 0 1.5h.01v2.75a.75.75 0 0 0 1.5 0V10.75a.75.75 0 0 0-.75-.75h-.76z"/></svg>
-        <span class="message-content">提示信息</span>
-      </div>
-    </div>
-  </div>
+        const showWarning = () => {
+          ElementPlus.ElMessage.warning('请注意');
+        };
 
-  <div class="pv-section">
-    <div class="pv-section__title">Loading 加载中</div>
-    <div class="stack-12">
-      <div class="message message-loading" data-component="message" data-type="loading" data-closable="true">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1.5L10.7 4.75 10 7 9.3 4.75ZM10 18.5L9.3 15.25 10 13 10.7 15.25ZM18.5 10L15.25 10.7 13 10 15.25 9.3ZM1.5 10L4.75 9.3 7 10 4.75 10.7ZM13.89 6.11L13.18 6.82 11.77 8.23 12.48 7.52ZM13.89 13.89L12.48 13.18 11.77 11.77 13.18 12.48ZM6.11 13.89L6.82 12.48 8.23 11.77 7.52 13.18ZM6.11 6.11L7.52 6.82 8.23 8.23 6.82 7.52Z"/></svg>
-        <span class="message-content">加载中</span>
-        <button class="message-close" aria-label="关闭"><svg viewBox="0 0 16 16"><path d="M8 6.94L11.47 3.47a.75.75 0 1 1 1.06 1.06L9.06 8l3.47 3.47a.75.75 0 1 1-1.06 1.06L8 9.06l-3.47 3.47a.75.75 0 0 1-1.06-1.06L6.94 8 3.47 4.53a.75.75 0 0 1 1.06-1.06L8 6.94z"/></svg></button>
-      </div>
-      <div class="message message-loading" data-component="message" data-type="loading" data-closable="false">
-        <svg class="message-icon" viewBox="0 0 20 20"><path d="M10 1.5L10.7 4.75 10 7 9.3 4.75ZM10 18.5L9.3 15.25 10 13 10.7 15.25ZM18.5 10L15.25 10.7 13 10 15.25 9.3ZM1.5 10L4.75 9.3 7 10 4.75 10.7ZM13.89 6.11L13.18 6.82 11.77 8.23 12.48 7.52ZM13.89 13.89L12.48 13.18 11.77 11.77 13.18 12.48ZM6.11 13.89L6.82 12.48 8.23 11.77 7.52 13.18ZM6.11 6.11L7.52 6.82 8.23 8.23 6.82 7.52Z"/></svg>
-        <span class="message-content">加载中</span>
-      </div>
-    </div>
-  </div>
+        const showError = () => {
+          ElementPlus.ElMessage.error('操作失败');
+        };
+
+        const showInfo = () => {
+          ElementPlus.ElMessage.info('提示信息');
+        };
+
+        return {
+          showSuccess,
+          showWarning,
+          showError,
+          showInfo
+        };
+      }
+    });
+
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      app.component(key, component);
+    }
+
+    const zhCn = {
+      name: 'zh-cn',
+      el: {
+        pagination: { goto: '前往', pagesize: '条/页', total: '共 {total} 条', pageClassifier: '页', page: '页', prev: '上一页', next: '下一页', currentPage: '第 {pager} 页' },
+        select: { loading: '加载中', noMatch: '无匹配数据', noData: '暂无数据', placeholder: '请选择' },
+        table: { emptyText: '暂无数据', confirmFilter: '确认', resetFilter: '重置', clearFilter: '全部', sumText: '合计' },
+        pageHeader: { title: '返回' },
+        datepicker: { now: '此刻', today: '今天', cancel: '取消', clear: '清空', confirm: '确定', startDate: '开始日期', startTime: '开始时间', endDate: '结束日期', endTime: '结束时间', prevYear: '前一年', nextYear: '后一年', prevMonth: '上个月', nextMonth: '下个月', year: '年', month1: '1月', month2: '2月', month3: '3月', month4: '4月', month5: '5月', month6: '6月', month7: '7月', month8: '8月', month9: '9月', month10: '10月', month11: '11月', month12: '12月', weeks: { sun: '日', mon: '一', tue: '二', wed: '三', thu: '四', fri: '五', sat: '六' }, months: { jan: '一月', feb: '二月', mar: '三月', apr: '四月', may: '五月', jun: '六月', jul: '七月', aug: '八月', sep: '九月', oct: '十月', nov: '十一月', dec: '十二月' } }
+      }
+    };    app.use(ElementPlus, { locale: zhCn });
+    app.mount('#app');
+  </script>
 </body>
 </html>
