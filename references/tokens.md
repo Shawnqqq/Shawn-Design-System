@@ -107,7 +107,7 @@
   left: -12px;
   transform: translateY(-50%);
   width: 4px;
-  height: 16px;
+  height: 12px;
   background-color: #1764e8;
   border-top: 4px solid #C9D8F2;
   border-bottom: 4px solid #C9D8F2;
